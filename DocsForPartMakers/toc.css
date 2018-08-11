@@ -1,0 +1,32 @@
+html {
+	background-color: #181818;
+}
+
+body {
+	background-color: #000000;
+	color: #C8C8C8;
+	float: right;
+	font-family: sans-serif;
+	padding: 20px;
+	border: 0px;
+	margin-top: 2em;
+	margin-left: auto;
+	margin-right: 0px;
+}
+
+a:link {
+	color: #FF7F00;
+}
+
+a:visited {
+	color: #B060D0;
+}
+
+a:hover {
+	color: #D0D050;
+}
+
+.id {
+	margin-left: 15px;
+	margin-bottom: 10px;
+}
