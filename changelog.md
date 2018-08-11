@@ -1,6 +1,7 @@
-ODFC
-On Demand Fuel Cells Refueled (ODFCr)
-Changelog
+# ODFC  
+## On Demand Fuel Cells Refueled (ODFCr)  
+
+### Changelog  
 
 v.0.0.1.2 
    * released:  
