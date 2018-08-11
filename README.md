@@ -6,7 +6,8 @@ Proudly Adopts(HOPEFULLY) - for private/personal use
 ## ODFC  
 ### ***On Demand Fuel Cells Refueled (ODFCr)***  
 
-v.0.0.1.3  
+v.0.0.1.2 
+   * released:  
    * updated .version to 1.4.9999  
    * recomplied against KSP 1.4.5  
    * ?  
@@ -14,7 +15,7 @@ v.0.0.1.3
 
 *a part of the **TWYLLTR** (Take What You Like, Leave the Rest) collection.*  
  
-📌v0.0.1.3-alpha  
+📌v0.0.1.2-alpha  
 
 ## links to original:  
 On Demand Fuel Cells (ODFC) by `Orum  
@@ -36,4 +37,4 @@ License
 ##### All bundled mods are distributed under their own licenses
 ##### All art assets (textures, models, animations) are distributed under an All Rights Reserved License.
 
-###### v0.0.1.3 original: 11 Aug 2018 0K updated: 11 Aug 2018 0K
+###### v0.0.1.2 original: 11 Aug 2018 0K updated: 11 Aug 2018 0K
