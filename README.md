@@ -4,24 +4,24 @@ StarGuise Experimental
 Proudly Adopts(HOPEFULLY) - for private/personal use  
 
 ## ODFC  
-### ***On Demand Fuel Cells Refueled (ODFCr***  
+### ***On Demand Fuel Cells Refueled (ODFCr)***  
 
-v.0.0.1.3
-   * updated .version to 1.4.9999
-   * recomplied against KSP 1.4.5
-   * ?
+v.0.0.1.3  
+   * updated .version to 1.4.9999  
+   * recomplied against KSP 1.4.5  
+   * ?  
 
 
 *a part of the **TWYLLTR** (Take What You Like, Leave the Rest) collection.*  
  
 📌v0.0.1.3-alpha  
 
-## links to original:
-On Demand Fuel Cells (ODFC) by `Orum
-Licensed under CC BY-NC-SA-4.0
-https://forum.kerbalspaceprogram.com/index.php?/topic/138431-112-on-demand-fuel-cells-odfc-v11/
-https://spacedock.info/mod/618/ODFC%20-%20On%20Demand%20Fuel%20Cells
-https://www.dropbox.com/s/0rpp4138jumvaxq/ODFC_v1.1.zip?dl=0
+## links to original:  
+On Demand Fuel Cells (ODFC) by `Orum  
+Licensed under CC BY-NC-SA-4.0  
+[KSP Forums](https://forum.kerbalspaceprogram.com/index.php?/topic/138431-112-on-demand-fuel-cells-odfc-v11/)  
+[Spacedock](https://spacedock.info/mod/618/ODFC%20-%20On%20Demand%20Fuel%20Cells)  
+[Dropbox](https://www.dropbox.com/s/0rpp4138jumvaxq/ODFC_v1.1.zip?dl=0)  
 
 
 
