@@ -46,7 +46,7 @@ namespace ODFC {
 	public class light {
 		public string name;
 		public Color clr;
-		public float mmag;
+		public Double mmag;
 
 		public light(ConfigNode.Value cnv, Part p) {
 			name = cnv.name;
@@ -60,7 +60,7 @@ namespace ODFC {
 		public ConfigNode.ValueList tanks;
 		public emttr[] emttrs;
 		public light[] lights;
-		public float maxec;
+		public Double maxec;
 
 		public mode(ConfigNode cn, Part p) {
 			maxec = 10;

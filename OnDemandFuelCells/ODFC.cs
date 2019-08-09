@@ -17,7 +17,7 @@ namespace ODFC {
 
 		private Animation a;
 		private AnimationState ast;
-		private float
+		private Double
 			lgen = -1,
 			lmax = -1,
 			ltf = -1;
@@ -155,19 +155,20 @@ namespace ODFC {
 				foreach(MeshRenderer mr in part.FindModelComponents<MeshRenderer>(cnv.name))
 					mr.material.mainTexture = GameDatabase.Instance.GetTexture(cnv.value, false);
 			}
+ 
+            foreach(emttr e in c.ms[fm].emttrs) {
 
-			foreach(emttr e in c.ms[fm].emttrs) {
-				foreach(KSPParticleEmitter kpe in part.FindModelComponents<KSPParticleEmitter>(e.name) ?? new KSPParticleEmitter[0])
+                foreach (KSPParticleEmitter kpe in part.FindModelComponents<KSPParticleEmitter>(e.name) ?? new List<KSPParticleEmitter>())
 					kpe.colorAnimation = e.clrs;
 			}
 
-			foreach(light l in c.ms[fm].lights) {
-				foreach(Light lim in part.FindModelComponents<Light>(l.name) ?? new Light[0])
+            foreach(light l in c.ms[fm].lights) {
+				foreach(Light lim in part.FindModelComponents<Light>(l.name) ?? new List<Light>())
 					lim.color = l.clr;
 			}
 		}
 
-		private void uds(states newstate, float gen, float max) {
+		private void uds(states newstate, Double gen, Double max) {
 			if(gen != lgen || max != lmax) {
 				lgen = gen;
 				lmax = max;
@@ -214,19 +215,18 @@ namespace ODFC {
 				}
 			}
 			
-			float tf = gen / max * ratelmt;
+			Double tf = gen / max * ratelmt;
 			if(tf != ltf || fm != lfm) {
 				ltf = tf;
 				lfm = fm;
 
-				foreach(light l in c.ms[fm].lights) {
-					foreach(Light lim in part.FindModelComponents<Light>(l.name) ?? new Light[0])
-						lim.intensity = l.mmag * tf;
+                 foreach(light l in c.ms[fm].lights) {
+					foreach(Light lim in part.FindModelComponents<Light>(l.name) ?? new List<Light>())
+						lim.intensity = Convert.ToSingle(l.mmag * tf);
 				}
-
 				tf *= c.em;
 				int min = (state == states.nominal ? 1 : 0);
-
+                
 				foreach(KSPParticleEmitter kpe in part.FindModelComponents<KSPParticleEmitter>()) {
 					emttr e = Array.Find(c.ms[fm].emttrs, x => x.name == kpe.name);
 					kpe.minEmission = kpe.maxEmission = Math.Max((int)(tf * (e == default(emttr) ? 1 : e.scale)), min);
@@ -282,9 +282,9 @@ namespace ODFC {
 			return rrs;
 		}
 
-		private void kommit(fuel[] fl, float adjr) {
+		private void kommit(fuel[] fl, Double adjr) {
 			foreach(fuel f in fl)
-				part.RequestResource(f.rid, f.rate * adjr);
+                part.RequestResource(f.rid, f.rate * adjr);
 		}
 		#endregion
 
@@ -317,7 +317,7 @@ namespace ODFC {
 			if(ns) {
 				ns = false;
 
-				foreach(KSPParticleEmitter kpe in part.FindModelComponents<KSPParticleEmitter>() ?? new KSPParticleEmitter[0]) {
+				foreach(KSPParticleEmitter kpe in part.FindModelComponents<KSPParticleEmitter>() ?? new List<KSPParticleEmitter>()) {
 					// Why isn't there just one variable (Vector3 for shape3D) and then just use only the floats you need in that?  Oh, that would make too much sense.
 					kpe.shape3D			*= c.sh;
 					kpe.shape2D			*= c.sh;
@@ -330,7 +330,7 @@ namespace ODFC {
 					kpe.rndForce		*= c.sh;
 				}
 
-				foreach(Light l in part.FindModelComponents<Light>() ?? new Light[0])
+				foreach(Light l in part.FindModelComponents<Light>() ?? new List<Light>())
 					l.range *= c.sh;
 			}
 			// }
@@ -339,7 +339,7 @@ namespace ODFC {
 
 			if(c.ms.Length < 2) {	// Disable unneccessary UI elements if we only have a single mode
 				Events["nextFuel"].guiActive			= false;
-				Events["nextFuel"].guiActiveEditor	= false;
+				Events["nextFuel"].guiActiveEditor	    = false;
 				Fields["fmod_t"].guiActive				= false;
 				Fields["fmod_t"].guiActiveEditor		= false;
 				Actions["pfm"].active					= false;
@@ -389,18 +389,20 @@ namespace ODFC {
 				return;
 			}
 
-			double amt = 0, tot = 0;
+			Double amt = 0, tot = 0;
 			List<PartResource> pr = new List<PartResource>();
-			part.GetConnectedResources(ecid, ResourceFlowMode.ALL_VESSEL, pr);
+            /* pr.part.partInfo.title */
+            //part.GetConnectedResource(ecid, ResourceFlowMode.ALL_VESSEL, pr);
+            part.GetConnectedResourceTotals(ecid, out amt, out tot);
 
 			foreach(PartResource r in pr) {
 				tot += r.maxAmount;
 				amt += r.amount;
 			}
 
-			float
+			Double
 				cft = TimeWarp.fixedDeltaTime,
-				ecn = (float)(tot * thresh - amt),
+				ecn = (Double)(tot * thresh - amt),
 				mecrl	= c.ms[fm].maxec * ratelmt;
 
 			cft = Math.Min(cft, ecn / mecrl);	// Determine activity based on supply/demand
@@ -412,13 +414,14 @@ namespace ODFC {
 
 			foreach(fuel f in c.ms[fm].fuels) {	// Determine activity based on available fuel
 				amt = 0;
-				pr.Clear();	// Might not be necessary, but safer
-				part.GetConnectedResources(f.rid, f.rfm, pr);
+				pr.Clear(); // Might not be necessary, but safer
+                //part.GetConnectedResources(f.rid, f.rfm, pr);
+                part.GetConnectedResourceTotals(ecid, out amt, out tot);
 
-				foreach(PartResource r in pr)
+                foreach (PartResource r in pr)
 					amt += r.amount;
 
-				cft = Math.Min(cft, ((float)amt) / (f.rate * ratelmt));
+				cft = Math.Min(cft, ((Double)amt) / (f.rate * ratelmt));
 			}
 
 			if(cft == 0) {
@@ -426,18 +429,28 @@ namespace ODFC {
 				return;
 			}
 
-			float adjr = ratelmt * cft;			// Calculate usage based on rate limiting and duty cycle
+			Double adjr = ratelmt * cft;			// Calculate usage based on rate limiting and duty cycle
 			kommit(c.ms[fm].fuels, adjr);			// Commit changes to fuel used
 			kommit(c.ms[fm].bypr, adjr);			// Handle byproducts
 
-			float eca = mecrl * cft;
-			part.RequestResource(ecid, -eca);	// Don't forget the most important part
-			uds(states.nominal, eca / TimeWarp.fixedDeltaTime, mecrl);
+			Double eca = mecrl * cft;
+            part.RequestResource(ecid, -eca);   // Don't forget the most important part
+            uds(states.nominal, eca / TimeWarp.fixedDeltaTime, mecrl);
 		}
 
-		public void Update() {
+        //private void uds(states nominal, Double v, Double mecrl)
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+        private void uds(states fuelDepr, int v, Double mecrl)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Update() {
 			if(HighLogic.LoadedSceneIsEditor) {
-				float nmax = c.ms[fm].maxec * ratelmt;
+				Double nmax = c.ms[fm].maxec * ratelmt;
 				
 				if(lmax != nmax) {
 					lmax = nmax;
@@ -445,7 +458,7 @@ namespace ODFC {
 				}
 
 				states ns = stchk();
-				uds(ns, ns == states.nominal ? 1 : 0, 1);
+                uds(ns, ns == states.nominal ? 1 : 0, 1);
 			}
 		}
 		#endregion
