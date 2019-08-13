@@ -2,12 +2,19 @@
 ## On Demand Fuel Cells Refueled (ODFCr)  
 
 ### Changelog  
+v.0.0.1.3
+	* created StockFuelCells.cfg which copies both stock fuel cells and adds ODFC
+	* 4x4cheesecake variable sweep and decrypt
+	* comment out all emmitter and light code, left animation
+	* zer0Kerbal variable sweep and decrypt
 
 v.0.0.1.2 
-   * released:  
-   * updated .version to 1.7.3.1  
-   * recomplied against KSP 1.7.3  
-   * ?
+	* released:  
+	* updated .version to 1.7.3.1  
+	* recompiled against KSP 1.7.3  
+	* converted FLOAT to DOUBLE
+	* updated Assembles.cs
+	* updated entire project
 
 
 >-- ORIGINAL --<
@@ -15,7 +22,7 @@ ODFC - change log
 
 v1.1
  - Released on 2016-04-29
- - Release split into two pieces; plugin is now distributed separately from the OI parts, to ease CKAN support
+ - Release split into two pieces; plug-in is now distributed separately from the OI parts, to ease CKAN support
  - Updated to support KSP v1.1 (KSP 1.0 was not and will not be supported)
  - UI will now hide certain elements if they are not used (mode switching and fuel used is hidden for those with only a single mode; Byproducts is hidden unless there are at least 2 modes, at least one of which has a byproduct)
  - Info screen will now report units in an easier to read and interpret manner (e.g. 0.36/h instead of 0.0001/s)
