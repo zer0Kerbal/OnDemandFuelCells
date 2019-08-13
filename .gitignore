@@ -221,3 +221,8 @@ $RECYCLE.BIN/
 *.swp
 *.dll
 .vs
+
+# Archive
+.zip
+.rar
+.7z

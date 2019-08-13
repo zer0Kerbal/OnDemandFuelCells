@@ -4,7 +4,9 @@
 ### Changelog  
 v.0.0.1.3
 	* created StockFuelCells.cfg which copies both stock fuel cells and adds ODFC
-	* 
+	* 4x4cheesecake variable sweep and decrypt
+	* comment out all emmitter and light code, left animation
+	* zer0Kerbal variable sweep and decrypt
 
 v.0.0.1.2 
 	* released:  

@@ -9,7 +9,7 @@ namespace ODFC {
 		#region Enums Vars
 		public enum states : byte { error, off, nominal, deploy, retract, fuelDeprived, noDemand };
 
-		private const string FTFMT = "0.##"; //FTFMT?
+		private const string FuelTransferFormat = "0.##"; //FuelTransferFormat?
 		private const float
 			thresHoldSteps = 0.05f,
 			thresholdMin = thresHoldSteps,
@@ -18,15 +18,15 @@ namespace ODFC {
 		private Animation animation;
 		private AnimationState animationState;
 		private Double
-			lgen = -1,
-			lmax = -1,
-			ltf = -1;
-		private int lfm = -1;
+			lastGen = -1,
+			lastMax = -1,
+			lastTF = -1;
+		private int lastFuelMode = -1;
 		private string info = string.Empty;
 
 		public ConfigNode configNode;
-		public static List<rla> rlas = new List<rla>();
-		public static int ecID;
+		public static List<resourceLa> lastResource = new List<resourceLa>();
+		public static int ElectricChargeID;
 		public string scn;
 		public bool ns = true;
 		public cfg ODFC_config;
@@ -35,16 +35,16 @@ namespace ODFC {
 
 		#region Fields Events Actions
 		[KSPField(isPersistant = true, guiActive = false, guiActiveEditor = false)]
-		public int fuelmode = 0;
+		public int fuelMode = 0;
 
 		[KSPField(isPersistant = false, guiActive = true, guiActiveEditor = false, guiName = "Status")]
 		public string status = "ERROR!";
 
 		[KSPField(isPersistant = false, guiActive = true, guiActiveEditor = false, guiName = "EC/s (cur/max)")]
-		public string ecs_status = "ERROR!";
+		public string ECs_status = "ERROR!";
 
 		[KSPField(isPersistant = false, guiActive = false, guiActiveEditor = true, guiName = "Max EC/s")]
-		public string maxecs_status = "ERROR!";
+		public string maxECs_status = "ERROR!";
 
 		[KSPField(isPersistant = false, guiActive = true, guiActiveEditor = true, guiName = "Fuel Used")]
 		public string fuel_consumption = "ERROR!";
@@ -57,16 +57,16 @@ namespace ODFC {
 
 		[KSPEvent(guiActive = false, guiActiveEditor = false, guiName = "Previous Fuel Mode")]
 		public void previousFuelMode() {
-			if(--fuelmode < 0)
-				fuelmode = ODFC_config.modes.Length - 1;
+			if(--fuelMode < 0)
+				fuelMode = ODFC_config.modes.Length - 1;
 
 			udft();
 		}
 
 		[KSPEvent(guiActive = true, guiActiveEditor = true, guiName = "Next Fuel Mode")]
 		public void nextFuelMode() {
-			if(++fuelmode >= ODFC_config.modes.Length)
-				fuelmode = 0;
+			if(++fuelMode >= ODFC_config.modes.Length)
+				fuelMode = 0;
 
 			udft();
 		}
@@ -93,7 +93,7 @@ namespace ODFC {
 		}
 
 		[KSPAction("Previous Fuel Mode")]
-		public void previousFuelModeAction(KSPActionParam kap) {
+		public void previousFuelMode(KSPActionParam kap) {
 			previousFuelMode();
 		}
 
@@ -138,9 +138,9 @@ namespace ODFC {
 					s += " + ";
 				
 				plus = true;
-				rla abr = rlas.Find(x => x.resourceID == fuel.resourceID);
+				resourceLa abr = lastResource.Find(x => x.resourceID == fuel.resourceID);
 
-				if(abr == default(rla))	// If we're missing a resource abbreviation (bad!)
+				if(abr == default(resourceLa))	// If we're missing a resource abbreviation (bad!)
 					s += PartResourceLibrary.Instance.GetDefinition(fuel.resourceID).name;
 				else	// Found one (good!)
 					s += abr.ressourceAbbreviation;
@@ -148,32 +148,32 @@ namespace ODFC {
 		}
 
 		private void udft() { //udft?
-			udfs(out fuel_consumption, ODFC_config.modes[fuelmode].fuels);
-			udfs(out byproducts, ODFC_config.modes[fuelmode].byproducts);
+			udfs(out fuel_consumption, ODFC_config.modes[fuelMode].fuels);
+			udfs(out byproducts, ODFC_config.modes[fuelMode].byproducts);
 
-			foreach(ConfigNode.Value cnv in ODFC_config.modes[fuelmode].tanks) {
+	/*		foreach(ConfigNode.Value cnv in ODFC_config.modes[fuelMode].tanks) {
 				foreach(MeshRenderer mr in part.FindModelComponents<MeshRenderer>(cnv.name))
 					mr.material.mainTexture = GameDatabase.Instance.GetTexture(cnv.value, false);
 			}
  
-            foreach(emttr e in ODFC_config.modes[fuelmode].emttrs) {
+            foreach(emmitter e in ODFC_config.modes[fuelMode].emttrs) {
 
                 foreach (KSPParticleEmitter kpe in part.FindModelComponents<KSPParticleEmitter>(e.name) ?? new List<KSPParticleEmitter>())
 					kpe.colorAnimation = e.colors;
 			}
 
-            foreach(light l in ODFC_config.modes[fuelmode].lights) {
+            foreach(light l in ODFC_config.modes[fuelMode].lights) {
 				foreach(Light lim in part.FindModelComponents<Light>(l.name) ?? new List<Light>())
 					lim.color = l.color;
-			}
+			}*/
 		}
 
 		private void uds(states newstate, Double gen, Double max) { //uds?
-			if(gen != lgen || max != lmax) {
-				lgen = gen;
-				lmax = max;
+			if(gen != lastGen || max != lastMax) {
+				lastGen = gen;
+				lastMax = max;
 
-				ecs_status = gen.ToString(FTFMT) + " / " + max.ToString(FTFMT);
+				ECs_status = gen.ToString(FuelTransferFormat) + " / " + max.ToString(FuelTransferFormat);
 			}
 
 			if(state != newstate) {
@@ -216,11 +216,11 @@ namespace ODFC {
 			}
 			
 			Double tf = gen / max * rateLimit;
-			if(tf != ltf || fuelmode != lfm) {
-				ltf = tf;
-				lfm = fuelmode;
+			if(tf != lastTF || fuelMode != lastFuelMode) {
+				lastTF = tf;
+				lastFuelMode = fuelMode;
 
-                 foreach(light l in ODFC_config.modes[fuelmode].lights) {
+ /*                foreach(light l in ODFC_config.modes[fuelMode].lights) {
 					foreach(Light lim in part.FindModelComponents<Light>(l.name) ?? new List<Light>())
 						lim.intensity = Convert.ToSingle(l.mmag * tf);
 				}
@@ -228,9 +228,9 @@ namespace ODFC {
 				int min = (state == states.nominal ? 1 : 0);
                 
 				foreach(KSPParticleEmitter kpe in part.FindModelComponents<KSPParticleEmitter>()) {
-					emttr e = Array.Find(ODFC_config.modes[fuelmode].emttrs, x => x.name == kpe.name);
-					kpe.minEmission = kpe.maxEmission = Math.Max((int)(tf * (e == default(emttr) ? 1 : e.scale)), min);
-				}
+					emmitter e = Array.Find(ODFC_config.modes[fuelMode].emttrs, x => x.name == kpe.name);
+					kpe.minEmission = kpe.maxEmission = Math.Max((int)(tf * (e == default(emmitter) ? 1 : e.scale)), min);
+				}*/
 			}
 		}
 
@@ -300,8 +300,8 @@ namespace ODFC {
 			animation = part.FindModelComponent<Animation>();
 			animationState = (animation == null) ? null : animation[animation.clip.name];
 
-			if(ecID == default(int))
-				ecID = PartResourceLibrary.Instance.GetDefinition("ElectricCharge").id;
+			if(ElectricChargeID == default(int))
+				ElectricChargeID = PartResourceLibrary.Instance.GetDefinition("ElectricCharge").id;
 
 			configNode = ConfigNode.Parse(scn).GetNode("MODULE");
 			ODFC_config = new cfg(configNode, part);
@@ -309,30 +309,30 @@ namespace ODFC {
 			foreach(ConfigNode.Value cnv in configNode.GetNode("FSHORT").values) {
 				int rid = PartResourceLibrary.Instance.GetDefinition(cnv.name).id;
 
-				if(!rlas.Exists(x => x.resourceID == rid))
-					rlas.Add(new rla(rid, cnv.value));
+				if(!lastResource.Exists(x => x.resourceID == rid))
+					lastResource.Add(new resourceLa(rid, cnv.value));
 			}
 
-			// One kitten will explode for every question you ask about this code.  Please, think of the kittens. {
-			if(ns) {
-				ns = false;
+			// One puppy will explode for every question you ask about this code.  Please, think of the puppies. {
+			//if(ns) {
+			//	ns = false;
 
-				foreach(KSPParticleEmitter kpe in part.FindModelComponents<KSPParticleEmitter>() ?? new List<KSPParticleEmitter>()) {
-					// Why isn't there just one variable (Vector3 for shape3D) and then just use only the floats you need in that?  Oh, that would make too much sense.
-					kpe.shape3D			*= ODFC_config.scaleHack;
-					kpe.shape2D			*= ODFC_config.scaleHack;
-					kpe.shape1D			*= ODFC_config.scaleHack;
-					kpe.minSize			*= ODFC_config.scaleHack;
-					kpe.maxSize			*= ODFC_config.scaleHack;
-					kpe.rndVelocity	*= ODFC_config.scaleHack;
-					kpe.localVelocity	*= ODFC_config.scaleHack;
-					kpe.force			*= ODFC_config.scaleHack;
-					kpe.rndForce		*= ODFC_config.scaleHack;
-				}
+			//	foreach(KSPParticleEmitter kpe in part.FindModelComponents<KSPParticleEmitter>() ?? new List<KSPParticleEmitter>()) {
+			//		// Why isn't there just one variable (Vector3 for shape3D) and then just use only the floats you need in that?  Oh, that would make too much sense.
+			//		kpe.shape3D			*= ODFC_config.scaleHack;
+			//		kpe.shape2D			*= ODFC_config.scaleHack;
+			//		kpe.shape1D			*= ODFC_config.scaleHack;
+			//		kpe.minSize			*= ODFC_config.scaleHack;
+			//		kpe.maxSize			*= ODFC_config.scaleHack;
+			//		kpe.rndVelocity	*= ODFC_config.scaleHack;
+			//		kpe.localVelocity	*= ODFC_config.scaleHack;
+			//		kpe.force			*= ODFC_config.scaleHack;
+			//		kpe.rndForce		*= ODFC_config.scaleHack;
+			//	}
 
-				foreach(Light l in part.FindModelComponents<Light>() ?? new List<Light>())
-					l.range *= ODFC_config.scaleHack;
-			}
+			//	foreach(Light l in part.FindModelComponents<Light>() ?? new List<Light>())
+			//		l.range *= ODFC_config.scaleHack;
+			//}
 			// }
 
 			udft();
@@ -340,22 +340,22 @@ namespace ODFC {
 			if(ODFC_config.modes.Length < 2) {	// Disable unneccessary UI elements if we only have a single mode
 				Events["nextFuel"].guiActive			= false;
 				Events["nextFuel"].guiActiveEditor	    = false;
-				Fields["fmod_t"].guiActive				= false;
-				Fields["fmod_t"].guiActiveEditor		= false;
-				Actions["pfm"].active					= false;
-				Actions["nfm"].active					= false;
+				Fields["fuel_consumption"].guiActive				= false;
+				Fields["fuel_consumption"].guiActiveEditor		= false;
+				Actions["previousFuelMode"].active					= false;
+				Actions["nextFuelMode"].active					= false;
 			} else {						// If we have at least 2 modes
 				if(ODFC_config.modes.Length > 2) {		// If we have at least 3 modes
 					Events["prevFuel"].guiActive			= true;
 					Events["prevFuel"].guiActiveEditor	= true;
 				} else {							// If we have exactly 2 modes
-					Actions["pfm"].active					= false;
+					Actions["previousFuelMode"].active					= false;
 				}
 
 				foreach(mode m in ODFC_config.modes) {	// Show byproducts tweakable if at least one mode has at least one byproduct
 					if(m.byproducts.Length > 0) {
-						Fields["bypr_t"].guiActive			= true;
-						Fields["bypr_t"].guiActiveEditor	= true;
+						Fields["byproducts"].guiActive			= true;
+						Fields["byproducts"].guiActiveEditor	= true;
 						break;
 					}
 				}
@@ -393,7 +393,7 @@ namespace ODFC {
 			List<PartResource> pr = new List<PartResource>();
             /* pr.part.partInfo.title */
             //part.GetConnectedResource(ecid, ResourceFlowMode.ALL_VESSEL, pr);
-            part.GetConnectedResourceTotals(ecID, out amt, out tot);
+            part.GetConnectedResourceTotals(ElectricChargeID, out amt, out tot);
 
 			foreach(PartResource r in pr) {
 				tot += r.maxAmount;
@@ -403,7 +403,7 @@ namespace ODFC {
 			Double
 				cft = TimeWarp.fixedDeltaTime,
 				ecn = (Double)(tot * threshold - amt),
-				mecrl	= ODFC_config.modes[fuelmode].maxec * rateLimit;
+				mecrl	= ODFC_config.modes[fuelMode].maxEC * rateLimit;
 
 			cft = Math.Min(cft, ecn / mecrl);	// Determine activity based on supply/demand
 
@@ -412,11 +412,11 @@ namespace ODFC {
 				return;
 			}
 
-			foreach(Fuel f in ODFC_config.modes[fuelmode].fuels) {	// Determine activity based on available fuel
+			foreach(Fuel f in ODFC_config.modes[fuelMode].fuels) {	// Determine activity based on available fuel
 				amt = 0;
 				pr.Clear(); // Might not be necessary, but safer
                 //part.GetConnectedResources(f.rid, f.rfm, pr);
-                part.GetConnectedResourceTotals(ecID, out amt, out tot);
+                part.GetConnectedResourceTotals(ElectricChargeID, out amt, out tot);
 
                 foreach (PartResource r in pr)
 					amt += r.amount;
@@ -430,11 +430,11 @@ namespace ODFC {
 			}
 
 			Double adjr = rateLimit * cft;			// Calculate usage based on rate limiting and duty cycle
-			kommit(ODFC_config.modes[fuelmode].fuels, adjr);			// Commit changes to fuel used
-			kommit(ODFC_config.modes[fuelmode].byproducts, adjr);			// Handle byproducts
+			kommit(ODFC_config.modes[fuelMode].fuels, adjr);			// Commit changes to fuel used
+			kommit(ODFC_config.modes[fuelMode].byproducts, adjr);			// Handle byproducts
 
 			Double eca = mecrl * cft;
-            part.RequestResource(ecID, -eca);   // Don't forget the most important part
+            part.RequestResource(ElectricChargeID, -eca);   // Don't forget the most important part
             uds(states.nominal, eca / TimeWarp.fixedDeltaTime, mecrl);
 		}
 
@@ -443,18 +443,18 @@ namespace ODFC {
         //    throw new NotImplementedException();
         //}
 
-        private void uds(states fuelDepr, int v, Double mecrl)
+        private void uds(states fuelDeprived, int v, Double mecrl)
         {
             throw new NotImplementedException();
         }
 
         public void Update() {
 			if(HighLogic.LoadedSceneIsEditor) {
-				Double nmax = ODFC_config.modes[fuelmode].maxec * rateLimit;
+				Double nmax = ODFC_config.modes[fuelMode].maxEC * rateLimit;
 				
-				if(lmax != nmax) {
-					lmax = nmax;
-					maxecs_status = lmax.ToString(FTFMT);
+				if(lastMax != nmax) {
+					lastMax = nmax;
+					maxECs_status = lastMax.ToString(FuelTransferFormat);
 				}
 
 				states ns = stchk();
