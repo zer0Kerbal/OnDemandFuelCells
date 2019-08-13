@@ -7,13 +7,13 @@ using UnityEngine;
 namespace ODFC {
 	public class ODFC : PartModule {
 		#region Enums Vars
-		public enum states : byte { error, off, nominal, deploy, retract, fuelDepr, noDeman };
+		public enum states : byte { error, off, nominal, deploy, retract, fuelDepr, noDemand };
 
 		private const string FTFMT = "0.##";
 		private const float
-			PCTSTP = 0.05f,
-			PCTMIN = PCTSTP,
-			PCTMAX = 1;
+			percentStop = 0.05f,
+			percentMin = percentStop,
+			percentMax = 1;
 
 		private Animation a;
 		private AnimationState ast;
@@ -26,7 +26,7 @@ namespace ODFC {
 
 		public ConfigNode cn;
 		public static List<rla> rlas = new List<rla>();
-		public static int ecid;
+		public static int electricChargeID;
 		public string scn;
 		public bool ns = true;
 		public cfg c;
@@ -35,47 +35,47 @@ namespace ODFC {
 
 		#region Fields Events Actions
 		[KSPField(isPersistant = true, guiActive = false, guiActiveEditor = false)]
-		public int fm = 0;
+		public int fuelMode = 0;
 
 		[KSPField(isPersistant = false, guiActive = true, guiActiveEditor = false, guiName = "Status")]
-		public string state_t = "ERROR!";
+		public string status_t = "ERROR!";
 
 		[KSPField(isPersistant = false, guiActive = true, guiActiveEditor = false, guiName = "EC/s (cur/max)")]
 		public string ecs_t = "ERROR!";
 
 		[KSPField(isPersistant = false, guiActive = false, guiActiveEditor = true, guiName = "Max EC/s")]
-		public string mecs_t = "ERROR!";
+		public string maxECperSec_t = "ERROR!";
 
 		[KSPField(isPersistant = false, guiActive = true, guiActiveEditor = true, guiName = "Fuel Used")]
-		public string fmod_t = "ERROR!";
+		public string fuelUsed_t = "ERROR!";
 
 		[KSPField(isPersistant = false, guiActive = false, guiActiveEditor = false, guiName = "Byproducts")]
-		public string bypr_t = "ERROR!";
+		public string byproducts_t = "ERROR!";
 
 		[KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "Enabled:"), UI_Toggle(disabledText = "No", enabledText = "Yes")]
 		public bool on = true;
 
 		[KSPEvent(guiActive = false, guiActiveEditor = false, guiName = "Previous Fuel Mode")]
 		public void prevFuel() {
-			if(--fm < 0)
-				fm = c.ms.Length - 1;
+			if(--fuelMode < 0)
+				fuelMode = c.ms.Length - 1;
 
 			udft();
 		}
 
 		[KSPEvent(guiActive = true, guiActiveEditor = true, guiName = "Next Fuel Mode")]
 		public void nextFuel() {
-			if(++fm >= c.ms.Length)
-				fm = 0;
+			if(++fuelMode >= c.ms.Length)
+				fuelMode = 0;
 
 			udft();
 		}
 
-		[KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "Rate Limit:", guiFormat = "P0"), UI_FloatRange(minValue = PCTMIN, maxValue = PCTMAX, stepIncrement = PCTSTP)]
-		public float ratelmt = 1f;
+		[KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "Rate Limit:", guiFormat = "P0"), UI_FloatRange(minValue = percentMin, maxValue = percentMax, stepIncrement = percentStop)]
+		public float rateLimit = 1f;
 
-		[KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "Threshold:", guiFormat = "P0"), UI_FloatRange(minValue = PCTMIN, maxValue = PCTMAX, stepIncrement = PCTSTP)]
-		public float thresh = PCTMIN;
+		[KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "Threshold:", guiFormat = "P0"), UI_FloatRange(minValue = percentMin, maxValue = percentMax, stepIncrement = percentStop)]
+		public float threshold = percentMin;
 
 		[KSPAction("Toggle")]
 		public void tg(KSPActionParam kap) {
@@ -103,23 +103,23 @@ namespace ODFC {
 		}
 
 		[KSPAction("Decrease Rate Limit")]
-		public void inRL(KSPActionParam kap) {
-			ratelmt = Math.Max(ratelmt - PCTSTP, PCTMIN);
+		public void decRateLimit(KSPActionParam kap) {
+			rateLimit = Math.Max(rateLimit - percentStop, percentMin);
 		}
 
 		[KSPAction("Increase Rate Limit")]
-		public void deRL(KSPActionParam kap) {
-			ratelmt = Math.Min(ratelmt + PCTSTP, PCTMAX);
+		public void incRateLimit(KSPActionParam kap) {
+			rateLimit = Math.Min(rateLimit + percentStop, percentMax);
 		}
 
 		[KSPAction("Decrease Threshold")]
-		public void inTh(KSPActionParam kap) {
-			thresh = Math.Max(thresh - PCTSTP, PCTMIN);
+		public void decThreshold(KSPActionParam kap) {
+			threshold = Math.Max(threshold - percentStop, percentMin);
 		}
 
 		[KSPAction("Increase Threshold")]
-		public void deTh(KSPActionParam kap) {
-			thresh = Math.Min(thresh + PCTSTP, PCTMAX);
+		public void incThreshold(KSPActionParam kap) {
+			threshold = Math.Min(threshold + percentStop, percentMax);
 		}
 		#endregion
 
@@ -148,21 +148,21 @@ namespace ODFC {
 		}
 
 		private void udft() {
-			udfs(out fmod_t, c.ms[fm].fuels);
-			udfs(out bypr_t, c.ms[fm].bypr);
+			udfs(out fuelUsed_t, c.ms[fuelMode].fuels);
+			udfs(out byproducts_t, c.ms[fuelMode].bypr);
 
-			foreach(ConfigNode.Value cnv in c.ms[fm].tanks) {
+			foreach(ConfigNode.Value cnv in c.ms[fuelMode].tanks) {
 				foreach(MeshRenderer mr in part.FindModelComponents<MeshRenderer>(cnv.name))
 					mr.material.mainTexture = GameDatabase.Instance.GetTexture(cnv.value, false);
 			}
  
-            foreach(emttr e in c.ms[fm].emttrs) {
+            foreach(emttr e in c.ms[fuelMode].emttrs) {
 
                 foreach (KSPParticleEmitter kpe in part.FindModelComponents<KSPParticleEmitter>(e.name) ?? new List<KSPParticleEmitter>())
 					kpe.colorAnimation = e.clrs;
 			}
 
-            foreach(light l in c.ms[fm].lights) {
+            foreach(light l in c.ms[fuelMode].lights) {
 				foreach(Light lim in part.FindModelComponents<Light>(l.name) ?? new List<Light>())
 					lim.color = l.clr;
 			}
@@ -181,46 +181,46 @@ namespace ODFC {
 			
 				switch(state) {
 					case states.fuelDepr: {
-						state_t = "Fuel Deprived";
+						status_t = "Fuel Deprived";
 						break;
 					}
-					case states.noDeman: {
-						state_t = "No Demand";
+					case states.noDemand: {
+						status_t = "No Demand";
 						break;
 					}
 					case states.nominal: {
-						state_t = "Nominal";
+						status_t = "Nominal";
 						break;
 					}
 					case states.deploy: {
-						state_t = "Deploying";
+						status_t = "Deploying";
 						amfd(-1);
 						break;
 					}
 					case states.retract: {
-						state_t = "Retracting";
+						status_t = "Retracting";
 						amfd(1);
 						break;
 					}
 					case states.off: {
-						state_t = "Off";
+						status_t = "Off";
 						break;
 					}
 #if DEBUG
 					default: {
-						state_t = "ERROR!";
+						status_t = "ERROR!";
 						break;
 					}
 #endif
 				}
 			}
 			
-			Double tf = gen / max * ratelmt;
-			if(tf != ltf || fm != lfm) {
+			Double tf = gen / max * rateLimit;
+			if(tf != ltf || fuelMode != lfm) {
 				ltf = tf;
-				lfm = fm;
+				lfm = fuelMode;
 
-                 foreach(light l in c.ms[fm].lights) {
+                 foreach(light l in c.ms[fuelMode].lights) {
 					foreach(Light lim in part.FindModelComponents<Light>(l.name) ?? new List<Light>())
 						lim.intensity = Convert.ToSingle(l.mmag * tf);
 				}
@@ -228,7 +228,7 @@ namespace ODFC {
 				int min = (state == states.nominal ? 1 : 0);
                 
 				foreach(KSPParticleEmitter kpe in part.FindModelComponents<KSPParticleEmitter>()) {
-					emttr e = Array.Find(c.ms[fm].emttrs, x => x.name == kpe.name);
+					emttr e = Array.Find(c.ms[fuelMode].emttrs, x => x.name == kpe.name);
 					kpe.minEmission = kpe.maxEmission = Math.Max((int)(tf * (e == default(emttr) ? 1 : e.scale)), min);
 				}
 			}
@@ -300,8 +300,8 @@ namespace ODFC {
 			a = part.FindModelComponent<Animation>();
 			ast = (a == null) ? null : a[a.clip.name];
 
-			if(ecid == default(int))
-				ecid = PartResourceLibrary.Instance.GetDefinition("ElectricCharge").id;
+			if(electricChargeID == default(int))
+				electricChargeID = PartResourceLibrary.Instance.GetDefinition("ElectricCharge").id;
 
 			cn = ConfigNode.Parse(scn).GetNode("MODULE");
 			c = new cfg(cn, part);
@@ -393,7 +393,7 @@ namespace ODFC {
 			List<PartResource> pr = new List<PartResource>();
             /* pr.part.partInfo.title */
             //part.GetConnectedResource(ecid, ResourceFlowMode.ALL_VESSEL, pr);
-            part.GetConnectedResourceTotals(ecid, out amt, out tot);
+            part.GetConnectedResourceTotals(electricChargeID, out amt, out tot);
 
 			foreach(PartResource r in pr) {
 				tot += r.maxAmount;
@@ -402,26 +402,26 @@ namespace ODFC {
 
 			Double
 				cft = TimeWarp.fixedDeltaTime,
-				ecn = (Double)(tot * thresh - amt),
-				mecrl	= c.ms[fm].maxec * ratelmt;
+				ecn = (Double)(tot * threshold - amt),
+				mecrl	= c.ms[fuelMode].maxec * rateLimit;
 
 			cft = Math.Min(cft, ecn / mecrl);	// Determine activity based on supply/demand
 
 			if(cft <= 0) {
-				uds(states.noDeman, 0, mecrl);
+				uds(states.noDemand, 0, mecrl);
 				return;
 			}
 
-			foreach(fuel f in c.ms[fm].fuels) {	// Determine activity based on available fuel
+			foreach(fuel f in c.ms[fuelMode].fuels) {	// Determine activity based on available fuel
 				amt = 0;
 				pr.Clear(); // Might not be necessary, but safer
                 //part.GetConnectedResources(f.rid, f.rfm, pr);
-                part.GetConnectedResourceTotals(ecid, out amt, out tot);
+                part.GetConnectedResourceTotals(electricChargeID, out amt, out tot);
 
                 foreach (PartResource r in pr)
 					amt += r.amount;
 
-				cft = Math.Min(cft, ((Double)amt) / (f.rate * ratelmt));
+				cft = Math.Min(cft, ((Double)amt) / (f.rate * rateLimit));
 			}
 
 			if(cft == 0) {
@@ -429,12 +429,12 @@ namespace ODFC {
 				return;
 			}
 
-			Double adjr = ratelmt * cft;			// Calculate usage based on rate limiting and duty cycle
-			kommit(c.ms[fm].fuels, adjr);			// Commit changes to fuel used
-			kommit(c.ms[fm].bypr, adjr);			// Handle byproducts
+			Double adjr = rateLimit * cft;			// Calculate usage based on rate limiting and duty cycle
+			kommit(c.ms[fuelMode].fuels, adjr);			// Commit changes to fuel used
+			kommit(c.ms[fuelMode].bypr, adjr);			// Handle byproducts
 
 			Double eca = mecrl * cft;
-            part.RequestResource(ecid, -eca);   // Don't forget the most important part
+            part.RequestResource(electricChargeID, -eca);   // Don't forget the most important part
             uds(states.nominal, eca / TimeWarp.fixedDeltaTime, mecrl);
 		}
 
@@ -450,11 +450,11 @@ namespace ODFC {
 
         public void Update() {
 			if(HighLogic.LoadedSceneIsEditor) {
-				Double nmax = c.ms[fm].maxec * ratelmt;
+				Double nmax = c.ms[fuelMode].maxec * rateLimit;
 				
 				if(lmax != nmax) {
 					lmax = nmax;
-					mecs_t = lmax.ToString(FTFMT);
+					maxECperSec_t = lmax.ToString(FTFMT);
 				}
 
 				states ns = stchk();

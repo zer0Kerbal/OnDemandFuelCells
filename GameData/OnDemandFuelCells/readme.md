@@ -8,7 +8,14 @@ v.0.0.1.2
    * released:  
    * updated .version to 1.7.3.1 
    * recompiled against Kerbal Space Program 1.7.3 
-   * ?  
+   * Known issues:
+    + Spams Error Log with: 
+    > [ERR 20:44:48.509] Module ODFC threw during OnFixedUpdate: System.NotImplementedException: The requested feature is not implemented.
+  at ODFC.ODFC.OnFixedUpdate () [0x00000] in <filename unknown>:0 
+  at Part.ModulesOnFixedUpdate () [0x00000] in <filename unknown>:0  
+  + Must have some EC to function, if EC == 0 does not charge
+  + Does not decriment fuel
+  
 
 ## Dependencies 
  * 
