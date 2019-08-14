@@ -6,11 +6,11 @@ using UnityEngine;
 namespace ODFC {
 	public class resourceLa { //resource la? 
 		public int resourceID;
-		public string ressourceAbbreviation;
+		public string resourceAbbreviation;
 
-		public resourceLa(int resourceID, string ressourceAbbreviation) {
+		public resourceLa(int resourceID, string resourceAbbreviation) {
 			this.resourceID = resourceID;
-			this.ressourceAbbreviation = ressourceAbbreviation;
+			this.resourceAbbreviation = resourceAbbreviation;
 		}
 	}
 
