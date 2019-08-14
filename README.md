@@ -1,29 +1,47 @@
 # SGEx  
 ### Proudly Adopts(HOPEFULLY) - for private/personal use  
 
+cooperative efforts of 4x4cheesecake, LinuxGuruGamer, and zer0Kerbal to continue original *On Demand Fuel Cells (ODFC)* by `**Orum**'  
+
 ## ODFC  
 ### ***On Demand Fuel Cells Refueled (ODFCr)***  
 
-v.0.0.1.2 
-   * released:  
-   * updated .version to 1.7.3.1 
-   * recompiled against Kerbal Space Program 1.7.3 
-   * Known issues:
-    + Spams Error Log with: 
-    > [ERR 20:44:48.509] Module ODFC threw during OnFixedUpdate: System.NotImplementedException: The requested feature is not implemented.
-  at ODFC.ODFC.OnFixedUpdate () [0x00000] in <filename unknown>:0 
-  at Part.ModulesOnFixedUpdate () [0x00000] in <filename unknown>:0  
-  + Must have some EC to function, if EC == 0 does not charge
-  + Does not decriment fuel
+### Changelog 
+#### v.0.0.1.4 (DEV BUILD)
+	* 4x4cheesecake 
+		* variable sweep and decrypt (continued)
+		* typo correction
+		* removed animation code
+		* [BUG 0.0.12a] fixed log spam
+	* variable sweep and decrypt (continued)
+	* [BUG 0.0.13d] corrected misplaced decimal point in StockFuelCells.cfg (LF consumption 1/10 what it should have been in LF+IA mode)
+	* Added H+0 operational mode to StockFuelCells
+	* 
+
+#### v.0.0.1.3a - RELEASED
+	* created StockFuelCells.cfg which copies both stock fuel cells and adds ODFC
+	* 4x4cheesecake variable sweep and decrypt
+	* comment out all emmitter and light code, left animation
+	* zer0Kerbal variable sweep and decrypt
+	* [D][BUG 0.0.12b] zedEC bug - fixed (variable name)
+	* [D][BUG 0.0.12c] fuel decrement - fixed (variable name)
+	BUG:
+	* [BUG 0.0.12a] log spam
+	* [NEW][BUG 0.0.13a] Upon vehicle load, PAW showing errors that go away with activation/EC production
+	* [NEW][BUG 0.0.13b] missing 'prev' fuel button
+	* [NEW][BUG 0.0.13c] current/max display just showing ECRateLimit/ECRateLimit instead of ECRateLimit/maxECRateLimit
+	* [NEW][BUG 0.0.13d] when in LiquidFuel+IntakeAir (LF+AI) mode - LF consumption too low
+	* [NEW][BUG 0.0.13e] byproduct (heat) missing from StockFuelCells.cfg or should be in .dll?
   
 
 ## Dependencies 
- * 
+ * Kerbal Space Program
  * 
  
 ## Supports 
- * 
- * 
+ * [WIP] Stock Mining Enhancements
+ * [WIP] Near Future Electionics
+ * [WIP] Bon Voyage
  
 ## Suggests 
  * 
