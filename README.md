@@ -71,4 +71,4 @@ Licensed under CC BY-NC-SA-4.0
 ##### All bundled mods are distributed under their own licenses
 ##### All art assets (textures, models, animations) are distributed under an All Rights Reserved License.
 
-###### v1.7.3.1 original: 11 Aug 2018 0K updated: 08 Aug 2019 zed'K
+###### v0.0.1.4 original: 11 Aug 2018 0K updated: 14 Aug 2019 zed'K & 4x4cheesecake & LinuxGuruGamer
