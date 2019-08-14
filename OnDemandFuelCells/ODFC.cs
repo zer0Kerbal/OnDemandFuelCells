@@ -258,7 +258,7 @@ namespace ODFC {
 		//	return fuelCellIsEnabled ? (animationState.normalizedTime == 0 ? states.nominal : states.deploy) : (animationState.normalizedTime == 1 ? states.off : states.retract);
 		//}
 
-		private string GetresourceRates(ConfigNode node) {
+		private string GetResourceRates(ConfigNode node) {
 			if(node == null || node.values.Count < 1)
 				return "\n - None";
 
@@ -374,8 +374,8 @@ namespace ODFC {
 
 				for(byte n = 0; n < mds.Length; n++)
 					info += "\n\n<color=#99FF00FF>Mode: " + n.ToString() + "</color> - Max EC: " + mds[n].GetValue("MaxEC") +
-						"/s\n<color=#FFFF00FF>Fuels:</color>" + GetresourceRates(mds[n].GetNode("FUELS")) +
-						"\n<color=#FFFF00FF>Byproducts:</color>" + GetresourceRates(mds[n].GetNode("BYPRODUCTS"));
+						"/s\n<color=#FFFF00FF>Fuels:</color>" + GetResourceRates(mds[n].GetNode("FUELS")) +
+						"\n<color=#FFFF00FF>Byproducts:</color>" + GetResourceRates(mds[n].GetNode("BYPRODUCTS"));
 			}
 
 			return info;
