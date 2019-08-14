@@ -15,8 +15,8 @@ namespace ODFC {
 			thresholdMin = thresHoldSteps,
 			thresHoldMax = 1;
 
-		private Animation animation;
-		private AnimationState animationState;
+		//private Animation animation;
+		//private AnimationState animationState;
 		private Double
 			lastGen = -1,
 			lastMax = -1,
@@ -93,7 +93,7 @@ namespace ODFC {
 		}
 
 		[KSPAction("Previous Fuel Mode")]
-		public void previousFuelMode(KSPActionParam kap) {
+		public void previousFuelModeAction(KSPActionParam kap) {
 			previousFuelMode();
 		}
 
@@ -143,7 +143,7 @@ namespace ODFC {
 				if(abr == default(resourceLa))	// If we're missing a resource abbreviation (bad!)
 					s += PartResourceLibrary.Instance.GetDefinition(fuel.resourceID).name;
 				else	// Found one (good!)
-					s += abr.ressourceAbbreviation;
+					s += abr.resourceAbbreviation;
 			}
 		}
 
@@ -168,7 +168,7 @@ namespace ODFC {
 			}*/
 		}
 
-		private void uds(states newstate, Double gen, Double max) { //uds?
+		private void UpdateState(states newstate, Double gen, Double max) {
 			if(gen != lastGen || max != lastMax) {
 				lastGen = gen;
 				lastMax = max;
@@ -192,16 +192,16 @@ namespace ODFC {
 						status = "Nominal";
 						break;
 					}
-					case states.deploy: {
-						status = "Deploying";
-						amfd(-1);
-						break;
-					}
-					case states.retract: {
-						status = "Retracting";
-						amfd(1);
-						break;
-					}
+					//case states.deploy: {
+					//	status = "Deploying";
+					//	amfd(-1);
+					//	break;
+					//}
+					//case states.retract: {
+					//	status = "Retracting";
+					//	amfd(1);
+					//	break;
+					//}
 					case states.off: {
 						status = "Off";
 						break;
@@ -234,35 +234,35 @@ namespace ODFC {
 			}
 		}
 
-		private void amfd(float speed) {
-			if(animation == null)
-				return;
+		//private void amfd(float speed) {
+		//	if(animation == null)
+		//		return;
 
-			animationState.speed = speed;
+		//	animationState.speed = speed;
 
-			if(!animation.isPlaying)
-				animation.Play();
-		}
+		//	if(!animation.isPlaying)
+		//		animation.Play();
+		//}
 
-		private states stchk() {
-			if(animation == null)
-				return fuelCellIsEnabled ? states.nominal : states.off;
+		//private states stchk() {
+		//	if(animation == null)
+		//		return fuelCellIsEnabled ? states.nominal : states.off;
 
-			// Unity is stupid and doesn't have a WrapMode to stop when AnimationState.normalizedTime == 1 without resetting it to 0.  WTF?!
-			if(animationState.normalizedTime < 0 || animationState.normalizedTime > 1) {
-				float nnt = Mathf.Clamp(animationState.normalizedTime, 0, 1);
-				animation.Stop();	// This screws with time/normalizedTime, so we have to set it back to what it should be below
-				animationState.normalizedTime = nnt;
-			}
+		//	// Unity is stupid and doesn't have a WrapMode to stop when AnimationState.normalizedTime == 1 without resetting it to 0.  WTF?!
+		//	if(animationState.normalizedTime < 0 || animationState.normalizedTime > 1) {
+		//		float nnt = Mathf.Clamp(animationState.normalizedTime, 0, 1);
+		//		animation.Stop();	// This screws with time/normalizedTime, so we have to set it back to what it should be below
+		//		animationState.normalizedTime = nnt;
+		//	}
 
-			return fuelCellIsEnabled ? (animationState.normalizedTime == 0 ? states.nominal : states.deploy) : (animationState.normalizedTime == 1 ? states.off : states.retract);
-		}
+		//	return fuelCellIsEnabled ? (animationState.normalizedTime == 0 ? states.nominal : states.deploy) : (animationState.normalizedTime == 1 ? states.off : states.retract);
+		//}
 
-		private string GetRessourceRates(ConfigNode node) {
+		private string GetResourceRates(ConfigNode node) {
 			if(node == null || node.values.Count < 1)
 				return "\n - None";
 
-			string ressourceRates = "";
+			string resourceRates = "";
 
 			foreach(ConfigNode.Value value in node.values) {
 				float rate = float.Parse(value.value);
@@ -276,10 +276,10 @@ namespace ODFC {
 					sfx = "/m";
 				}
 
-				ressourceRates += "\n - " + value.name + ": " + rate.ToString() + sfx;
+				resourceRates += "\n - " + value.name + ": " + rate.ToString() + sfx;
 			}
 
-			return ressourceRates;
+			return resourceRates;
 		}
 
 		private void kommit(Fuel[] fuels, Double adjr) {
@@ -297,8 +297,8 @@ namespace ODFC {
 		}
 
 		public override void OnStart(StartState state) {
-			animation = part.FindModelComponent<Animation>();
-			animationState = (animation == null) ? null : animation[animation.clip.name];
+			//animation = part.FindModelComponent<Animation>();
+			//animationState = (animation == null) ? null : animation[animation.clip.name];
 
 			if(ElectricChargeID == default(int))
 				ElectricChargeID = PartResourceLibrary.Instance.GetDefinition("ElectricCharge").id;
@@ -342,14 +342,14 @@ namespace ODFC {
 				Events["nextFuel"].guiActiveEditor	    = false;
 				Fields["fuel_consumption"].guiActive				= false;
 				Fields["fuel_consumption"].guiActiveEditor		= false;
-				Actions["previousFuelMode"].active					= false;
-				Actions["nextFuelMode"].active					= false;
+				Actions["previousFuelModeAction"].active					= false;
+				Actions["nextFuelModeAction"].active					= false;
 			} else {						// If we have at least 2 modes
 				if(ODFC_config.modes.Length > 2) {		// If we have at least 3 modes
-					Events["prevFuel"].guiActive			= true;
-					Events["prevFuel"].guiActiveEditor	= true;
+					Events["previousFuelMode"].guiActive			= true;
+					Events["previousFuelMode"].guiActiveEditor	= true;
 				} else {							// If we have exactly 2 modes
-					Actions["previousFuelMode"].active					= false;
+					Actions["previousFuelModeAction"].active					= false;
 				}
 
 				foreach(mode m in ODFC_config.modes) {	// Show byproducts tweakable if at least one mode has at least one byproduct
@@ -374,68 +374,69 @@ namespace ODFC {
 
 				for(byte n = 0; n < mds.Length; n++)
 					info += "\n\n<color=#99FF00FF>Mode: " + n.ToString() + "</color> - Max EC: " + mds[n].GetValue("MaxEC") +
-						"/s\n<color=#FFFF00FF>Fuels:</color>" + GetRessourceRates(mds[n].GetNode("FUELS")) +
-						"\n<color=#FFFF00FF>Byproducts:</color>" + GetRessourceRates(mds[n].GetNode("BYPRODUCTS"));
+						"/s\n<color=#FFFF00FF>Fuels:</color>" + GetResourceRates(mds[n].GetNode("FUELS")) +
+						"\n<color=#FFFF00FF>Byproducts:</color>" + GetResourceRates(mds[n].GetNode("BYPRODUCTS"));
 			}
 
 			return info;
 		}
 
 		public override void OnFixedUpdate() {
-			states ns = stchk();
+            states ns = fuelCellIsEnabled ? states.nominal : states.off;
 
-			if(ns != states.nominal) {
-				uds(ns, 0, 0);
+            if (ns != states.nominal) {
+				UpdateState(ns, 0, 0);
 				return;
 			}
 
-			Double amt = 0, tot = 0;
-			List<PartResource> pr = new List<PartResource>();
+			Double amount = 0, maxAmount = 0;
+			List<PartResource> resources = new List<PartResource>();
             /* pr.part.partInfo.title */
             //part.GetConnectedResource(ecid, ResourceFlowMode.ALL_VESSEL, pr);
-            part.GetConnectedResourceTotals(ElectricChargeID, out amt, out tot);
+            part.GetConnectedResourceTotals(ElectricChargeID, out amount, out maxAmount);
 
-			foreach(PartResource r in pr) {
-				tot += r.maxAmount;
-				amt += r.amount;
+			foreach(PartResource resource in resources) { 
+				maxAmount += resource.maxAmount;
+				amount += resource.amount;
 			}
 
 			Double
 				cft = TimeWarp.fixedDeltaTime,
-				ecn = (Double)(tot * threshold - amt),
+				ecn = (Double)(maxAmount * threshold - amount),
 				mecrl	= ODFC_config.modes[fuelMode].maxEC * rateLimit;
 
 			cft = Math.Min(cft, ecn / mecrl);	// Determine activity based on supply/demand
 
 			if(cft <= 0) {
-				uds(states.noDemand, 0, mecrl);
+				UpdateState(states.noDemand, 0, mecrl);
 				return;
-			}
+			}                      
 
-			foreach(Fuel f in ODFC_config.modes[fuelMode].fuels) {	// Determine activity based on available fuel
-				amt = 0;
-				pr.Clear(); // Might not be necessary, but safer
+            foreach (Fuel fuel in ODFC_config.modes[fuelMode].fuels) {	// Determine activity based on available fuel
+				amount = 0;
+				resources.Clear(); // Might not be necessary, but safer
                 //part.GetConnectedResources(f.rid, f.rfm, pr);
-                part.GetConnectedResourceTotals(ElectricChargeID, out amt, out tot);
+                part.GetConnectedResourceTotals(ElectricChargeID, out amount, out maxAmount);
 
-                foreach (PartResource r in pr)
-					amt += r.amount;
+                foreach (PartResource r in resources)
+					amount += r.amount;
 
-				cft = Math.Min(cft, ((Double)amt) / (f.rate * rateLimit));
+				cft = Math.Min(cft, ((Double)amount) / (fuel.rate * rateLimit));
 			}
 
-			if(cft == 0) {
-				uds(states.fuelDeprived, 0, mecrl);
-				return;
-			}
+            if (cft == 0)
+            {
+                UpdateState(states.fuelDeprived, 0, mecrl);
+                return;
+            }
 
-			Double adjr = rateLimit * cft;			// Calculate usage based on rate limiting and duty cycle
+            Double adjr = rateLimit * cft;			// Calculate usage based on rate limiting and duty cycle
 			kommit(ODFC_config.modes[fuelMode].fuels, adjr);			// Commit changes to fuel used
 			kommit(ODFC_config.modes[fuelMode].byproducts, adjr);			// Handle byproducts
 
 			Double eca = mecrl * cft;
             part.RequestResource(ElectricChargeID, -eca);   // Don't forget the most important part
-            uds(states.nominal, eca / TimeWarp.fixedDeltaTime, mecrl);
+            UpdateState(states.nominal, eca / TimeWarp.fixedDeltaTime, mecrl);
 		}
 
         //private void uds(states nominal, Double v, Double mecrl)
@@ -443,10 +444,10 @@ namespace ODFC {
         //    throw new NotImplementedException();
         //}
 
-        private void uds(states fuelDeprived, int v, Double mecrl)
-        {
-            throw new NotImplementedException();
-        }
+        //private void uds(states fuelDeprived, int v, Double mecrl)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
         public void Update() {
 			if(HighLogic.LoadedSceneIsEditor) {
@@ -457,8 +458,8 @@ namespace ODFC {
 					maxECs_status = lastMax.ToString(FuelTransferFormat);
 				}
 
-				states ns = stchk();
-                uds(ns, ns == states.nominal ? 1 : 0, 1);
+                states ns = fuelCellIsEnabled ? states.nominal : states.off;
+                UpdateState(ns, ns == states.nominal ? 1 : 0, 1);
 			}
 		}
 		#endregion
