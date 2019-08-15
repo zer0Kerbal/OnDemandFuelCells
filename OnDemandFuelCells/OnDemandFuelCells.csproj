@@ -55,6 +55,7 @@
     <Compile Include="InstallChecker.cs" />
     <Compile Include="ODFC.cs" />
     <Compile Include="cfg.cs" />
+    <!-- <Compile Include="AssemblyVersion.cs" /> -->
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

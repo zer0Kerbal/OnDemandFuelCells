@@ -401,14 +401,14 @@ namespace ODFC {
 			}
 
 			Double
-				cft = TimeWarp.fixedDeltaTime,
-				ecn = (Double)(maxAmount * threshold - amount),
-				mecrl	= ODFC_config.modes[fuelMode].maxEC * rateLimit;
+				cfTime = TimeWarp.fixedDeltaTime,
+				ECNeed = (Double)(maxAmount * threshold - amount),
+				fuelModeMaxECRateLimit	= ODFC_config.modes[fuelMode].maxEC * rateLimit;
 
-			cft = Math.Min(cft, ecn / mecrl);	// Determine activity based on supply/demand
+			cfTime = Math.Min(cfTime, ECNeed / fuelModeMaxECRateLimit);	// Determine activity based on supply/demand
 
-			if(cft <= 0) {
-				UpdateState(states.noDemand, 0, mecrl);
+			if(cfTime <= 0) {
+				UpdateState(states.noDemand, 0, fuelModeMaxECRateLimit);
 				return;
 			}                      
 
@@ -421,30 +421,30 @@ namespace ODFC {
                 foreach (PartResource r in resources)
 					amount += r.amount;
 
-				cft = Math.Min(cft, ((Double)amount) / (fuel.rate * rateLimit));
+				cfTime = Math.Min(cfTime, ((Double)amount) / (fuel.rate * rateLimit));
 			}
 
-            if (cft == 0)
+            if (cfTime == 0)
             {
-                UpdateState(states.fuelDeprived, 0, mecrl);
+                UpdateState(states.fuelDeprived, 0, fuelModeMaxECRateLimit);
                 return;
             }
 
-            Double adjr = rateLimit * cft;			// Calculate usage based on rate limiting and duty cycle
+            Double adjr = rateLimit * cfTime;			// Calculate usage based on rate limiting and duty cycle
 			kommit(ODFC_config.modes[fuelMode].fuels, adjr);			// Commit changes to fuel used
 			kommit(ODFC_config.modes[fuelMode].byproducts, adjr);			// Handle byproducts
 
-			Double eca = mecrl * cft;
-            part.RequestResource(ElectricChargeID, -eca);   // Don't forget the most important part
-            UpdateState(states.nominal, eca / TimeWarp.fixedDeltaTime, mecrl);
+			Double ECAmount = fuelModeMaxECRateLimit * cfTime;
+            part.RequestResource(ElectricChargeID, -ECAmount);   // Don't forget the most important part
+            UpdateState(states.nominal, ECAmount / TimeWarp.fixedDeltaTime, fuelModeMaxECRateLimit);
 		}
 
-        //private void uds(states nominal, Double v, Double mecrl)
+        //private void uds(states nominal, Double v, Double fuelModeMaxECRateLimit)
         //{
         //    throw new NotImplementedException();
         //}
 
-        //private void uds(states fuelDeprived, int v, Double mecrl)
+        //private void uds(states fuelDeprived, int v, Double fuelModeMaxECRateLimit)
         //{
         //    throw new NotImplementedException();
         //}
