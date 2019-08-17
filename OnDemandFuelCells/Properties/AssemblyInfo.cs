@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("On Demand Fuel Cells Refueled")]
-[assembly: AssemblyDescription("On Demand Fuel Cells Refueled")]
+[assembly: AssemblyDescription("On Demand Fuel Cells expands the capabilities of Kerbal Space Program (KSP) fuel cells")]
 [assembly: AssemblyConfiguration("Release")]
 [assembly: AssemblyCompany("Okram Industries")]
 [assembly: AssemblyProduct("ODFC")]
@@ -31,6 +31,6 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("0.0.1.4")]
-[assembly: AssemblyFileVersion("0.0.1.4")]
-// [assembly: AssemblyFileVersion("0.0.1.4")]
+[assembly: AssemblyVersion("0.0.1.5")]
+[assembly: AssemblyFileVersion("0.0.1.5")]
+// [assembly: AssemblyFileVersion("0.0.1.5")]

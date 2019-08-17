@@ -7,16 +7,14 @@ using UnityEngine;
 namespace ODFC {
 	public class ODFC : PartModule {
 		#region Enums Vars
-		public enum states : byte { error, off, nominal, deploy, retract, fuelDeprived, noDemand };
+		public enum states : byte { error, off, nominal, fuelDeprived, noDemand }; // deploy, retract, 
 
-		private const string FuelTransferFormat = "0.##"; //FuelTransferFormat?
+        private const string FuelTransferFormat = "0.##"; //FuelTransferFormat?
 		private const float
 			thresHoldSteps = 0.05f,
 			thresholdMin = thresHoldSteps,
 			thresHoldMax = 1;
 
-		//private Animation animation;
-		//private AnimationState animationState;
 		private Double
 			lastGen = -1,
 			lastMax = -1,
@@ -136,36 +134,20 @@ namespace ODFC {
 			foreach(Fuel fuel in fuels) {
 				if(plus)
 					s += " + ";
-				
+	// add code to verify found exists to prevent nullref			
 				plus = true;
 				resourceLa abr = lastResource.Find(x => x.resourceID == fuel.resourceID);
 
-				if(abr == default(resourceLa))	// If we're missing a resource abbreviation (bad!)
-					s += PartResourceLibrary.Instance.GetDefinition(fuel.resourceID).name;
-				else	// Found one (good!)
-					s += abr.resourceAbbreviation;
-			}
-		}
+                //if (abr == default(resourceLa)) // If we're missing a resource abbreviation (bad!)
+                    s += PartResourceLibrary.Instance.GetDefinition(fuel.resourceID).name;
+                //else    // Found one (good!)
+                 //   s += abr.resourceAbbreviation;
+            }
+        }
 
 		private void udft() { //udft?
 			udfs(out fuel_consumption, ODFC_config.modes[fuelMode].fuels);
 			udfs(out byproducts, ODFC_config.modes[fuelMode].byproducts);
-
-	/*		foreach(ConfigNode.Value cnv in ODFC_config.modes[fuelMode].tanks) {
-				foreach(MeshRenderer mr in part.FindModelComponents<MeshRenderer>(cnv.name))
-					mr.material.mainTexture = GameDatabase.Instance.GetTexture(cnv.value, false);
-			}
- 
-            foreach(emmitter e in ODFC_config.modes[fuelMode].emttrs) {
-
-                foreach (KSPParticleEmitter kpe in part.FindModelComponents<KSPParticleEmitter>(e.name) ?? new List<KSPParticleEmitter>())
-					kpe.colorAnimation = e.colors;
-			}
-
-            foreach(light l in ODFC_config.modes[fuelMode].lights) {
-				foreach(Light lim in part.FindModelComponents<Light>(l.name) ?? new List<Light>())
-					lim.color = l.color;
-			}*/
 		}
 
 		private void UpdateState(states newstate, Double gen, Double max) {
@@ -192,16 +174,6 @@ namespace ODFC {
 						status = "Nominal";
 						break;
 					}
-					//case states.deploy: {
-					//	status = "Deploying";
-					//	amfd(-1);
-					//	break;
-					//}
-					//case states.retract: {
-					//	status = "Retracting";
-					//	amfd(1);
-					//	break;
-					//}
 					case states.off: {
 						status = "Off";
 						break;
@@ -219,44 +191,8 @@ namespace ODFC {
 			if(tf != lastTF || fuelMode != lastFuelMode) {
 				lastTF = tf;
 				lastFuelMode = fuelMode;
-
- /*                foreach(light l in ODFC_config.modes[fuelMode].lights) {
-					foreach(Light lim in part.FindModelComponents<Light>(l.name) ?? new List<Light>())
-						lim.intensity = Convert.ToSingle(l.mmag * tf);
-				}
-				tf *= ODFC_config.emissionCoefficient;
-				int min = (state == states.nominal ? 1 : 0);
-                
-				foreach(KSPParticleEmitter kpe in part.FindModelComponents<KSPParticleEmitter>()) {
-					emmitter e = Array.Find(ODFC_config.modes[fuelMode].emttrs, x => x.name == kpe.name);
-					kpe.minEmission = kpe.maxEmission = Math.Max((int)(tf * (e == default(emmitter) ? 1 : e.scale)), min);
-				}*/
 			}
 		}
-
-		//private void amfd(float speed) {
-		//	if(animation == null)
-		//		return;
-
-		//	animationState.speed = speed;
-
-		//	if(!animation.isPlaying)
-		//		animation.Play();
-		//}
-
-		//private states stchk() {
-		//	if(animation == null)
-		//		return fuelCellIsEnabled ? states.nominal : states.off;
-
-		//	// Unity is stupid and doesn't have a WrapMode to stop when AnimationState.normalizedTime == 1 without resetting it to 0.  WTF?!
-		//	if(animationState.normalizedTime < 0 || animationState.normalizedTime > 1) {
-		//		float nnt = Mathf.Clamp(animationState.normalizedTime, 0, 1);
-		//		animation.Stop();	// This screws with time/normalizedTime, so we have to set it back to what it should be below
-		//		animationState.normalizedTime = nnt;
-		//	}
-
-		//	return fuelCellIsEnabled ? (animationState.normalizedTime == 0 ? states.nominal : states.deploy) : (animationState.normalizedTime == 1 ? states.off : states.retract);
-		//}
 
 		private string GetResourceRates(ConfigNode node) {
 			if(node == null || node.values.Count < 1)
@@ -297,8 +233,6 @@ namespace ODFC {
 		}
 
 		public override void OnStart(StartState state) {
-			//animation = part.FindModelComponent<Animation>();
-			//animationState = (animation == null) ? null : animation[animation.clip.name];
 
 			if(ElectricChargeID == default(int))
 				ElectricChargeID = PartResourceLibrary.Instance.GetDefinition("ElectricCharge").id;
@@ -306,34 +240,14 @@ namespace ODFC {
 			configNode = ConfigNode.Parse(scn).GetNode("MODULE");
 			ODFC_config = new cfg(configNode, part);
 
-			foreach(ConfigNode.Value cnv in configNode.GetNode("FSHORT").values) {
+/*			foreach(ConfigNode.Value cnv in configNode.GetNode("FSHORT").values) {
 				int rid = PartResourceLibrary.Instance.GetDefinition(cnv.name).id;
 
 				if(!lastResource.Exists(x => x.resourceID == rid))
 					lastResource.Add(new resourceLa(rid, cnv.value));
-			}
+			}*/
 
-			// One puppy will explode for every question you ask about this code.  Please, think of the puppies. {
-			//if(ns) {
-			//	ns = false;
-
-			//	foreach(KSPParticleEmitter kpe in part.FindModelComponents<KSPParticleEmitter>() ?? new List<KSPParticleEmitter>()) {
-			//		// Why isn't there just one variable (Vector3 for shape3D) and then just use only the floats you need in that?  Oh, that would make too much sense.
-			//		kpe.shape3D			*= ODFC_config.scaleHack;
-			//		kpe.shape2D			*= ODFC_config.scaleHack;
-			//		kpe.shape1D			*= ODFC_config.scaleHack;
-			//		kpe.minSize			*= ODFC_config.scaleHack;
-			//		kpe.maxSize			*= ODFC_config.scaleHack;
-			//		kpe.rndVelocity	*= ODFC_config.scaleHack;
-			//		kpe.localVelocity	*= ODFC_config.scaleHack;
-			//		kpe.force			*= ODFC_config.scaleHack;
-			//		kpe.rndForce		*= ODFC_config.scaleHack;
-			//	}
-
-			//	foreach(Light l in part.FindModelComponents<Light>() ?? new List<Light>())
-			//		l.range *= ODFC_config.scaleHack;
-			//}
-			// }
+			// One puppy will explode for every question you ask about this code.  Please, think of the puppies.
 
 			udft();
 
@@ -391,8 +305,6 @@ namespace ODFC {
 
 			Double amount = 0, maxAmount = 0;
 			List<PartResource> resources = new List<PartResource>();
-            /* pr.part.partInfo.title */
-            //part.GetConnectedResource(ecid, ResourceFlowMode.ALL_VESSEL, pr);
             part.GetConnectedResourceTotals(ElectricChargeID, out amount, out maxAmount);
 
 			foreach(PartResource resource in resources) { 
@@ -414,17 +326,15 @@ namespace ODFC {
 
             foreach (Fuel fuel in ODFC_config.modes[fuelMode].fuels) {	// Determine activity based on available fuel
 				amount = 0;
-				resources.Clear(); // Might not be necessary, but safer
-                //part.GetConnectedResources(f.rid, f.rfm, pr);
                 part.GetConnectedResourceTotals(ElectricChargeID, out amount, out maxAmount);
 
                 foreach (PartResource r in resources)
 					amount += r.amount;
 
-				cfTime = Math.Min(cfTime, ((Double)amount) / (fuel.rate * rateLimit));
-			}
+				cfTime = Math.Min(cfTime, amount / (fuel.rate * rateLimit)); // (Double)amount)
+            }
 
-            if (cfTime == 0)
+            if (cfTime == 0)  // (cfTime == 0) (Math.Round(cfTime, MidpointRounding.ToEven) == 0)
             {
                 UpdateState(states.fuelDeprived, 0, fuelModeMaxECRateLimit);
                 return;
@@ -438,16 +348,6 @@ namespace ODFC {
             part.RequestResource(ElectricChargeID, -ECAmount);   // Don't forget the most important part
             UpdateState(states.nominal, ECAmount / TimeWarp.fixedDeltaTime, fuelModeMaxECRateLimit);
 		}
-
-        //private void uds(states nominal, Double v, Double fuelModeMaxECRateLimit)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        //private void uds(states fuelDeprived, int v, Double fuelModeMaxECRateLimit)
-        //{
-        //    throw new NotImplementedException();
-        //}
 
         public void Update() {
 			if(HighLogic.LoadedSceneIsEditor) {
