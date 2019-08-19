@@ -7,10 +7,12 @@
 
 ####  v.0.0.1.6 
  * commented Scale related code out
- * removed commented code from StockFuelCells.cfg
+ * removed commented code from StockFuelCells.cfg to fix [BUG 0.0.1.6b]
  * Added AllYAll-Removal.cfg (AllYAll doesn't currently work with ODFC, and the AYA_FuelCell module carries over with +PART)
+ * Bug tracking now implemented via Github (all current and prior known bugs have been added and updated)
  * [BUG 0.0.1.3e] changed to Future Feature Request (heat)
- * [BUG 0.0.1.6a] Doesn't seem to work with BackgroundResources mod (so ODFC doesn't work when doesn't have focus)
+ * [NEW][BUG 0.0.1.6a] Doesn't seem to work with BackgroundResources mod (so ODFC doesn't work when doesn't have focus)
+ * [D][NEW][BUG 0.0.1.6b] AllYAll module being added
 
 ## Known Issue Tracker
  + [WIP] Work In Progress
@@ -40,7 +42,7 @@
  * [D][NEW][BUG 0.0.1.5] the paw label is created from the FSHORT node name in the part.cfg (or patch)
  * corrected changlog bug numbering (missing .)
  * started converting changelog to include markup
- * [BUG 0.0.1.4b] zer0Kerbal left the capslock on when typing WATER, which the code didn't like.
+ * [D][BUG 0.0.1.4b] zer0Kerbal left the capslock on when typing WATER, which the code didn't like.
  * removed code supporting FSHORT, instead using game references, which will also bring in localization
  * removed FSHORT from StockFuelCells.cfg
  
@@ -72,6 +74,7 @@
  * [D][BUG 0.0.1.2c] fuel decrement - fixed (variable name)
 	BUG:
    * [BUG 0.0.1.2a] log spam
+   * [NEW][BUG 0.0.1.3a] upon vehicle load, PAW showing errors that go away with activation/EC production
    * [NEW][BUG 0.0.1.3b] missing 'prev' fuel button
    * [NEW][BUG 0.0.1.3c] current/max display just showing ECRateLimit/ECRateLimit instead of ECRateLimit/maxECRateLimit
    * [NEW][BUG 0.0.1.3d] when in LiquidFuel+IntakeAir (LF+AI) mode - LF consumption too low
@@ -85,6 +88,7 @@
  * updated Assembles.cs
  * updated entire project
 	BUG:
+   * [NEW][BUG 0.0.1.2a] log spam - Val was singing offkey in the OnStart method
    * [NEW][BUG 0.0.1.2b] Must have some EC to function, if EC == 0 does not charge
    * [NEW][BUG 0.0.1.2c] Does not decrement fuel (all or any)
 
