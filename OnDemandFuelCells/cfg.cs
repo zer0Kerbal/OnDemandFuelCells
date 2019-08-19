@@ -58,19 +58,9 @@ namespace ODFC {
 
 	public struct cfg {
 		public mode[] modes;
-		public Double scaleHack;
+		//public Double scaleHack;
 
 		public cfg(ConfigNode node, Part part) {
-			scaleHack = 1;
-
-			foreach(ConfigNode.Value v in node.values ?? new ConfigNode.ValueList()) {
-				switch(v.name) {
-					case "ScaleHack": {
-						scaleHack = Double.Parse(v.value);
-						break;
-					}
-				}
-			}
 
 			ConfigNode[] nodes = node.GetNodes("MODE");	// Shouldn't need null coalescing as we should always have at least one MODE
 			modes = new mode[nodes.Length];

@@ -9,6 +9,13 @@
 cooperative efforts of the community and zer0Kerbal to continue original *On Demand Fuel Cells (ODFC)* by `**Orum**'  
 ![ODFC Refueled](https://i.postimg.cc/HLZt1bq1/1.png) 
  
+## ODFC  
+### ***On Demand Fuel Cells Refueled (ODFCr)***  
+
+*See ChangeLog.txt for full details of mod changes* 
+
+Extract to your KSP folder.
+
 
 ### Changelog 
 #### STATUS:
@@ -50,25 +57,53 @@ cooperative efforts of the community and zer0Kerbal to continue original *On Dem
 	* Added H+0 operational mode to StockFuelCells
 	* 
 
-#### v.0.0.1.3a - RELEASED
-	* created StockFuelCells.cfg which copies both stock fuel cells and adds ODFC
-	* 4x4cheesecake variable sweep and decrypt
-	* comment out all emmitter and light code, left animation
-	* zer0Kerbal variable sweep and decrypt
-	* [D][BUG 0.0.12b] zedEC bug - fixed (variable name)
-	* [D][BUG 0.0.12c] fuel decrement - fixed (variable name)
-	BUG:
-	* [BUG 0.0.12a] log spam
-	* [NEW][BUG 0.0.13a] Upon vehicle load, PAW showing errors that go away with activation/EC production
-	* [NEW][BUG 0.0.13b] missing 'prev' fuel button
-	* [NEW][BUG 0.0.13c] current/max display just showing ECRateLimit/ECRateLimit instead of ECRateLimit/maxECRateLimit
-	* [NEW][BUG 0.0.13d] when in LiquidFuel+IntakeAir (LF+AI) mode - LF consumption too low
-	* [NEW][BUG 0.0.13e] byproduct (heat) missing from StockFuelCells.cfg or should be in .dll?
-  
+### Summary Changelog 
+#### STATUS:
+ * ***BETA PRE-Release***
+
+####  v.0.0.1.6 (DEV BUILD)
+ * commented Scale related code out
+ * removed commented code from StockFuelCells.cfg
+ * Added AllYAll-Removal.cfg (AllYAll doesn't currently work with ODFC, and the AYA_FuelCell module carries over with +PART)
+ * [BUG 0.0.1.3e] changed to Future Feature Request (heat)
+ * [BUG 0.0.1.6a] Doesn't seem to work with BackgroundResources mod (so ODFC doesn't work when doesn't have focus)
+
+## Known Issue Tracker
+ + [WIP] Work In Progress
+ * [BUG 0.0.1.6a] Doesn't seem to work with BackgroundResources mod (so ODFC doesn't work when doesn't have focus)
+ * [BUG 0.0.1.4a] fuel cell doesn't switch to the "Fuel Deprived" state if you run out of any of the currently used resources and continues to produce EC
+ * [BUG 0.0.1.4c] if ECneed > ECsupply & ECtotal = 0 will make the PAW fluctuate in size.
+ * [BUG 0.0.1.2b] must have some EC to function, if EC == 0 causes ODFC to hang
+
+ + Swatted with the big can of KAID bug zapper
+ * [D][BUG 0.0.1.5] the paw label is created from the FSHORT node name in the part.cfg (or patch)
+ * [D][BUG 0.0.1.4b] the H2O+water mode causes the part to mis-function (ERROR) - probably has to do with resourceAbbreviations
+ * [D][BUG 0.0.1.3a] upon vehicle load, PAW showing errors that go away with activation/EC production
+ * [D][BUG 0.0.1.3b] missing 'prev' fuel button
+ * [D][BUG 0.0.1.3c] current/max display just showing ECRateLimit/ECRateLimit instead of ECRateLimit/maxECRateLimit
+ * [D][BUG 0.0.1.3d] when in LiquidFuel+IntakeAir (LF+AI) mode - LF consumption too low
+ * [R][BUG 0.0.1.3e] byproduct (heat) missing from StockFuelCells.cfg or should be in .dll?
+ * [D][BUG 0.0.1.2a] log spam - Val was singing offkey in the OnStart method
+ * [D][BUG 0.0.1.2c] Does not decrement fuel (all or any)
+
+## Feature Request Tracker
+ + AYA integration
+ + NearFuture and ![Dymanic Battery Storage](https://github.com/ChrisAdderley/DynamicBatteryStorage/releases/tag/2.0.5) integration
+ + Fusebox integration
+ + Ampyear integration
+ + Add Heat production
+ + Convert to On-Demand Resource Converter (still base of ODFC) by either adding or modifying
+ + 
 
 ## Dependencies 
- * Kerbal Space Program
- * Module Manager
+ * ![Kerbal Space Program]()
+ * ![ModuleManager](http://forum.kerbalspaceprogram.com/index.php?/topic/50533-105-module-manager-2618-january-17th-with-even-more-sha-and-less-bug/) 
+
+ 
+## Supports 
+ * [WIP] 
+ * [WIP] 
+ * [] Bon Voyage
  
 ## Supports 
  * [WIP] Stock Mining Enhancements
@@ -77,7 +112,9 @@ cooperative efforts of the community and zer0Kerbal to continue original *On Dem
  * [WIP] Universal Storage II
  
 ## Suggests 
- * 
+ * ![Community Resource Pack]P()
+ * ![Kerbal Change Log]() 
+
  * 
  
 ## License  
@@ -87,7 +124,8 @@ cooperative efforts of the community and zer0Kerbal to continue original *On Dem
 
 *a part of the **TWYLLTR** (Take What You Like, Leave the Rest) collection.*  
  
-📌v0.0.1.5-beta  
+📌v0.0.1.6-beta  
+
  
 ## links to original:  
 On Demand Fuel Cells (ODFC) by `Orum'  
@@ -102,4 +140,5 @@ Licensed under CC BY-NC-SA-4.0
 ##### All bundled mods are distributed under their own licenses
 ##### All art assets (textures, models, animations) are distributed under an All Rights Reserved License.
 
-###### v0.0.1.5 original: 11 Aug 2018 zed'K updated: 17 Aug 2019 zed'K & 4x4cheesecake & LinuxGuruGamer
+###### v0.0.1.6 original: 11 Aug 2018 zed'K | updated: 18 Aug 2019 zed'K & 4x4cheesecake & LinuxGuruGamer
+

@@ -138,10 +138,7 @@ namespace ODFC {
 				plus = true;
 				resourceLa abr = lastResource.Find(x => x.resourceID == fuel.resourceID);
 
-                //if (abr == default(resourceLa)) // If we're missing a resource abbreviation (bad!)
-                    s += PartResourceLibrary.Instance.GetDefinition(fuel.resourceID).name;
-                //else    // Found one (good!)
-                 //   s += abr.resourceAbbreviation;
+                s += PartResourceLibrary.Instance.GetDefinition(fuel.resourceID).name;
             }
         }
 
@@ -239,13 +236,6 @@ namespace ODFC {
 
 			configNode = ConfigNode.Parse(scn).GetNode("MODULE");
 			ODFC_config = new cfg(configNode, part);
-
-/*			foreach(ConfigNode.Value cnv in configNode.GetNode("FSHORT").values) {
-				int rid = PartResourceLibrary.Instance.GetDefinition(cnv.name).id;
-
-				if(!lastResource.Exists(x => x.resourceID == rid))
-					lastResource.Add(new resourceLa(rid, cnv.value));
-			}*/
 
 			// One puppy will explode for every question you ask about this code.  Please, think of the puppies.
 
