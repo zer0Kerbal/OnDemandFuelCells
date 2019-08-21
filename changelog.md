@@ -5,6 +5,10 @@
 #### STATUS:
  * ***BETA PRE-Release***
 
+####  v.0.0.1.7 
+ * ns renamed to newState
+ //* cfTime renamed to elapsedGameTime
+
 ####  v.0.0.1.6 
  * commented Scale related code out
  * removed commented code from StockFuelCells.cfg to fix [BUG 0.0.1.6b]

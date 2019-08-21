@@ -1,7 +1,7 @@
 {
 	"NAME":"On Demand Fuel Cells",
-	"URL":"https://raw.githubusercontent.com/zer0Kerbal/ODFCr/dev/OnDemandFuelCells.version",
-	"DOWNLOAD":"https://github.com/zer0Kerbal/ODFCr/releases",
+	"URL":"https://raw.githubusercontent.com/zer0Kerbal/ODFCr/OnDemandFuelCells.version",
+	"DOWNLOAD":"https://github.com/zer0Kerbal/ODFCr/releases", "CHANGE_LOG_URL": "https://raw.githubusercontent.com/zer0Kerbal/ODFCr/dev/changelog.md",
     "GITHUB":
     {
         "USERNAME":"zer0Kerbal",
