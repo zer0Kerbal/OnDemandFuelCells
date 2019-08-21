@@ -3,6 +3,7 @@
 #### Formerly known as On Demand Fuel Cells (ODFC)
 ![ODFCr](https://img.shields.io/badge/KSP%20version-1.7.x-66ccff.svg?style=flat-square) 
 ![ODFCr](https://img.shields.io/badge/MOD%20version-0.0.1.6-orange.svg?style=flat-square)
+![ODFCr](https://img.shields.io/github/downloads/zer0Kerbal/ODFCr/total)
 
 ### Proudly Adopts(HOPEFULLY) - for private/personal use  
 
