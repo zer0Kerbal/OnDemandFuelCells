@@ -341,15 +341,15 @@ namespace ODFC {
 
         public void Update() {
 			if(HighLogic.LoadedSceneIsEditor) {
-				Double nmax = ODFC_config.modes[fuelMode].maxEC * rateLimit;
+				Double newMax = ODFC_config.modes[fuelMode].maxEC * rateLimit;
 				
-				if(lastMax != nmax) {
-					lastMax = nmax;
+				if(lastMax != newMax) {
+					lastMax = newMax;
 					maxECs_status = lastMax.ToString(FuelTransferFormat);
 				}
 
-                states ns = fuelCellIsEnabled ? states.nominal : states.off;
-                UpdateState(ns, ns == states.nominal ? 1 : 0, 1);
+                states newState = fuelCellIsEnabled ? states.nominal : states.off;
+                UpdateState(newState, newState == states.nominal ? 1 : 0, 1);
 			}
 		}
 		#endregion
