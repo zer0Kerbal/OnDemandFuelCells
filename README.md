@@ -2,7 +2,7 @@
 ### On Demand Fuel Cells Refueled (ODFCr) 
 #### Formerly known as On Demand Fuel Cells (ODFC)
 ![ODFCr](https://img.shields.io/badge/KSP%20version-1.7.x-66ccff.svg?style=flat-square) 
-![ODFCr](https://img.shields.io/badge/MOD%20version-0.0.1.6-orange.svg?style=flat-square)
+![ODFCr](https://img.shields.io/badge/MOD%20version-0.0.1.7-orange.svg?style=flat-square)
 ![ODFCr](https://img.shields.io/github/downloads/zer0Kerbal/ODFCr/total)
 
 ### Proudly Adopts(HOPEFULLY) - for private/personal use  
@@ -61,13 +61,11 @@ Extract to your KSP folder.
 ### Summary Changelog 
 #### STATUS:
  * ***BETA PRE-Release***
-
-####  v.0.0.1.6 (DEV BUILD)
- * commented Scale related code out
- * removed commented code from StockFuelCells.cfg
- * Added AllYAll-Removal.cfg (AllYAll doesn't currently work with ODFC, and the AYA_FuelCell module carries over with +PART)
- * [BUG 0.0.1.3e] changed to Future Feature Request (heat)
- * [BUG 0.0.1.6a] Doesn't seem to work with BackgroundResources mod (so ODFC doesn't work when doesn't have focus)
+ 
+####  v.0.0.1.7 (Dev Build)
+ * [D][BUG 0.0.1.4c] other fixes seems to have fixed this.
+ * [D][BUG 0.0.1.4a] someone tried to hotwire the fuel tanks with EC (**ElectricChargeID** needed to be replaced with **fuel.resourceID** )
+ * removed ScreenMessages #DEBUG code
 
 ## Known Issue Tracker
  + [WIP] Work In Progress
@@ -125,7 +123,7 @@ Extract to your KSP folder.
 
 *a part of the **TWYLLTR** (Take What You Like, Leave the Rest) collection.*  
  
-📌v0.0.1.6-beta  
+📌v0.0.1.7-beta  
 
  
 ## links to original:  
@@ -141,5 +139,5 @@ Licensed under CC BY-NC-SA-4.0
 ##### All bundled mods are distributed under their own licenses
 ##### All art assets (textures, models, animations) are distributed under an All Rights Reserved License.
 
-###### v0.0.1.6 original: 11 Aug 2018 zed'K | updated: 18 Aug 2019 zed'K & 4x4cheesecake & LinuxGuruGamer
+###### v0.0.1.7 original: 11 Aug 2018 zed'K | updated: 22 Aug 2019 zed'K & 4x4cheesecake & LinuxGuruGamer
 
