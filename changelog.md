@@ -5,6 +5,21 @@
 #### STATUS:
  * ***BETA PRE-Release***
 
+<<<<<<< Updated upstream
+=======
+####  v.0.0.1.8 
+ * ns renamed to newState
+ * nmax renamed to newMax
+ * add new recommened mod: HotBeverageReheated
+ * add ODFC and AYA_FuelCell patches for HotBeverageReheated
+ * Release to Beta-Testers
+ 
+####  v.0.0.1.7 
+ * [D][BUG 0.0.1.4c] other fixes seems to have fixed this.
+ * [D][BUG 0.0.1.4a] someone tried to hotwire the fuel tanks with EC (**ElectricChargeID** needed to be replaced with **fuel.resourceID** )
+ * removed ScreenMessages #DEBUG code
+
+>>>>>>> Stashed changes
 ####  v.0.0.1.6 
  * commented Scale related code out
  * removed commented code from StockFuelCells.cfg to fix [BUG 0.0.1.6b]
