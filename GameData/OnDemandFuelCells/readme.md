@@ -4,10 +4,16 @@
 cooperative efforts of 4x4cheesecake, LinuxGuruGamer, and zer0Kerbal to continue original *On Demand Fuel Cells (ODFC)* by `**Orum**'  
 ![ODFC Refueled](https://i.postimg.cc/HLZt1bq1/1.png) 
  
+<<<<<<< Updated upstream
 ## ODFC  
 ### ***On Demand Fuel Cells Refueled (ODFCr)***  
+=======
+ *See ChangeLog.txt for full details of mod changes* 
+>>>>>>> Stashed changes
 
-### Changelog 
+Extract to your KSP folder.
+
+### Summary Changelog 
 #### STATUS:
  * ***BETA PRE-Release***
 
@@ -46,8 +52,13 @@ cooperative efforts of 4x4cheesecake, LinuxGuruGamer, and zer0Kerbal to continue
  + 
 
 ## Dependencies 
+<<<<<<< Updated upstream
  * ![Kerbal Space Program]()
  * ![Module Manager]()
+=======
+ * Kerbal Space Program
+ * ![ModuleManager](http://forum.kerbalspaceprogram.com/index.php?/topic/50533-105-module-manager-2618-january-17th-with-even-more-sha-and-less-bug/) 
+>>>>>>> Stashed changes
  
 ## Supports 
  * [WIP] 
@@ -55,7 +66,11 @@ cooperative efforts of 4x4cheesecake, LinuxGuruGamer, and zer0Kerbal to continue
  * [] Bon Voyage
  
 ## Suggests 
+<<<<<<< Updated upstream
  * ![Community Resource Pack]P()
+=======
+ * ![Kerbal Change Log]() 
+>>>>>>> Stashed changes
  * 
  
 ## License  
