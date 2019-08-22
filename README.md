@@ -5,7 +5,7 @@
 ![ODFCr](https://img.shields.io/badge/MOD%20version-0.0.1.7-orange.svg?style=flat-square)
 ![ODFCr](https://img.shields.io/github/downloads/zer0Kerbal/ODFCr/total)
 
-### Proudly Adopts(HOPEFULLY) - for private/personal use  
+### Proudly Adopts
 
 cooperative efforts of the community and zer0Kerbal to continue original *On Demand Fuel Cells (ODFC)* by `**Orum**'  
 ![ODFC Refueled](https://i.postimg.cc/HLZt1bq1/1.png) 
