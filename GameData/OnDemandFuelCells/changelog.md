@@ -5,11 +5,19 @@
 #### STATUS:
  * ***BETA PRE-Release***
 
-####  v.0.0.1.7 
+####  v.0.0.1.8 
  * ns renamed to newState
- //* cfTime renamed to elapsedGameTime
+ * add new recommened mod: HotBeverageReheated
+ * add ODFC and AYA_FuelCell patches for HotBeverageReheated
+ * Release to Beta-Testers
+ 
+####  v.0.0.1.7 
+ * [D][BUG 0.0.1.4c] other fixes seems to have fixed this.
+ * [D][BUG 0.0.1.4a] someone tried to hotwire the fuel tanks with EC (**ElectricChargeID** needed to be replaced with **fuel.resourceID** )
+ * removed ScreenMessages #DEBUG code
 
 ####  v.0.0.1.6 
+ * added ScreenMessages #DEBUG code
  * commented Scale related code out
  * removed commented code from StockFuelCells.cfg to fix [BUG 0.0.1.6b]
  * Added AllYAll-Removal.cfg (AllYAll doesn't currently work with ODFC, and the AYA_FuelCell module carries over with +PART)
@@ -21,13 +29,13 @@
 ## Known Issue Tracker
  + [WIP] Work In Progress
  * [BUG 0.0.1.6a] Doesn't seem to work with BackgroundResources mod (so ODFC doesn't work when doesn't have focus)
- * [BUG 0.0.1.4a] fuel cell doesn't switch to the "Fuel Deprived" state if you run out of any of the currently used resources and continues to produce EC
- * [BUG 0.0.1.4c] if ECneed > ECsupply & ECtotal = 0 will make the PAW fluctuate in size.
  * [BUG 0.0.1.2b] must have some EC to function, if EC == 0 causes ODFC to hang
 
  + Swatted with the big can of KAID bug zapper
  * [D][BUG 0.0.1.5] the paw label is created from the FSHORT node name in the part.cfg (or patch)
+ * [D][BUG 0.0.1.4a] fuel cell doesn't switch to the "Fuel Deprived" state if you run out of any of the currently used resources and continues to produce EC
  * [D][BUG 0.0.1.4b] the H2O+water mode causes the part to mis-function (ERROR) - probably has to do with resourceAbbreviations
+ * [D][BUG 0.0.1.4c] if ECneed > ECsupply & ECtotal = 0 will make the PAW fluctuate in size.
  * [D][BUG 0.0.1.3a] upon vehicle load, PAW showing errors that go away with activation/EC production
  * [D][BUG 0.0.1.3b] missing 'prev' fuel button
  * [D][BUG 0.0.1.3c] current/max display just showing ECRateLimit/ECRateLimit instead of ECRateLimit/maxECRateLimit
