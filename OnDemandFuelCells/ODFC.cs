@@ -316,7 +316,7 @@ namespace ODFC {
 
             foreach (Fuel fuel in ODFC_config.modes[fuelMode].fuels) {	// Determine activity based on available fuel
 				amount = 0;
-                part.GetConnectedResourceTotals(ElectricChargeID, out amount, out maxAmount);
+                part.GetConnectedResourceTotals(fuel.resourceID , out amount, out maxAmount);
 
                 foreach (PartResource r in resources)
 					amount += r.amount;
@@ -330,12 +330,13 @@ namespace ODFC {
                 return;
             }
 
-            Double adjr = rateLimit * cfTime;			// Calculate usage based on rate limiting and duty cycle
-			kommit(ODFC_config.modes[fuelMode].fuels, adjr);			// Commit changes to fuel used
-			kommit(ODFC_config.modes[fuelMode].byproducts, adjr);			// Handle byproducts
-
-			Double ECAmount = fuelModeMaxECRateLimit * cfTime;
+            Double adjr = rateLimit * cfTime;           // Calculate usage based on rate limiting and duty cycle
+            Double ECAmount = fuelModeMaxECRateLimit * cfTime;
             part.RequestResource(ElectricChargeID, -ECAmount);   // Don't forget the most important part
+
+            kommit(ODFC_config.modes[fuelMode].fuels, adjr);            // Commit changes to fuel used
+            kommit(ODFC_config.modes[fuelMode].byproducts, adjr);           // Handle byproducts
+
             UpdateState(states.nominal, ECAmount / TimeWarp.fixedDeltaTime, fuelModeMaxECRateLimit);
 		}
 
