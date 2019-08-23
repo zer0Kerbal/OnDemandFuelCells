@@ -1,4 +1,4 @@
-# zer0Kerbal  
+# zer0Kerbal 
 ### Proudly Adopts(HOPEFULLY) - for private/personal use  
 
 cooperative efforts of 4x4cheesecake, LinuxGuruGamer, and zer0Kerbal to continue original *On Demand Fuel Cells (ODFC)* by `**Orum**'  
@@ -22,24 +22,25 @@ Extract to your KSP folder.
  * add ODFC and AYA_FuelCell patches for HotBeverageReheated
  * add ODFC and AYA_FuelCell patches for UniversalStorage2
  * fixed typo in StockFuelCells.cfg (replaced '-' with '=')
+ * [D][BUG 0.0.1.2b] must have some EC to function, if EC == 0 causes ODFC to hang - just had to move two lines of code to execute earlier. Reason this works, why it wasn't working if vessel EC == 0 was the order of execution. Needed to add the generated EC before handling byproducts, and remove fuel which triggered update state. 
  * Release to Beta-Testers
 
 ## Known Issue Tracker
  + [WIP] Work In Progress
  * [BUG 0.0.1.6a] Doesn't seem to work with BackgroundResources mod (so ODFC doesn't work when doesn't have focus)
- * [BUG 0.0.1.4c] if ECneed > ECsupply & ECtotal = 0 will make the PAW fluctuate in size.
- * [BUG 0.0.1.2b] must have some EC to function, if EC == 0 causes ODFC to hang
 
  + Swatted with the big can of KAID bug zapper
  * [D][BUG 0.0.1.5] the paw label is created from the FSHORT node name in the part.cfg (or patch)
  * [D][BUG 0.0.1.4a] fuel cell doesn't switch to the "Fuel Deprived" state if you run out of any of the currently used resources and continues to produce EC
  * [D][BUG 0.0.1.4b] the H2O+water mode causes the part to mis-function (ERROR) - probably has to do with resourceAbbreviations
+ * [D][BUG 0.0.1.4c] if ECneed > ECsupply & ECtotal = 0 will make the PAW fluctuate in size.
  * [D][BUG 0.0.1.3a] upon vehicle load, PAW showing errors that go away with activation/EC production
  * [D][BUG 0.0.1.3b] missing 'prev' fuel button
  * [D][BUG 0.0.1.3c] current/max display just showing ECRateLimit/ECRateLimit instead of ECRateLimit/maxECRateLimit
  * [D][BUG 0.0.1.3d] when in LiquidFuel+IntakeAir (LF+AI) mode - LF consumption too low
  * [R][BUG 0.0.1.3e] byproduct (heat) missing from StockFuelCells.cfg or should be in .dll?
  * [D][BUG 0.0.1.2a] log spam - Val was singing offkey in the OnStart method
+ * [D][BUG 0.0.1.2b] must have some EC to function, if EC == 0 causes ODFC to hang
  * [D][BUG 0.0.1.2c] Does not decrement fuel (all or any)
 
 ## Feature Request Tracker

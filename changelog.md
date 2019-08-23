@@ -12,12 +12,12 @@
  * add ODFC and AYA_FuelCell patches for HotBeverageReheated
  * add ODFC and AYA_FuelCell patches for UniversalStorage2
  * fixed typo in StockFuelCells.cfg (replaced '-' with '=')
+ * [D][BUG 0.0.1.2b] must have some EC to function, if EC == 0 causes ODFC to hang - just had to move two lines of code to execute earlier. Reason this works, why it wasn't working if vessel EC == 0 was the order of execution. Needed to add the generated EC before handling byproducts, and remove fuel which triggered update state. 
  * Release to Beta-Testers
 
 ## Known Issue Tracker
  + [WIP] Work In Progress
  * [BUG 0.0.1.6a] Doesn't seem to work with BackgroundResources mod (so ODFC doesn't work when doesn't have focus)
- * [BUG 0.0.1.2b] must have some EC to function, if EC == 0 causes ODFC to hang
 
  + Swatted with the big can of KAID bug zapper
  * [D][BUG 0.0.1.5] the paw label is created from the FSHORT node name in the part.cfg (or patch)
@@ -30,6 +30,7 @@
  * [D][BUG 0.0.1.3d] when in LiquidFuel+IntakeAir (LF+AI) mode - LF consumption too low
  * [R][BUG 0.0.1.3e] byproduct (heat) missing from StockFuelCells.cfg or should be in .dll?
  * [D][BUG 0.0.1.2a] log spam - Val was singing offkey in the OnStart method
+ * [D][BUG 0.0.1.2b] must have some EC to function, if EC == 0 causes ODFC to hang
  * [D][BUG 0.0.1.2c] Does not decrement fuel (all or any)
 
 ## Feature Request Tracker
