@@ -366,10 +366,9 @@ namespace ODFC
 
             //Boolean Empty = false;
 
-            foreach (Fuel fuel in ODFC_config.modes[fuelMode].fuels)
-            {   // Determine activity based on available fuel
-                amount = 0;
-                part.GetConnectedResourceTotals(fuel.resourceID, out amount, out maxAmount);
+            foreach (Fuel fuel in ODFC_config.modes[fuelMode].fuels) {	// Determine activity based on available fuel
+				amount = 0;
+                part.GetConnectedResourceTotals(fuel.resourceID , out amount, out maxAmount);
 
                 foreach (PartResource r in resources) 
                     amount += r.amount;
@@ -384,11 +383,12 @@ namespace ODFC
             }
 
             Double adjr = rateLimit * cfTime;           // Calculate usage based on rate limiting and duty cycle
+            Double ECAmount = fuelModeMaxECRateLimit * cfTime;
+            part.RequestResource(ElectricChargeID, -ECAmount);   // Don't forget the most important part
+
             kommit(ODFC_config.modes[fuelMode].fuels, adjr);            // Commit changes to fuel used
             kommit(ODFC_config.modes[fuelMode].byproducts, adjr);           // Handle byproducts
 
-            Double ECAmount = fuelModeMaxECRateLimit * cfTime;
-            part.RequestResource(ElectricChargeID, -ECAmount);   // Don't forget the most important part
             UpdateState(states.nominal, ECAmount / TimeWarp.fixedDeltaTime, fuelModeMaxECRateLimit);
         }
 
@@ -398,16 +398,19 @@ namespace ODFC
             {
                 Double nmax = ODFC_config.modes[fuelMode].maxEC * rateLimit;
 
-                if (lastMax != nmax)
-                {
-                    lastMax = nmax;
-                    maxECs_status = lastMax.ToString(FuelTransferFormat);
-                }
+        public void Update() {
+			if(HighLogic.LoadedSceneIsEditor) {
+				Double newMax = ODFC_config.modes[fuelMode].maxEC * rateLimit;
+				
+				if(lastMax != newMax) {
+					lastMax = newMax;
+					maxECs_status = lastMax.ToString(FuelTransferFormat);
+				}
 
-                states ns = fuelCellIsEnabled ? states.nominal : states.off;
-                UpdateState(ns, ns == states.nominal ? 1 : 0, 1);
-            }
-        }
-        #endregion
-    }
+                states newState = fuelCellIsEnabled ? states.nominal : states.off;
+                UpdateState(newState, newState == states.nominal ? 1 : 0, 1);
+			}
+		}
+		#endregion
+	}
 }

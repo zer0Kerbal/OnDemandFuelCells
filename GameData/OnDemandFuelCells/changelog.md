@@ -1,30 +1,18 @@
 # ODFC  
 ## On Demand Fuel Cells Refueled (ODFCr)  
 
-### Changelog 
+### Changelog
 #### STATUS:
  * ***BETA PRE-Release***
 
-####  v.0.0.1.8 
+####  v.0.0.1.8
  * ns renamed to newState
- * add new recommened mod: HotBeverageReheated
+ * nmax renamed to newMax
+ * add new recommended mod: HotBeverageReheated
  * add ODFC and AYA_FuelCell patches for HotBeverageReheated
+ * add ODFC and AYA_FuelCell patches for UniversalStorage2
+ * fixed typo in StockFuelCells.cfg (replaced '-' with '=')
  * Release to Beta-Testers
- 
-####  v.0.0.1.7 
- * [D][BUG 0.0.1.4c] other fixes seems to have fixed this.
- * [D][BUG 0.0.1.4a] someone tried to hotwire the fuel tanks with EC (**ElectricChargeID** needed to be replaced with **fuel.resourceID** )
- * removed ScreenMessages #DEBUG code
-
-####  v.0.0.1.6 
- * added ScreenMessages #DEBUG code
- * commented Scale related code out
- * removed commented code from StockFuelCells.cfg to fix [BUG 0.0.1.6b]
- * Added AllYAll-Removal.cfg (AllYAll doesn't currently work with ODFC, and the AYA_FuelCell module carries over with +PART)
- * Bug tracking now implemented via Github (all current and prior known bugs have been added and updated)
- * [BUG 0.0.1.3e] changed to Future Feature Request (heat)
- * [NEW][BUG 0.0.1.6a] Doesn't seem to work with BackgroundResources mod (so ODFC doesn't work when doesn't have focus)
- * [D][NEW][BUG 0.0.1.6b] AllYAll module being added
 
 ## Known Issue Tracker
  + [WIP] Work In Progress
@@ -48,9 +36,23 @@
  + AYA integration
  + Add Heat production
  + Convert to On-Demand Resource Converter (still base of ODFC) by either adding or modifying
- + 
+ +
 
-####  v.0.0.1.5 
+####  v.0.0.1.7
+ * [D][BUG 0.0.1.4c] other fixes seems to have fixed this.
+ * [D][BUG 0.0.1.4a] someone tried to hotwire the fuel tanks with EC (**ElectricChargeID** needed to be replaced with **fuel.resourceID** )
+ * removed ScreenMessages #DEBUG code
+
+ ####  v.0.0.1.6
+  * commented Scale related code out
+  * removed commented code from StockFuelCells.cfg to fix [BUG 0.0.1.6b]
+  * Added AllYAll-Removal.cfg (AllYAll doesn't currently work with ODFC, and the AYA_FuelCell module carries over with +PART)
+  * Bug tracking now implemented via Github (all current and prior known bugs have been added and updated)
+  * [BUG 0.0.1.3e] changed to Future Feature Request (heat)
+  * [NEW][BUG 0.0.1.6a] Doesn't seem to work with BackgroundResources mod (so ODFC doesn't work when doesn't have focus)
+  * [D][NEW][BUG 0.0.1.6b] AllYAll module being added
+
+####  v.0.0.1.5
  * [D][NEW][BUG 0.0.1.5] the paw label is created from the FSHORT node name in the part.cfg (or patch)
  * corrected changlog bug numbering (missing .)
  * started converting changelog to include markup
@@ -59,7 +61,7 @@
  * removed FSHORT from StockFuelCells.cfg
  
 ####  v.0.0.1.4
- * 4x4cheesecake 
+ * 4x4cheesecake
 	 * variable sweep and decrypt (continued)
 	 * typo correction
 	 * removed animation code
@@ -92,23 +94,25 @@
    * [NEW][BUG 0.0.1.3d] when in LiquidFuel+IntakeAir (LF+AI) mode - LF consumption too low
    * [NEW][BUG 0.0.1.3e] byproduct (heat) missing from StockFuelCells.cfg or should be in .dll?
 
-####  v.0.0.1.2 
- * released:  
- * [REVERTED] updated .version to 1.7.3.1  
- * recompiled against KSP 1.7.3  
- * converted FLOAT to DOUBLE - might be slower, but KSP seems to be going this way
- * updated Assembles.cs
- * updated entire project
-	BUG:
-   * [NEW][BUG 0.0.1.2a] log spam - Val was singing offkey in the OnStart method
-   * [NEW][BUG 0.0.1.2b] Must have some EC to function, if EC == 0 does not charge
-   * [NEW][BUG 0.0.1.2c] Does not decrement fuel (all or any)
-
->-- ORIGINAL --<
 {
+   VERSION
+   {
+    version = v.0.0.1.2
+		change = released:  
+		change = [REVERTED] updated .version to 1.7.3.1  
+		change = recompiled against KSP 1.7.3  
+		change = converted FLOAT to DOUBLE - might be slower, but KSP seems to be going this way
+		change = updated Assembles.cs
+		change = updated entire project
+		change = BUG:
+		change = [NEW][BUG 0.0.1.2a] log spam - Val was singing offkey in the OnStart method
+		change = [NEW][BUG 0.0.1.2b] Must have some EC to function, if EC == 0 does not charge
+		change = [NEW][BUG 0.0.1.2c] Does not decrement fuel (all or any)
+  }
+// >-- ORIGINAL --<
 	VERSION
 	{
-		version = v1.1 
+		version = v1.1
 		change = >-- ORIGINAL --<
 		change = ODFC - change log
 		change = Released on 2016-04-29
