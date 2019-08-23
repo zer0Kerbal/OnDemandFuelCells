@@ -10,8 +10,10 @@
 ####  v.0.0.1.8 
  * ns renamed to newState
  * nmax renamed to newMax
- * add new recommened mod: HotBeverageReheated
+ * add new recommended mod: HotBeverageReheated
  * add ODFC and AYA_FuelCell patches for HotBeverageReheated
+ * add ODFC and AYA_FuelCell patches for UniversalStorage2
+ * fixed typo in StockFuelCells.cfg (replaced '-' with '=')
  * Release to Beta-Testers
  
 ####  v.0.0.1.7 
