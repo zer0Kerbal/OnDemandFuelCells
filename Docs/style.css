@@ -1,0 +1,100 @@
+html {
+	background-color: #181818;
+}
+
+body, .id, .bw, .sep {
+	background-color: #000008;
+}
+
+body {
+	min-width: 480px;
+	font-family: sans-serif;
+	padding: 0px;
+	border: 0px;
+	margin-top: 0px;
+	margin-bottom: 0px;
+	margin-left: 0px;
+	margin-right: 17.65%;
+}
+
+.bw {
+	padding-top: 0px;
+	padding-left: 30px;
+	padding-right: 30px;
+	padding-bottom: 30px;
+}
+
+p {
+	margin-top: 0.5em;
+	color: #C8C8C8;
+}
+
+p.i {
+	font-style: italic;
+}
+
+h1, h2, h3 {
+	text-decoration: underline;
+}
+
+h1, h2 {
+	margin-bottom: 0px;
+}
+
+h1 {
+	margin-top: 0px;
+	padding-top: 1em;
+	color: #E0E0E0;
+}
+
+h2 {
+	color: #70A0D0;
+}
+
+h3 {
+	margin-top: 1em;
+	margin-bottom: 2px;
+	color: #D0D070;
+}
+
+a:link {
+	color: #FF7F00;
+}
+
+a:visited {
+	color: #B060D0;
+}
+
+a:hover {
+	color: #D0D050;
+}
+
+.id {
+	margin-left: 30px;
+}
+
+td {
+	vertical-align: top;
+}
+
+.sep {
+	margin-top: 22px;
+	background-color: #D0D0D0;
+	height: 1px;
+	width: 100%;
+}
+
+.key, .vkey {
+	color: #70A0D0;
+	float: right;
+	text-align: right;
+	font-variant: small-caps;
+	white-space: nowrap;
+}
+
+.val {
+	color: #C8C8C8;
+	width: 100%;
+	text-align: justify;
+	text-justify: newspaper;
+}
