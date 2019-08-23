@@ -2,16 +2,15 @@
 ### Proudly Adopts(HOPEFULLY) - for private/personal use  
 
 cooperative efforts of 4x4cheesecake, LinuxGuruGamer, and zer0Kerbal to continue original *On Demand Fuel Cells (ODFC)* by `**Orum**'  
-![ODFC Refueled](https://i.postimg.cc/HLZt1bq1/1.png)
 
+![ODFC Refueled](https://i.postimg.cc/HLZt1bq1/1.png) 
 ## ODFC  
 ### ***On Demand Fuel Cells Refueled (ODFCr)***  
+ *See ChangeLog.txt for full details of mod changes* 
 
 Extract to your KSP folder.
 
-### Summary Changelog
-*See ChangeLog.txt for full details of mod changes*
-
+### Summary Changelog 
 #### STATUS:
  * ***BETA PRE-Release***
 
@@ -64,7 +63,7 @@ Extract to your KSP folder.
  * ![Community Resource Pack]P()
  * ![Kerbal Change Log]()
  *
-
+ 
 ## License  
 ![[CC 4.0 BY-NC-SA](https://creativecommons.org/licenses/by-nc-sa/4.0/)](https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png "CC 4.0 BY-NC-SA")
 

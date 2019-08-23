@@ -1,5 +1,5 @@
 # zer0Kerbal 
-### Proudly Adopts(HOPEFULLY) - for private/personal use  
+### Proudly Adopts for curation (HOPEFULLY) - for private/personal use  
 
 cooperative efforts of 4x4cheesecake, LinuxGuruGamer, and zer0Kerbal to continue original *On Demand Fuel Cells (ODFC)* by `**Orum**'  
 ![ODFC Refueled](https://i.postimg.cc/HLZt1bq1/1.png)
@@ -76,7 +76,7 @@ Extract to your KSP folder.
 📌v0.0.1.8-beta  
 
 ## links to original:  
-On Demand Fuel Cells (ODFC) by `Orum  
+On Demand Fuel Cells (ODFC) by `Orum'  
 Licensed under CC BY-NC-SA-4.0  
  * ![KSP Forums](https://forum.kerbalspaceprogram.com/index.php?/topic/138431-112-on-demand-fuel-cells-odfc-v11/)
  * ![Spacedock](https://spacedock.info/mod/618/ODFC%20-%20On%20Demand%20Fuel%20Cells)

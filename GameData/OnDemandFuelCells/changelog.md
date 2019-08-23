@@ -59,7 +59,7 @@
  * [D][BUG 0.0.1.4b] zer0Kerbal left the capslock on when typing WATER, which the code didn't like.
  * removed code supporting FSHORT, instead using game references, which will also bring in localization
  * removed FSHORT from StockFuelCells.cfg
-
+ 
 ####  v.0.0.1.4
  * 4x4cheesecake
 	 * variable sweep and decrypt (continued)
