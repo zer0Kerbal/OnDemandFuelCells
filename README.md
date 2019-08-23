@@ -1,5 +1,13 @@
+## ODFC  
+### On Demand Fuel Cells Refueled (ODFCr) 
+#### Formerly known as On Demand Fuel Cells (ODFC)
+![ODFCr](https://img.shields.io/badge/KSP%20version-1.7.x-66ccff.svg?style=flat-square) 
+![ODFCr](https://img.shields.io/badge/MOD%20version-0.0.1.6-orange.svg?style=flat-square)
+![ODFCr](https://img.shields.io/github/downloads/zer0Kerbal/ODFCr/total)
+
 # zer0Kerbal 
 ### Proudly Adopts for curation (HOPEFULLY) - for private/personal use  
+
 
 cooperative efforts of 4x4cheesecake, LinuxGuruGamer, and zer0Kerbal to continue original *On Demand Fuel Cells (ODFC)* by `**Orum**'  
 ![ODFC Refueled](https://i.postimg.cc/HLZt1bq1/1.png)
