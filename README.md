@@ -46,6 +46,7 @@ Extract to your KSP folder.
  + Add Heat production
  + Convert to On-Demand Resource Converter (still base of ODFC) by either adding or modifying
  + Determine if both BackgroundProcessing and Background Resources mods are installed and adjust.
+ + add a vessel wide control panel (GUI) for all ODFC on vessel.
 
 ## Dependencies
  * Kerbal Space Program
