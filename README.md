@@ -6,7 +6,7 @@
 ![ODFCr](https://img.shields.io/github/downloads/zer0Kerbal/ODFCr/total)
 
 # zer0Kerbal 
-### Proudly Adopts for curation (HOPEFULLY) - for private/personal use  
+### Proudly Adopts for curation  
 
 
 cooperative efforts of 4x4cheesecake, LinuxGuruGamer, and zer0Kerbal to continue original *On Demand Fuel Cells (ODFC)* by `**Orum**'  
@@ -35,30 +35,36 @@ Extract to your KSP folder.
 
 ## Known Issue Tracker
  + [WIP] Work In Progress
- * [BUG 0.0.1.6a] Doesn't seem to work with BackgroundResources mod (so ODFC doesn't work when doesn't have focus)
+ * [BUG 0.0.1.6a] Does not seeming work with BackgroundProcessing or Background Resources mods (being looked at) (so ODFC doesn't work when doesn't have focus). Should not have both BackgroundProcessing and BackgroundResources installed.
 
 ## Feature Request Tracker
- + AYA integration
- + NearFuture and ![Dymanic Battery Storage](https://github.com/ChrisAdderley/DynamicBatteryStorage/releases/tag/2.0.5) integration
- + Fusebox integration
- + Ampyear integration
+ + ![AllYAll](http://forum.kerbalspaceprogram.com/index.php?/topic/155858-ksp-122-all) integration
+ + ![NearFuture](https://forum.kerbalspaceprogram.com/index.php?/topic/155465-16x-near-future-technologies-16x-fixes-jan-21/) integration
+ + ![Dymanic Battery Storage](https://github.com/ChrisAdderley/DynamicBatteryStorage/releases/tag/2.0.5) integration
+ + ![Fusebox](http://forum.kerbalspaceprogram.com/index.php?/topic/157896-122-fusebox-continued-electric-charge-tracker-and-build-helper/) integration
+ + ![Ampyear](http://forum.kerbalspaceprogram.com/index.php?/topic/114991-105-ampyear-main-reserve-power-manager-ion-rcs-traffic-light-icons-edition-v1200-28-feb-2016/) integration
  + Add Heat production
  + Convert to On-Demand Resource Converter (still base of ODFC) by either adding or modifying
- +
+ + Determine if both BackgroundProcessing and Background Resources mods are installed and adjust.
+ + add a vessel wide control panel (GUI) for all ODFC on vessel.
 
 ## Dependencies
  * Kerbal Space Program
  * ![ModuleManager](http://forum.kerbalspaceprogram.com/index.php?/topic/50533-105-module-manager-2618-january-17th-with-even-more-sha-and-less-bug/)
 
 ## Supports
- * [WIP]
- * [WIP]
- * [] Bon Voyage
+ * ![AllYAll](http://forum.kerbalspaceprogram.com/index.php?/topic/155858-ksp-122-all) - supports by removing
+ * ![BackgroundProcessing](http://forum.kerbalspaceprogram.com/index.php?/topic/88777-102-backgroundprocessing/) (current - see known issues list)
+ * ![Background Resources](https://github.com/KSP-RO/TacLifeSupport/wiki) (either this or BackgroundResources
+ * [Bon Voyage](https://forum.kerbalspaceprogram.com/index.php?/topic/172447-ksp-15x-bon-voyage-make-your-wheels-rolling-01411-2018-11-10/) 
 
 ## Suggests
- * ![Community Resource Pack]P()
- * ![Kerbal Change Log]()
- *
+ * ![Community Resource Pack](https://forum.kerbalspaceprogram.com/index.php?/topic/166314-131-community-real-agency-pack/)
+ * ![Kerbal Change Log](https://forum.kerbalspaceprogram.com/index.php?/topic/179207-*)
+ * ![Hot Beverages Microwaved](https://github.com/zer0Kerbal/HotBeverageReheated) - additional fuel cells (stack) and other parts
+ 
+## Conflicts
+ * ![ODFC - On Demand Fuel Cells by Orum](http://forum.kerbalspaceprogram.com/index.php?/topic/138431-111-on-demand-fuel-cells-odfc-v11/)
 
 ## License  
 ![[CC 4.0 BY-NC-SA](https://creativecommons.org/licenses/by-nc-sa/4.0/)](https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png "CC 4.0 BY-NC-SA")
@@ -67,7 +73,7 @@ Extract to your KSP folder.
 
 *a part of the **TWYLLTR** (Take What You Like, Leave the Rest) collection.*  
 
-📌v0.0.1.8-beta  
+📌v0.0.1.8-pre-release  
 
 ## links to original:  
 On Demand Fuel Cells (ODFC) by `Orum'  
@@ -84,4 +90,4 @@ Licensed under CC BY-NC-SA-4.0
 ##### All bundled mods are distributed under their own licenses
 ##### All art assets (textures, models, animations) are distributed under an All Rights Reserved License.
 
-###### v0.0.1.8 original: 11 Aug 2018 zed'K | updated: 22 Aug 2019 zed'K & 4x4cheesecake & LinuxGuruGamer
+###### v0.0.1.8 original: 11 Aug 2018 zed'K | updated: 24 Aug 2019 zed'K & 4x4cheesecake & LinuxGuruGamer
