@@ -15,6 +15,8 @@ cooperative efforts of 4x4cheesecake, LinuxGuruGamer, and zer0Kerbal to continue
 ## ODFC  
 ### ***On Demand Fuel Cells Refueled (ODFCr)***  
 
+On Demand Fuel Cells (ODFC) is a plugin to simulate fuel cells in Kerbal Space Program (KSP), and do a better job of it than stock's use of a resource converter.  The main difference is it only generates electricity when it's really needed (batteries almost empty), and otherwise lets electricity of a craft float up and down, as it might in a solar powered vehicle when the sun is eclipsed by another celestial body.  It also allows fuel cells to generate byproducts, aimed at supporting life support mods like TACLS. 
+
 Extract to your KSP folder.
 
 ### Summary Changelog
