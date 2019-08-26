@@ -1,15 +1,15 @@
-## ODFC  
-### On Demand Fuel Cells Refueled (ODFCr) 
-#### Formerly known as On Demand Fuel Cells (ODFC)
+// Download on SpaceDock here or Github here.
+// Also available on CKAN.
+
+## On Demand Fuel Cells Refueled (ODFCr) 
 ![ODFCr](https://img.shields.io/badge/KSP%20version-1.7.x-66ccff.svg?style=flat-square) 
 ![ODFCr](https://img.shields.io/badge/MOD%20version-0.0.1.6-orange.svg?style=flat-square)
 ![ODFCr](https://img.shields.io/github/downloads/zer0Kerbal/ODFCr/total)
 
-# zer0Kerbal 
-### Proudly Adopts for curation  
+#### Formerly known as On Demand Fuel Cells (ODFC)
 
+Continuation of *On Demand Fuel Cells (ODFC)* by `**Orum**', now continued by the cooperative efforts of 4x4cheesecake, LinuxGuruGamer, and zer0Kerbal.
 
-cooperative efforts of 4x4cheesecake, LinuxGuruGamer, and zer0Kerbal to continue original *On Demand Fuel Cells (ODFC)* by `**Orum**'  
 ![ODFC Refueled](https://i.postimg.cc/HLZt1bq1/1.png)
 
 ## ODFC  
@@ -18,7 +18,7 @@ cooperative efforts of 4x4cheesecake, LinuxGuruGamer, and zer0Kerbal to continue
 Extract to your KSP folder.
 
 ### Summary Changelog
-*See ChangeLog.txt for full details of mod changes*
+*See ![ChangeLog](https://github.com/zer0Kerbal/ODFCr/blob/master/changelog.md) for full details of mod changes*
 
 #### STATUS:
  * ***BETA PRE-Release***
@@ -56,7 +56,7 @@ Extract to your KSP folder.
  * ![AllYAll](http://forum.kerbalspaceprogram.com/index.php?/topic/155858-ksp-122-all) - supports by removing
  * ![BackgroundProcessing](http://forum.kerbalspaceprogram.com/index.php?/topic/88777-102-backgroundprocessing/) (current - see known issues list)
  * ![Background Resources](https://github.com/KSP-RO/TacLifeSupport/wiki) (either this or BackgroundResources
- * [Bon Voyage](https://forum.kerbalspaceprogram.com/index.php?/topic/172447-ksp-15x-bon-voyage-make-your-wheels-rolling-01411-2018-11-10/) 
+ * ![Bon Voyage](https://forum.kerbalspaceprogram.com/index.php?/topic/172447-ksp-15x-bon-voyage-make-your-wheels-rolling-01411-2018-11-10/) 
 
 ## Suggests
  * ![Community Resource Pack](https://forum.kerbalspaceprogram.com/index.php?/topic/166314-131-community-real-agency-pack/)
@@ -90,4 +90,4 @@ Licensed under CC BY-NC-SA-4.0
 ##### All bundled mods are distributed under their own licenses
 ##### All art assets (textures, models, animations) are distributed under an All Rights Reserved License.
 
-###### v0.0.1.8 original: 11 Aug 2018 zed'K | updated: 24 Aug 2019 zed'K & 4x4cheesecake & LinuxGuruGamer
+###### v0.0.1.8 original: 11 Aug 2018 zed'K | updated: 25 Aug 2019 zed'K & 4x4cheesecake & LinuxGuruGamer
