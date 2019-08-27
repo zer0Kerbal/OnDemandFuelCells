@@ -1,5 +1,5 @@
 ---
-name: Sstock fuel cells balance survey
+name: Stack/Stock fuel cells balance survey
 about: Tell us your thougts concerning balancing ***stack*** fuel cells
 title: ''
 labels: 'stackcells'
