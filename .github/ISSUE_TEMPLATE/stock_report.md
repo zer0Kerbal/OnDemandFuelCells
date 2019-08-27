@@ -11,8 +11,8 @@ assignees: 'zer0Kerbal'
 
 
 ### Improvements
- * Additional sizes of stock/stack/fuselage fuel cells? 
- * What EC/s desired? 
+ * Additional sizes of stock/stack/fuselage fuel cells?
+ * What EC/s desired?
  * Consumption?
  * Patches for stock pods? what specs?
  * Additional Features
@@ -36,7 +36,7 @@ Thank you in advance!
 
 
 ![Stack Fuel Cell Specifications](https://i.postimg.cc/XqTbqHsH/image.png)
- 
+
 
 For comparison
 
@@ -56,3 +56,8 @@ For comparison
   - mass:    0.24
   - EC/s Produced:    18      
   - EC storage: 300
+
+  | Name | Cost | Entry Cost | Tech Required | Mass *(t)* | EC/s Produced | EC Storage | Fuel (Units) |
+  | :-- | :-- | :-- | :-- | :-- | :-- | :-- | :-- |
+  | Stock Fuel Cell | 750 | 2250 | Electrics | 0.05 | 1.5 | 50 | |
+  | Stock Fuel Cell Array | 4500 | 13500 | Electrics | 0.24 | 18 | 300 | |
