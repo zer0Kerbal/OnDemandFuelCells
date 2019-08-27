@@ -1,6 +1,6 @@
 ---
-name: Stack Fuel Cell comments
-about: Tell us your thougts concerning balancing stack fuel cells
+name: Sstock fuel cells balance survey
+about: Tell us your thougts concerning balancing ***stack*** fuel cells
 title: ''
 labels: 'stackcells'
 assignees: 'zer0Kerbal'
@@ -8,7 +8,7 @@ assignees: 'zer0Kerbal'
 ---
 
 # Thank you in advance!
-
+## stack fuel cells balance survey
 
 ### Improvements
  * Additional sizes of stock/stack/fuselage fuel cells? 
