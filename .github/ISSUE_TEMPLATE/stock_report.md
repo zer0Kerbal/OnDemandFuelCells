@@ -4,7 +4,6 @@ about: Tell us your thougts concerning balancing ***stack*** fuel cells
 title: ''
 labels: 'stackcells'
 assignees: 'zer0Kerbal'
-
 ---
 
 # Thank you in advance!
