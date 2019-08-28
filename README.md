@@ -8,12 +8,14 @@
 
 #### Formerly known as On Demand Fuel Cells (ODFC)
 
-Continuation of *On Demand Fuel Cells (ODFC)* by `**Orum**', now continued by the cooperative efforts of 4x4cheesecake, LinuxGuruGamer, and zer0Kerbal.
+zer0Kerbal adopts for curation a continuation of *On Demand Fuel Cells (ODFC)* by `**Orum**', now continued by the cooperative efforts of 4x4cheesecake, LinuxGuruGamer, and zer0Kerbal.
 
 ![ODFC Refueled](https://i.postimg.cc/HLZt1bq1/1.png)
 
 ## ODFC  
 ### ***On Demand Fuel Cells Refueled (ODFCr)***  
+
+On Demand Fuel Cells (ODFC) is a plugin to simulate fuel cells in Kerbal Space Program (KSP), and do a better job of it than stock's use of a resource converter.  The main difference is it only generates electricity when it's really needed (batteries almost empty), and otherwise lets electricity of a craft float up and down, as it might in a solar powered vehicle when the sun is eclipsed by another celestial body.  It also allows fuel cells to generate byproducts, aimed at supporting life support mods like TACLS. 
 
 Extract to your KSP folder.
 
@@ -55,7 +57,7 @@ Extract to your KSP folder.
 ## Supports
  * ![AllYAll](http://forum.kerbalspaceprogram.com/index.php?/topic/155858-ksp-122-all) - supports by removing
  * ![BackgroundProcessing](http://forum.kerbalspaceprogram.com/index.php?/topic/88777-102-backgroundprocessing/) (current - see known issues list)
- * ![Background Resources](https://github.com/KSP-RO/TacLifeSupport/wiki) (either this or BackgroundResources
+ * ![Background Resources](https://github.com/KSP-RO/TacLifeSupport/wiki) (either this or BackgroundResources)
  * ![Bon Voyage](https://forum.kerbalspaceprogram.com/index.php?/topic/172447-ksp-15x-bon-voyage-make-your-wheels-rolling-01411-2018-11-10/) 
 
 ## Suggests
@@ -73,21 +75,20 @@ Extract to your KSP folder.
 
 *a part of the **TWYLLTR** (Take What You Like, Leave the Rest) collection.*  
 
-📌v0.0.1.8-pre-release  
+📌v0.0.1.9-pre-release  
 
 ## links to original:  
 On Demand Fuel Cells (ODFC) by `Orum'  
 Licensed under CC BY-NC-SA-4.0  
  * ![KSP Forums](https://forum.kerbalspaceprogram.com/index.php?/topic/138431-112-on-demand-fuel-cells-odfc-v11/)
- * ![Spacedock](https://spacedock.info/mod/618/ODFC%20-%20On%20Demand%20Fuel%20Cells)
- * ![Dropbox](https://www.dropbox.com/s/0rpp4138jumvaxq/ODFC_v1.1.zip?dl=0)
+ * ![Spacedock](https://spacedock.info/mod/618/ODFC%20-%20On%20Demand%20Fuel%20Cells/)
+ * ![Dropbox](https://www.dropbox.com/s/0rpp4138jumvaxq/ODFC_v1.1.zip?dl=0/)
 
 
 ![Jeb's Rule #1"](https://ic.pics.livejournal.com/asaratov/25113347/1448500/1448500_original.jpg   "Jeb's Rule #1")
 
 
-
 ##### All bundled mods are distributed under their own licenses
 ##### All art assets (textures, models, animations) are distributed under an All Rights Reserved License.
 
-###### v0.0.1.8 original: 11 Aug 2018 zed'K | updated: 25 Aug 2019 zed'K & 4x4cheesecake & LinuxGuruGamer
+###### v0.0.1.9 original: 11 Aug 2018 zed'K | updated: 28 Aug 2019 zed'K & 4x4cheesecake & LinuxGuruGamer
