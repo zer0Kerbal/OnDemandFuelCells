@@ -1,0 +1,26 @@
+add to part module (use FSHORT code to read in)
+
+   enabled = True
+   threshold = 0.05
+   rateLimit = 1.00
+   defaultMode = 1
+   autoSwitch = false
+	 UseSpecialistBonus = false
+
+then plan on putting those in the code. autoSwitch mode will be the most difficult.
+
+void huntPeck()
+{
+  currentFuelMode++
+  if (currentMode <= totalModes) // check for depleted
+  else { currentmode = 0 };
+}
+
+eventually want to add the following for each fuel/byproducts:
+
+   reserve Amount= 0.0 (fuels)
+   maximumAmount = 1.00 (byproducts)
+   ventExcess = True (byproducts, vent excess over maximum Amount)
+   flowMode = All
+
+Plan is to fully release early September 2019, along with Hot Beverages(at least the fuel cell parts).

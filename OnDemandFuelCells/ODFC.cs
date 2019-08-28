@@ -9,7 +9,7 @@ namespace ODFC
     public class ODFC : PartModule
     {
         #region Enums Vars
-        public enum states : byte { error, off, nominal, fuelDeprived, noDemand }; // deploy, retract, 
+        public enum states : byte { error, off, nominal, fuelDeprived, noDemand }; // deploy, retract,
 
         private const string FuelTransferFormat = "0.##"; //FuelTransferFormat?
         private const float
@@ -55,20 +55,20 @@ namespace ODFC
         [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "Enabled:"), UI_Toggle(disabledText = "No", enabledText = "Yes")]
         public bool fuelCellIsEnabled = true;
 
-        [KSPEvent(guiActive = false, guiActiveEditor = false, guiName = "Previous Fuel Mode")]
-        public void previousFuelMode()
-        {
-            if (--fuelMode < 0)
-                fuelMode = ODFC_config.modes.Length - 1;
-
-            udft();
-        }
-
         [KSPEvent(guiActive = true, guiActiveEditor = true, guiName = "Next Fuel Mode")]
         public void nextFuelMode()
         {
             if (++fuelMode >= ODFC_config.modes.Length)
                 fuelMode = 0;
+
+            udft();
+        }
+
+        [KSPEvent(guiActive = false, guiActiveEditor = false, guiName = "Previous Fuel Mode")]
+        public void previousFuelMode()
+        {
+            if (--fuelMode < 0)
+                fuelMode = ODFC_config.modes.Length - 1;
 
             udft();
         }
@@ -97,16 +97,16 @@ namespace ODFC
             fuelCellIsEnabled = false;
         }
 
-        [KSPAction("Previous Fuel Mode")]
-        public void previousFuelModeAction(KSPActionParam kap)
-        {
-            previousFuelMode();
-        }
-
         [KSPAction("Next Fuel Mode")]
         public void nextFuelmodeAction(KSPActionParam kap)
         {
             nextFuelMode();
+        }
+
+        [KSPAction("Previous Fuel Mode")]
+        public void previousFuelModeAction(KSPActionParam kap)
+        {
+            previousFuelMode();
         }
 
         [KSPAction("Decrease Rate Limit")]
@@ -150,7 +150,7 @@ namespace ODFC
             {
                 if (plus)
                     s += " + ";
-                // add code to verify found exists to prevent nullref			
+                // add code to verify found exists to prevent nullref
                 plus = true;
                 resourceLa abr = lastResource.Find(x => x.resourceID == fuel.resourceID);
 
@@ -370,7 +370,7 @@ namespace ODFC
 				amount = 0;
                 part.GetConnectedResourceTotals(fuel.resourceID , out amount, out maxAmount);
 
-                foreach (PartResource r in resources) 
+                foreach (PartResource r in resources)
                     amount += r.amount;
 
                 cfTime = Math.Min(cfTime, amount / (fuel.rate * rateLimit)); // (Double)amount)
@@ -396,12 +396,9 @@ namespace ODFC
         {
             if (HighLogic.LoadedSceneIsEditor)
             {
-                Double nmax = ODFC_config.modes[fuelMode].maxEC * rateLimit;
+                Double newMax = ODFC_config.modes[fuelMode].maxEC * rateLimit;
 
-        public void Update() {
-			if(HighLogic.LoadedSceneIsEditor) {
-				Double newMax = ODFC_config.modes[fuelMode].maxEC * rateLimit;
-				
+  		
 				if(lastMax != newMax) {
 					lastMax = newMax;
 					maxECs_status = lastMax.ToString(FuelTransferFormat);
