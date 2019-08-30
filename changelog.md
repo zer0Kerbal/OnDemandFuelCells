@@ -5,7 +5,12 @@
 #### STATUS:
  * ***BETA PRE-Release***
 
-####  v.0.0.1.8
+####  v.0.0.1.9
+ * added item grouping in PAW.
+ * [NEW][BUG 0.0.1.9a] - B9 module swapping - needs onLoad etc update to make work
+ * [NEW][BUG 0.0.1.9b] next fuel mode should not be visable when only one mode
+
+#### v.0.0.1.8
  * ns renamed to newState
  * nmax renamed to newMax
  * add new recommended mod: HotBeverageReheated
