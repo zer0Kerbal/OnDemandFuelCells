@@ -22,6 +22,24 @@
 //    bool    ventExcess = True(byproducts, vent excess over maximum Amount)
 //    // flowMode = All;
 
+//MODULE
+//{
+//    name = ModuleODFC
+//    thresholdMin = 0.05
+//    thresholdMax = 0.95
+//    thresholdStep = 0.05
+//    defaultMode = MonoPropellant
+//    autoSwitch = true
+//    enabled = true
+//    useSpecialistBonus = true
+//    MODE
+//    {
+//        reserveAmount = 0.00
+//        maxAmount = 1.00
+//        ventExcess = true
+//        flowmode = All
+//    }
+//}
 
 #define DEBUG
 
@@ -38,7 +56,7 @@ namespace ODFC
         public enum states : byte { error, off, nominal, fuelDeprived, noDemand }; // deploy, retract,
         private const string FuelTransferFormat = "0.##"; //FuelTransferFormat?
         private const float
-            thresHoldSteps = 0.05f,
+            thresHoldSteps = 0.05f, // increment the rate by this amount (default is 5)
             thresholdMin = thresHoldSteps,
             thresHoldMax = 1;
   
