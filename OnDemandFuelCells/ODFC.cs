@@ -1,4 +1,29 @@
-﻿#define DEBUG
+﻿//void huntPeck()
+//{
+//    currentFuelMode++
+//  if (currentMode <= totalModes) // check for depleted
+//  else { currentmode = 0 };
+//}
+
+////MODULE variables
+//    double  threshold = 0.05f, //thresHoldSteps
+//            rateLimit = 1;
+
+//    byte    defaultMode = 1;
+
+//    bool    autoSwitch = false,
+//            enabled = true,
+//            UseSpecialistBonus = false;
+
+//per FUEL/BYPRODUCT:
+//    double  reserveAmount = 0.0f, //(fuels)
+//            maximumAmount = 1.00f; // (byproducts)
+
+//    bool    ventExcess = True(byproducts, vent excess over maximum Amount)
+//    // flowMode = All;
+
+
+#define DEBUG
 
 using System;
 using System.Collections.Generic;
@@ -9,13 +34,14 @@ namespace ODFC
     public class ODFC : PartModule
     {
         #region Enums Vars
+        // add stalled stated
         public enum states : byte { error, off, nominal, fuelDeprived, noDemand }; // deploy, retract,
-
         private const string FuelTransferFormat = "0.##"; //FuelTransferFormat?
         private const float
             thresHoldSteps = 0.05f,
             thresholdMin = thresHoldSteps,
             thresHoldMax = 1;
+  
 
         private Double
             lastGen = -1,
@@ -32,30 +58,30 @@ namespace ODFC
         public cfg ODFC_config;
         public states state = states.error;
         #endregion
-
+        
         #region Fields Events Actions
-        [KSPField(isPersistant = true, guiActive = false, guiActiveEditor = false)]
+        [KSPField(isPersistant = true, guiActive = false, guiActiveEditor = false, groupName = "ODFC", groupDisplayName = "On Demand Fuel Cells", groupStartCollapsed = true)]
         public int fuelMode = 0;
 
-        [KSPField(isPersistant = false, guiActive = true, guiActiveEditor = false, guiName = "Status")]
+        [KSPField(isPersistant = false, guiActive = true, guiActiveEditor = false, guiName = "Status", groupName = "ODFC", groupDisplayName = "On Demand Fuel Cells", groupStartCollapsed = true)]
         public string status = "ERROR!";
 
-        [KSPField(isPersistant = false, guiActive = true, guiActiveEditor = false, guiName = "EC/s (cur/max)")]
+        [KSPField(isPersistant = false, guiActive = true, guiActiveEditor = false, guiName = "EC/s (cur/max)", groupName = "ODFC", groupDisplayName = "On Demand Fuel Cells", groupStartCollapsed = true)]
         public string ECs_status = "ERROR!";
 
-        [KSPField(isPersistant = false, guiActive = false, guiActiveEditor = true, guiName = "Max EC/s")]
+        [KSPField(isPersistant = false, guiActive = false, guiActiveEditor = true, guiName = "Max EC/s", groupName = "ODFC", groupDisplayName = "On Demand Fuel Cells", groupStartCollapsed = true)]
         public string maxECs_status = "ERROR!";
 
-        [KSPField(isPersistant = false, guiActive = true, guiActiveEditor = true, guiName = "Fuel Used")]
+        [KSPField(isPersistant = false, guiActive = true, guiActiveEditor = true, guiName = "Fuel Used", groupName = "ODFC", groupDisplayName = "On Demand Fuel Cells", groupStartCollapsed = true)]
         public string fuel_consumption = "ERROR!";
 
-        [KSPField(isPersistant = false, guiActive = false, guiActiveEditor = false, guiName = "Byproducts")]
+        [KSPField(isPersistant = false, guiActive = false, guiActiveEditor = false, guiName = "Byproducts", groupName = "ODFC", groupDisplayName = "On Demand Fuel Cells", groupStartCollapsed = true)]
         public string byproducts = "ERROR!";
 
-        [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "Enabled:"), UI_Toggle(disabledText = "No", enabledText = "Yes")]
+        [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "Enabled:", groupName = "ODFC", groupDisplayName = "On Demand Fuel Cells", groupStartCollapsed = true), UI_Toggle(disabledText = "No", enabledText = "Yes")]
         public bool fuelCellIsEnabled = true;
 
-        [KSPEvent(guiActive = true, guiActiveEditor = true, guiName = "Next Fuel Mode")]
+        [KSPEvent(guiActive = true, guiActiveEditor = true, guiName = "Next Fuel Mode", groupName = "ODFC", groupDisplayName = "On Demand Fuel Cells", groupStartCollapsed = true)]
         public void nextFuelMode()
         {
             if (++fuelMode >= ODFC_config.modes.Length)
@@ -64,7 +90,7 @@ namespace ODFC
             udft();
         }
 
-        [KSPEvent(guiActive = false, guiActiveEditor = false, guiName = "Previous Fuel Mode")]
+        [KSPEvent(guiActive = false, guiActiveEditor = false, guiName = "Previous Fuel Mode", groupName = "ODFC", groupDisplayName = "On Demand Fuel Cells", groupStartCollapsed = true)]
         public void previousFuelMode()
         {
             if (--fuelMode < 0)
@@ -73,10 +99,10 @@ namespace ODFC
             udft();
         }
 
-        [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "Rate Limit:", guiFormat = "P0"), UI_FloatRange(minValue = thresholdMin, maxValue = thresHoldMax, stepIncrement = thresHoldSteps)]
+        [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "Rate Limit:", guiFormat = "P0", groupName = "ODFC", groupDisplayName = "On Demand Fuel Cells", groupStartCollapsed = true), UI_FloatRange(minValue = thresholdMin, maxValue = thresHoldMax, stepIncrement = thresHoldSteps)]
         public float rateLimit = 1f;
 
-        [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "Threshold:", guiFormat = "P0"), UI_FloatRange(minValue = thresholdMin, maxValue = thresHoldMax, stepIncrement = thresHoldSteps)]
+        [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "Threshold:", guiFormat = "P0", groupName = "ODFC", groupDisplayName = "On Demand Fuel Cells", groupStartCollapsed = true), UI_FloatRange(minValue = thresholdMin, maxValue = thresHoldMax, stepIncrement = thresHoldSteps)]
         public float threshold = thresholdMin;
 
         [KSPAction("Toggle")]
