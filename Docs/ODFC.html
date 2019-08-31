@@ -1,10 +1,11 @@
 ﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
-<head>
-<title>ODFC Documentation</title>
 <link href="style.css" rel="stylesheet" />
+<head>
+	<title>On Demand Fuel Cells Refueled Documentation</title>
 </head>
 <body>
+<p><small><i>Updated 30 Aug 2019</i></small></p>
 <div class="bw">
 <h1><a id="cfgfile">Config File</a></h1>
 <p class="i">Here you'll find all the necessary <a href="http://wiki.kerbalspaceprogram.com/wiki/API:ConfigNode">ConfigNode</a> definitions, including key/value pairs, for creating your own parts to use the ODFC module, or to augment the included parts.  Note that everything contained within is case-sensitive.</p>
@@ -35,7 +36,7 @@
 			<td><span class="val">See the <a href="http://wiki.kerbalspaceprogram.com/wiki/CFG_File_Documentation#MODULES">documentation on the KSP wiki</a> for more information.</span></td>
 	</tr>
 </table>
-<h3><a id="fshort">FSHORT</a></h3>
+<h3><a id="fshort">FSHORT(depreciated)</a></h3>
 <table>
 	<tr>
 		<td><span class="key">Parent:</span></td>
@@ -127,7 +128,7 @@
 			<td><span class="val">Byproducts are created during nominal operation of the fuel cell in a given mode, and can be beneficial or harmful (e.g., if creating a fuel cell to work with <a href="http://forum.kerbalspaceprogram.com/threads/40667">TACLS</a>, you might make one that uses Hydrogen + Oxidizer and creates Water as a byproduct, or some other combination of fuels that creates Waste).</span></td>
 	</tr>
 </table>
-<h3><a id="tanks">TANKS</a></h3>
+<!-- <h3><a id="tanks">TANKS</a></h3>
 <table>
 	<tr>
 		<td><span class="key">Parent:</span></td>
@@ -217,7 +218,7 @@
 	<tr>
 		<td><span class="key">Notes:</span></td>
 			<td><span class="val">Holds a list of names of KSPParticleEmitter GameObject names and their flow rates (Emission) relative to <a href="#emitcoeff">EmitCoeff</a> to be used while the fuel cell is in this mode.  Note that this requires a corresponding (identical name) entry in EMITTERS to work properly.</span></td>
-	</tr>
+	</tr> -->
 </table>
 </div>
 <div class="sep"></div>
@@ -247,7 +248,7 @@
 			<td><span class="val">Must be set to "ODFC" (sans-quotes).  This is how KSP knows which plugin to use for the part behavior of a given MODULE.</span></td>
 	</tr>
 </table>
-<h3><a id="scalehack">ScaleHack</a></h3>
+<!-- <h3><a id="scalehack">ScaleHack</a></h3>
 <table>
 	<tr>
 		<td><span class="vkey">Used In:</span></td>
@@ -292,7 +293,7 @@
 		<td><span class="vkey">Notes:</span></td>
 			<td><span class="val">This is used as a coefficient when calculating how many particles an emitter will emit (known as "emission"), and will be equal to the emission when the <a href="#escaleval">&lt;EmitterScale&gt;</a> for an <a href="#emitterval">&lt;EmitterValue&gt;</a> = 1, and the fuel cell is operating at 100% rated capacity (before the effects of rate limiting).  It is not a strict limit on individual or total emission values.  For performance reasons, I recommend having no more than a combined total of 100 emission for any part in any configuration.  There are two easy ways to do this: by setting EmitCoeff to 100, and ensuring the sum of all <a href="#escaleval">&lt;EmitterScale&gt;</a> values are &lt;= 1, or by setting EmitCoeff to 100 / n (where 'n' is your <a href="#emitterval">&lt;EmitterValue&gt;</a> count) and making sure the sum of all <a href="#escaleval">&lt;EmitterScale&gt;</a> values are &lt;= n.  The stock parts in this mod are configured to do the latter.</span></td>
 	</tr>
-</table>
+</table> -->
 <h3><a id="maxec">MaxEC</a></h3>
 <table>
 	<tr>
@@ -316,7 +317,7 @@
 			<td><span class="val">This is the maximum amount of ElectricCharge per second that a nominal fuel cell in this mode can generate, assuming no rate limiting.  The default value is merely an internal requirement, and should not be used as a guideline for balance.  Instead, refer to the bundled parts for balance recommendations.  Lastly, note that this value has a direct impact on efficiency, and raising/lowering it without adjusting values in <a href="#fuels">FUELS</a> will increase/decrease efficiency respectively.</span></td>
 	</tr>
 </table>
-<h3><a id="resshort">&lt;ResourceShorthand&gt;</a></h3>
+<!-- <h3><a id="resshort">&lt;ResourceShorthand&gt;</a></h3>
 <table>
 	<tr>
 		<td><span class="vkey">Used In:</span></td>
@@ -338,7 +339,7 @@
 		<td><span class="vkey">Notes:</span></td>
 			<td><span class="val">This table is used to solve the problem of lengthy resource names, which can be too long to fit into a tweakable (right click menu) when they are concatenated for display to the user for the current mode of operation.  As such, this allows you to configure abbreviations for whatever resources your part may use.  This library is shared across all parts using the mod, and if several different resource abbreviations are given in different parts, it will use whichever one is loaded first.</span></td>
 	</tr>
-</table>
+</table> -->
 <h3><a id="resrate">&lt;ResourceRate&gt;</a></h3>
 <table>
 	<tr>
@@ -362,11 +363,11 @@
 			<td><span class="val">Each resource here is consumed (in the case of being used in <a href="#fuels">FUELS</a>) or generated (if used in <a href="#byproducts">BYPRODUCTS</a>) at the given rate when an unconstrained fuel cell is running at maximum capacity.  At slower rates, resource consumption/production is linearly interpolated.  The value(s) set here determine efficiency for a given mode, along with <a href="#maxec">MaxEC</a>.  See its notes for additional details.</span></td>
 	</tr>
 </table>
-<h3><a id="tankval">&lt;TankValue&gt;</a></h3>
+<!-- <h3><a id="tankval">&lt;TankValue&gt;</a></h3>
 <table>
 	<tr>
 		<td><span class="vkey">Used In:</span></td>
-			<td><span class="val"><a href="#tanks">TANKS</a></span></td>
+		<td><span class="val"><a href="#tanks">TANKS</a></span></td>
 	</tr>
 	<tr>
 		<td><span class="vkey">Name Type:</span></td>
@@ -384,8 +385,8 @@
 		<td><span class="vkey">Notes:</span></td>
 			<td><span class="val">This controls what textures are mapped to which "tank" meshes on the model, as defined by GameObjects within the model.  Using these you can swap tank textures to reflect the resources currently in use.  Note that no resource is actually stored on the fuel cell, with the exception of some ElectricCharge required for operation (see <a href="#cfgnotes">Notes</a> for more information).</span></td>
 	</tr>
-</table>
-<h3><a id="lightval">&lt;LightValue&gt;</a></h3>
+</table> -->
+<!-- <h3><a id="lightval">&lt;LightValue&gt;</a></h3>
 <table>
 	<tr>
 		<td><span class="vkey">Used In:</span></td>
@@ -407,8 +408,8 @@
 		<td><span class="vkey">Notes:</span></td>
 			<td><span class="val">This defines the color to be applied to various light GameObjects within the model when operating in a given mode.  Lights are linearly scaled in brightness between their default value and 0 depending on the use of the fuel cell for power generation.</span></td>
 	</tr>
-</table>
-<h3><a id="emitterval">&lt;EmitterValue&gt;</a></h3>
+</table> -->
+<!-- <h3><a id="emitterval">&lt;EmitterValue&gt;</a></h3>
 <table>
 	<tr>
 		<td><span class="vkey">Used In:</span></td>
@@ -430,8 +431,8 @@
 		<td><span class="vkey">Notes:</span></td>
 			<td><span class="val">This defines emitters (KSPParticleEmitter GameObjects) to be used to represent the fuel being consumed or "burned", and lets you set an array of colors to be applied to those emitters for a given mode (leftmost is the earliest color time-wise, and rightmost the last).</span></td>
 	</tr>
-</table>
-<h3><a id="escaleval">&lt;EmitterScale&gt;</a></h3>
+</table> -->
+<!-- <h3><a id="escaleval">&lt;EmitterScale&gt;</a></h3>
 <table>
 	<tr>
 		<td><span class="vkey">Used In:</span></td>
@@ -472,6 +473,6 @@
 <h2><a id="mdltank">Tanks</a></h2>
 <p>Tanks, if present, use texture swapping instead of model (i.e. UV) swapping, in order to make modding in additional tank textures for other resources more accessible.  See <a href="#tankval">&lt;TankValue&gt;</a> for more information.</p>
 </div>
-</div>
+</div> -->
 </body>
 </html>
