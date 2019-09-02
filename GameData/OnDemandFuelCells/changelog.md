@@ -5,10 +5,25 @@
 #### STATUS:
  * ***BETA PRE-Release***
 
-####  v.0.0.1.9
+KERBALCHANGELOG
+{
+	showChangelog = True
+	modName = On Demand Fuel Cells Refueled (ODFCr)
+	VERSION
+	{
+		version =  ####  v.0.0.1.9
  * added item grouping in PAW.
  * [NEW][BUG 0.0.1.9a] - B9 module swapping - needs onLoad etc update to make work
- * [NEW][BUG 0.0.1.9b] next fuel mode should not be visable when only one mode
+ * [NEW][BUG 0.0.1.9b] next fuel mode should not be visible when only one mode
+ * [NEW][BUG 0.0.1.9c] ERROR!'s out when there is only one fuel mode. Stock pod patch only adds one mode (monoprop - because pods usually have monoprop if they have any fuel). This bug was temporarily fixed by added a second mode(it can be the same as the first so it appears like there only one fuel mode) in the patch (LFO). 
+ * Split patches into two categories, copy (green text) and modify (blue text)
+ * Copy Patches now automatically rename the part with an ODFC prefix
+ * Copy/Modify patches all add 50 cost, 0.010 mass, 5 EC battery, and 5 MP tank to all parts, even if part already has a battery / monoPropellant tank.
+ * Copy/Modify patches add 5 storedCharge (and DischargeCapacitor module) if Near Future Electrical installed
+ * Copy/Modify patches add 5 ReservePower if AmpYear installed
+ * Copy/Modify patches add 0.01 megaJoules if InterstellarFuelSwitch installed
+ * Added support for the following: JatwaaDemolitionsCo, MiningExpansion, SolidFuelCell, StockPods, UniversalStorage2, UniversalStorage2
+ * Patches coming for the following: Bluedog Design Bureau, RLA
 
 #### v.0.0.1.8
  * ns renamed to newState
