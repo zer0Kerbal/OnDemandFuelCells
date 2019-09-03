@@ -49,7 +49,7 @@ namespace ODFC
                     break;
 
                 case GameParameters.Preset.Moderate:
-                    needsECtoStart = false;
+                    needsECtoStart = true;
                     break;
 
                 case GameParameters.Preset.Hard:
