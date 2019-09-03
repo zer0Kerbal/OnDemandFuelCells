@@ -1,4 +1,3 @@
-<<<<<<< Updated upstream
 <!-- Readme.md v1.9
 On Demand Fuel Cells Refueled
 created: 17 Jul 18
@@ -13,32 +12,16 @@ Also available on CKAN. -->
 ![CKAN listed](https://img.shields.io/badge/CKAN-Indexed-brightgreen.svg)
 #### Formerly known as On Demand Fuel Cells (ODFC)
 
-Continuation of *On Demand Fuel Cells (ODFC)* by `**Orum**', now continued by the cooperative efforts of 4x4cheesecake, LinuxGuruGamer, and zer0Kerbal.
+zer0Kerbal adopts for curation a continuation of *On Demand Fuel Cells (ODFC)* by `**Orum**', now continued by the cooperative efforts of 4x4cheesecake, LinuxGuruGamer, and zer0Kerbal.
 
 ![ODFC PAW](https://i.postimg.cc/7Pj7gQQD/image.png)
 
 On Demand Fuel Cells (ODFC) is a plugin to simulate fuel cells in Kerbal Space Program (KSP), and do a better job of it than stock's use of a resource converter.  The main difference is it only generates electricity when it's really needed (batteries almost empty), and otherwise lets electricity of a craft float up and down, as it might in a solar powered vehicle when the sun is eclipsed by another celestial body.  It also allows fuel cells to generate byproducts, aimed at supporting life support mods like TACLS.
-=======
-// Download on SpaceDock here or Github here.
-// Also available on CKAN.
-
-## On Demand Fuel Cells Refueled (ODFCr) 
-![ODFCr](https://img.shields.io/badge/KSP%20version-1.7.x-66ccff.svg?style=flat-square) 
-![ODFCr](https://img.shields.io/badge/MOD%20version-0.0.1.6-orange.svg?style=flat-square)
-![ODFCr](https://img.shields.io/github/downloads/zer0Kerbal/ODFCr/total)
-
-#### Formerly known as On Demand Fuel Cells (ODFC)
-
-zer0Kerbal adopts for curation a continuation of *On Demand Fuel Cells (ODFC)* by `**Orum**', now continued by the cooperative efforts of 4x4cheesecake, LinuxGuruGamer, and zer0Kerbal.
-
-![ODFC Refueled](https://i.postimg.cc/HLZt1bq1/1.png)
->>>>>>> Stashed changes
 
 The plugin requires a set of Module Manager patches to function, as it does not do anything unless integrated into a part. There are two different sets of patches available on CKAN or SpaceDock.
 One set that copies the fuel cells from Stock, Universal Storage 2, Jatwaa Demolitions Co, and Solid Fuel Cells (soon more) and replaces the stock modules with ODFC with three modes (four if Community Resource Pack is installed correctly) of operation. Also adds a 0.5 EC/s multimode fuel cell to all stock command pods (easily disabled since in separate patch)
 Another set that modifies the same set of parts instead of copying them.
 
-<<<<<<< Updated upstream
 ### Features:
 - adjustable fuel cell use - much more than just On/Off operation
 - multiple fuel modes (serial usage - one mode at a time)
@@ -52,14 +35,6 @@ Another set that modifies the same set of parts instead of copying them.
 #### Installation Directions (assumes basic KSP mod installation knowledge):
 - Extract to your KSP folder.
 - Install related ModuleManager patches.
-=======
-On Demand Fuel Cells (ODFC) is a plugin to simulate fuel cells in Kerbal Space Program (KSP), and do a better job of it than stock's use of a resource converter.  The main difference is it only generates electricity when it's really needed (batteries almost empty), and otherwise lets electricity of a craft float up and down, as it might in a solar powered vehicle when the sun is eclipsed by another celestial body.  It also allows fuel cells to generate byproducts, aimed at supporting life support mods like TACLS. 
-
-Extract to your KSP folder.
-
-### Summary Changelog
-*See ![ChangeLog](https://github.com/zer0Kerbal/ODFCr/blob/master/changelog.md) for full details of mod changes*
->>>>>>> Stashed changes
 
 ### Summary Changelog
 *See ![ChangeLog](https://github.com/zer0Kerbal/ODFCr/blob/master/changelog.md) for full details of mod changes*
@@ -80,7 +55,6 @@ Extract to your KSP folder.
  * Patches coming for the following: Bluedog Design Bureau, RLA, MiningExpansion, UniversalStorage
  * ad hoc, ergo promptus hoc: dropping the 'v' on all future version numbering.
 ## Known Issue Tracker
-<<<<<<< Updated upstream
  * [BUG 0.0.1.6a] Does not seeming work with BackgroundProcessing or Background Resources mods (being looked at) (so ODFC doesn't work when doesn't have focus). Should not have both BackgroundProcessing and BackgroundResources installed.
 
 <hr>
@@ -143,56 +117,6 @@ Extract to your KSP folder.
 
  *Be Kind: Lithobrake, not jakebrake! Keep your Module Manager up to date*
 
-=======
- + [WIP] Work In Progress
- * [BUG 0.0.1.6a] Does not seeming work with BackgroundProcessing or Background Resources mods (being looked at) (so ODFC doesn't work when doesn't have focus). Should not have both BackgroundProcessing and BackgroundResources installed.
-
-## Feature Request Tracker
- + ![AllYAll](http://forum.kerbalspaceprogram.com/index.php?/topic/155858-ksp-122-all) integration
- + ![NearFuture](https://forum.kerbalspaceprogram.com/index.php?/topic/155465-16x-near-future-technologies-16x-fixes-jan-21/) integration
- + ![Dymanic Battery Storage](https://github.com/ChrisAdderley/DynamicBatteryStorage/releases/tag/2.0.5) integration
- + ![Fusebox](http://forum.kerbalspaceprogram.com/index.php?/topic/157896-122-fusebox-continued-electric-charge-tracker-and-build-helper/) integration
- + ![Ampyear](http://forum.kerbalspaceprogram.com/index.php?/topic/114991-105-ampyear-main-reserve-power-manager-ion-rcs-traffic-light-icons-edition-v1200-28-feb-2016/) integration
- + Add Heat production
- + Convert to On-Demand Resource Converter (still base of ODFC) by either adding or modifying
- + Determine if both BackgroundProcessing and Background Resources mods are installed and adjust.
- + add a vessel wide control panel (GUI) for all ODFC on vessel.
-
-## Dependencies
- * Kerbal Space Program
- * ![ModuleManager](http://forum.kerbalspaceprogram.com/index.php?/topic/50533-105-module-manager-2618-january-17th-with-even-more-sha-and-less-bug/)
-
-## Supports
- * ![AllYAll](http://forum.kerbalspaceprogram.com/index.php?/topic/155858-ksp-122-all) - supports by removing
- * ![BackgroundProcessing](http://forum.kerbalspaceprogram.com/index.php?/topic/88777-102-backgroundprocessing/) (current - see known issues list)
- * ![Background Resources](https://github.com/KSP-RO/TacLifeSupport/wiki) (either this or BackgroundResources)
- * ![Bon Voyage](https://forum.kerbalspaceprogram.com/index.php?/topic/172447-ksp-15x-bon-voyage-make-your-wheels-rolling-01411-2018-11-10/) 
-
-## Suggests
- * ![Community Resource Pack](https://forum.kerbalspaceprogram.com/index.php?/topic/166314-131-community-real-agency-pack/)
- * ![Kerbal Change Log](https://forum.kerbalspaceprogram.com/index.php?/topic/179207-*)
- * ![Hot Beverages Microwaved](https://github.com/zer0Kerbal/HotBeverageReheated) - additional fuel cells (stack) and other parts
- 
-## Conflicts
- * ![ODFC - On Demand Fuel Cells by Orum](http://forum.kerbalspaceprogram.com/index.php?/topic/138431-111-on-demand-fuel-cells-odfc-v11/)
-
-## License  
-![[CC 4.0 BY-NC-SA](https://creativecommons.org/licenses/by-nc-sa/4.0/)](https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png "CC 4.0 BY-NC-SA")
-
-[CC 4.0 BY-NC-SA](https://creativecommons.org/licenses/by-nc-sa/4.0/)
-
-*a part of the **TWYLLTR** (Take What You Like, Leave the Rest) collection.*  
-
-📌v0.0.1.9-pre-release  
-
-## links to original:  
-On Demand Fuel Cells (ODFC) by `Orum'  
-Licensed under CC BY-NC-SA-4.0  
- * ![KSP Forums](https://forum.kerbalspaceprogram.com/index.php?/topic/138431-112-on-demand-fuel-cells-odfc-v11/)
- * ![Spacedock](https://spacedock.info/mod/618/ODFC%20-%20On%20Demand%20Fuel%20Cells/)
- * ![Dropbox](https://www.dropbox.com/s/0rpp4138jumvaxq/ODFC_v1.1.zip?dl=0/)
->>>>>>> Stashed changes
-
 ##### All bundled mods are distributed under their own licenses
 ##### All art assets (textures, models, animations) are distributed under an All Rights Reserved License.
 
@@ -203,15 +127,8 @@ zer0Kerbal-->
 
 * ![Stack/Stock fuel cells balance survey](https://github.com/zer0Kerbal/ODFCr/issues/new?assignees=zer0Kerbal&labels=stackcells&template=stock_report.md&title=BalanceSurvey)
 
-<<<<<<< Updated upstream
 * ![Have a patch to add?](https://github.com/zer0Kerbal/ODFCr/issues/new?assignees=zer0Kerbal&labels=patches&template=feature_request.md&title=Patch)
 
 * ![Bug report?](https://github.com/zer0Kerbal/ODFCr/issues/new?assignees=zer0Kerbal&labels=bug&template=bug_report.md&title=BUG_report)
 
 * ![feature request?](https://github.com/zer0Kerbal/ODFCr/issues/new?assignees=zer0Kerbal&labels=feature&template=feature_request.md&title=feature_request)
-=======
-##### All bundled mods are distributed under their own licenses
-##### All art assets (textures, models, animations) are distributed under an All Rights Reserved License.
-
-###### v0.0.1.9 original: 11 Aug 2018 zed'K | updated: 28 Aug 2019 zed'K & 4x4cheesecake & LinuxGuruGamer
->>>>>>> Stashed changes
