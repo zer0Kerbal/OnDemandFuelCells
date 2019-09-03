@@ -1,4 +1,42 @@
-﻿#define DEBUG
+﻿/* ROADMAP TODO:
+implement 'stalled' mode - with a setting in the difficulty settings menu: this will 'stall' the fuel cell if the vessel (at least reachable) reaches below a certain level of EC (like <= 0),
+will not reset until the vessel has at least 0.5 EC
+
+fix showing 'next' button when there is only one mode of operation
+implement double slider in B9Partswitch
+implement PAW status in group header
+
+add to part module pulled from MODULE config nodes(use FSHORT code to read in)
+
+implement and add autoSwitch fuel deprived auto mode switcher will be the most difficult.
+
+ void huntPeck()
+{
+currentFuelMode++
+   if (currentMode <= totalModes) // check for depleted
+   else { currentmode = 0 }; // need to make sure not spamming autohunt
+}
+
+//MODULE variables
+double threshold = 0.05f, //thresHoldSteps
+        rateLimit = 1;
+
+byte defaultMode = 1;
+
+bool autoSwitch = false,
+          enabled = true,
+           UseSpecialistBonus = false;
+
+eventually want to add the following for each fuel/ byproducts:
+ per FUEL / BYPRODUCT:
+     double  reserveAmount = 0.0f, //(fuels)
+             maximumAmount = 1.00f; // (byproducts)
+
+bool ventExcess = True(byproducts, vent excess over maximum Amount)
+    // flowMode = All;
+ */
+
+#define DEBUG
 
 using System;
 using System.Collections.Generic;
@@ -33,9 +71,11 @@ namespace ODFC
         public cfg ODFC_config;
         public states state = states.error;
         #endregion
+        // added PAW grouping, set to autocollapse - introduced in KSP 1.7.1
         // would really like the PAW to remember if the group was open
+        // future: have the groupDisplayName display ODFC: [status] EC/s (cur/max)
         #region Fields Events Actions
-        [KSPField(isPersistant = true, guiActive = false, guiActiveEditor = false, groupName = "ODFC", groupDisplayName = "On Demand Fuel Cells", groupStartCollapsed = true)]
+        [KSPField(isPersistant = true, guiActive = false, guiActiveEditor = false, groupName = "ODFC", groupDisplayName = "<#ADFF2F>On Demand Fuel Cells</color", groupStartCollapsed = true)]
         public int fuelMode = 0;
 
         [KSPField(isPersistant = false, guiActive = true, guiActiveEditor = false, guiName = "Status", groupName = "ODFC", groupDisplayName = "On Demand Fuel Cells", groupStartCollapsed = true)]
@@ -73,7 +113,13 @@ namespace ODFC
 
             udft();
         }
-
+        /*
+        future: convert rateLimit and threshold to use 
+        KSP 1.7.1 Added a new type for PAW fields, a double slider to set ranges with a min and max values
+        https://kerbalspaceprogram.com/api/class_u_i_part_action_min_max_range.html
+        TMPro.TMP_InputField UIPartActionMinMaxRange.inputFieldMax
+        TMPro.TMP_InputField UIPartActionMinMaxRange.inputFieldMin
+        */
         [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "Rate Limit:", guiFormat = "P0", groupName = "ODFC", groupDisplayName = "On Demand Fuel Cells", groupStartCollapsed = true), UI_FloatRange(minValue = thresholdMin, maxValue = thresHoldMax, stepIncrement = thresHoldSteps)]
         public float rateLimit = 1f;
 
@@ -139,7 +185,7 @@ namespace ODFC
         private void udfs(out string s, Fuel[] fuels)
         {
             // DEBUG
-            ScreenMessages.PostScreenMessage("a: " + fuels.Length.ToString(), 1, ScreenMessageStyle.LOWER_CENTER, true);
+            //ScreenMessages.PostScreenMessage("a: " + fuels.Length.ToString(), 1, ScreenMessageStyle.LOWER_CENTER, true);
 
             if (fuels.Length == 0)
             {
@@ -161,7 +207,7 @@ namespace ODFC
                 s += PartResourceLibrary.Instance.GetDefinition(fuel.resourceID).name;
                 
                 // DEBUG
-                ScreenMessages.PostScreenMessage(s + ": " + fuels.Length.ToString(), 1, ScreenMessageStyle.UPPER_CENTER, true);
+                //ScreenMessages.PostScreenMessage(s, 1, ScreenMessageStyle.UPPER_CENTER, true);
             }
         }
 
