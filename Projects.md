@@ -15,6 +15,7 @@ Plan is to release first week of September 2019, coinsiding with Hot Beverages i
   - [x] implement grouping and autocollapse
   - [ ] implement summary status on grouping label (ODFC: *status* | EC/*s*: *currentEC/*maxEX*
   - [ ] have PAW remember collapse status of group
+  - [ ] convert to using double slider (KSP 1.7.1)
   
 ##### add to part module (use FSHORT code to read in)
 
@@ -24,9 +25,12 @@ Plan is to release first week of September 2019, coinsiding with Hot Beverages i
   - [ ] defaultMode = 1
   - [ ] autoSwitch = False
   - [ ] stallEC = False
-  - [ ] storedChargeFirst = False *(NearFuture)*
-  - [ ] researvePowerFirst = False *(Ampyear)*
-  - [ ] megajoulesFirst = False *(KSP Interstellar)*
+  - [ ] storedChargeFirst = False *(NearFuture)* (double slider for min/max/%)
+  - [ ] researvePowerFirst = False *(Ampyear)* (double slider for min/max/%)
+  - [ ] megajoulesFirst = False *(KSP Interstellar)* (double slider for min/max/%)
+
+##### Mod Compatability
+  - [] :NEEDS[Kethane] Kethane uses its own converter mode, but Kethane the resource (Kethane in, EC +xenonGas out)
 
 ##### implement into code.
   - [ ] autoSwitching fuel mode will be the most difficult.
