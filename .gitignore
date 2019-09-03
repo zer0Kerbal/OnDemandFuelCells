@@ -229,3 +229,6 @@ $RECYCLE.BIN/
 *.zip
 
 *.atom
+*.pdb
+*.dll
+*.mdb
