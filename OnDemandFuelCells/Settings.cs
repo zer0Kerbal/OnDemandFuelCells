@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEngine;
 using System.Collections.Generic;
 using System.Collections;
 using System.Reflection;
@@ -32,7 +33,7 @@ namespace ODFC
         // the "if false" to "if true" and set the values as you like
 
 
-#if false
+#if true
         public override bool HasPresets { get { return true; } }
         public override void SetDifficultyPreset(GameParameters.Preset preset)
         {
