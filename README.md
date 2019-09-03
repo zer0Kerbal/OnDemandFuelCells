@@ -12,7 +12,7 @@ Also available on CKAN. -->
 ![CKAN listed](https://img.shields.io/badge/CKAN-Indexed-brightgreen.svg)
 #### Formerly known as On Demand Fuel Cells (ODFC)
 
-Continuation of *On Demand Fuel Cells (ODFC)* by `**Orum**', now continued by the cooperative efforts of 4x4cheesecake, LinuxGuruGamer, and zer0Kerbal.
+zer0Kerbal adopts for curation a continuation of *On Demand Fuel Cells (ODFC)* by `**Orum**', now continued by the cooperative efforts of 4x4cheesecake, LinuxGuruGamer, and zer0Kerbal.
 
 ![ODFC PAW](https://i.postimg.cc/7Pj7gQQD/image.png)
 
@@ -116,7 +116,6 @@ Another set that modifies the same set of parts instead of copying them.
  @Orum (the mod's original author) has given permission to release this under CC-BY-NC-SA-4.0.
 
  *Be Kind: Lithobrake, not jakebrake! Keep your Module Manager up to date*
-
 
 ##### All bundled mods are distributed under their own licenses
 ##### All art assets (textures, models, animations) are distributed under an All Rights Reserved License.
