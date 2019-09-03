@@ -48,7 +48,7 @@ namespace ODFC
     {
         #region Enums Vars
         // add stalled state
-        public enum states : byte { error, off, nominal, fuelDeprived, noDemand }; // deploy, retract,
+        public enum states : byte { error, off, nominal, fuelDeprived, noDemand, stalled }; // deploy, retract,
         private const string FuelTransferFormat = "0.##"; //FuelTransferFormat?
         private const float
             thresHoldSteps = 0.05f, // increment the rate by this amount (default is 5)
@@ -253,6 +253,11 @@ namespace ODFC
                             status = "Off";
                             break;
                         }
+                    case states.stalled:
+                        {
+                            status = "Stalled";
+                            break;
+                        }
 #if DEBUG
                     default:
                         {
@@ -414,6 +419,13 @@ namespace ODFC
                 ECNeed = (Double)(maxAmount * threshold - amount),
                 fuelModeMaxECRateLimit = ODFC_config.modes[fuelMode].maxEC * rateLimit;
 
+            // add stall code
+            if (amount == 0f)
+            {
+                UpdateState(states.stalled, 0, fuelModeMaxECRateLimit);
+                return;
+            }
+
             cfTime = Math.Min(cfTime, ECNeed / fuelModeMaxECRateLimit); // Determine activity based on supply/demand
 
             if (cfTime <= 0)
@@ -439,7 +451,6 @@ namespace ODFC
                 UpdateState(states.fuelDeprived, 0, fuelModeMaxECRateLimit);
                 return;
             }
-
             Double adjr = rateLimit * cfTime;           // Calculate usage based on rate limiting and duty cycle
             Double ECAmount = fuelModeMaxECRateLimit * cfTime;
             part.RequestResource(ElectricChargeID, -ECAmount);   // Don't forget the most important part
