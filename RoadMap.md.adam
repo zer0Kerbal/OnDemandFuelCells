@@ -1,26 +1,35 @@
-add to part module (use FSHORT code to read in)
+implement 'stalled' mode - with a setting in the difficulty settings menu: this will 'stall' the fuel cell if the vessel (at least reachable) reaches below a certain level of EC (like <= 0),
+will not reset until the vessel has at least 0.5 EC
 
-   enabled = True
-   threshold = 0.05
-   rateLimit = 1.00
-   defaultMode = 1
-   autoSwitch = false
-	 UseSpecialistBonus = false
+fix showing 'next' button when there is only one mode of operation
+implement double slider in B9Partswitch
+implement PAW status in group header
 
-then plan on putting those in the code. autoSwitch mode will be the most difficult.
+add to part module pulled from MODULE config nodes (use FSHORT code to read in)
 
-void huntPeck()
-{
-  currentFuelMode++
-  if (currentMode <= totalModes) // check for depleted
-  else { currentmode = 0 };
-}
+implement and add autoSwitch fuel deprived auto mode switcher will be the most difficult.
+
+ void huntPeck()
+ {
+     currentFuelMode++
+   if (currentMode <= totalModes) // check for depleted
+   else { currentmode = 0 }; // need to make sure not spamming autohunt
+ }
+
+ //MODULE variables
+     double  threshold = 0.05f, //thresHoldSteps
+             rateLimit = 1;
+
+  byte    defaultMode = 1;
+
+  bool    autoSwitch = false,
+            enabled = true,
+             UseSpecialistBonus = false;
 
 eventually want to add the following for each fuel/byproducts:
+ per FUEL/BYPRODUCT:
+     double  reserveAmount = 0.0f, //(fuels)
+             maximumAmount = 1.00f; // (byproducts)
 
-   reserve Amount= 0.0 (fuels)
-   maximumAmount = 1.00 (byproducts)
-   ventExcess = True (byproducts, vent excess over maximum Amount)
-   flowMode = All
-
-Plan is to fully release early September 2019, along with Hot Beverages(at least the fuel cell parts).
+  bool    ventExcess = True(byproducts, vent excess over maximum Amount)
+    // flowMode = All;

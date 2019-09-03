@@ -1,4 +1,42 @@
-﻿#define DEBUG
+﻿/* ROADMAP TODO:
+implement 'stalled' mode - with a setting in the difficulty settings menu: this will 'stall' the fuel cell if the vessel (at least reachable) reaches below a certain level of EC (like <= 0),
+will not reset until the vessel has at least 0.5 EC
+
+fix showing 'next' button when there is only one mode of operation
+implement double slider in B9Partswitch
+implement PAW status in group header
+
+add to part module pulled from MODULE config nodes(use FSHORT code to read in)
+
+implement and add autoSwitch fuel deprived auto mode switcher will be the most difficult.
+
+ void huntPeck()
+{
+currentFuelMode++
+   if (currentMode <= totalModes) // check for depleted
+   else { currentmode = 0 }; // need to make sure not spamming autohunt
+}
+
+//MODULE variables
+double threshold = 0.05f, //thresHoldSteps
+        rateLimit = 1;
+
+byte defaultMode = 1;
+
+bool autoSwitch = false,
+          enabled = true,
+           UseSpecialistBonus = false;
+
+eventually want to add the following for each fuel/ byproducts:
+ per FUEL / BYPRODUCT:
+     double  reserveAmount = 0.0f, //(fuels)
+             maximumAmount = 1.00f; // (byproducts)
+
+bool ventExcess = True(byproducts, vent excess over maximum Amount)
+    // flowMode = All;
+ */
+
+#define DEBUG
 
 using System;
 using System.Collections.Generic;
@@ -9,13 +47,14 @@ namespace ODFC
     public class ODFC : PartModule
     {
         #region Enums Vars
+        // add stalled state
         public enum states : byte { error, off, nominal, fuelDeprived, noDemand }; // deploy, retract,
-
         private const string FuelTransferFormat = "0.##"; //FuelTransferFormat?
         private const float
-            thresHoldSteps = 0.05f,
+            thresHoldSteps = 0.05f, // increment the rate by this amount (default is 5)
             thresholdMin = thresHoldSteps,
             thresHoldMax = 1;
+  
 
         private Double
             lastGen = -1,
@@ -32,30 +71,32 @@ namespace ODFC
         public cfg ODFC_config;
         public states state = states.error;
         #endregion
-
+        // added PAW grouping, set to autocollapse - introduced in KSP 1.7.1
+        // would really like the PAW to remember if the group was open
+        // future: have the groupDisplayName display ODFC: [status] EC/s (cur/max)
         #region Fields Events Actions
-        [KSPField(isPersistant = true, guiActive = false, guiActiveEditor = false)]
+        [KSPField(isPersistant = true, guiActive = false, guiActiveEditor = false, groupName = "ODFC", groupDisplayName = "<#ADFF2F>On Demand Fuel Cells</color", groupStartCollapsed = true)]
         public int fuelMode = 0;
 
-        [KSPField(isPersistant = false, guiActive = true, guiActiveEditor = false, guiName = "Status")]
+        [KSPField(isPersistant = false, guiActive = true, guiActiveEditor = false, guiName = "Status", groupName = "ODFC", groupDisplayName = "On Demand Fuel Cells", groupStartCollapsed = true)]
         public string status = "ERROR!";
 
-        [KSPField(isPersistant = false, guiActive = true, guiActiveEditor = false, guiName = "EC/s (cur/max)")]
+        [KSPField(isPersistant = false, guiActive = true, guiActiveEditor = false, guiName = "EC/s (cur/max)", groupName = "ODFC", groupDisplayName = "On Demand Fuel Cells", groupStartCollapsed = true)]
         public string ECs_status = "ERROR!";
 
-        [KSPField(isPersistant = false, guiActive = false, guiActiveEditor = true, guiName = "Max EC/s")]
+        [KSPField(isPersistant = false, guiActive = false, guiActiveEditor = true, guiName = "Max EC/s", groupName = "ODFC", groupDisplayName = "On Demand Fuel Cells", groupStartCollapsed = true)]
         public string maxECs_status = "ERROR!";
 
-        [KSPField(isPersistant = false, guiActive = true, guiActiveEditor = true, guiName = "Fuel Used")]
+        [KSPField(isPersistant = false, guiActive = true, guiActiveEditor = true, guiName = "Fuel Used", groupName = "ODFC", groupDisplayName = "On Demand Fuel Cells", groupStartCollapsed = true)]
         public string fuel_consumption = "ERROR!";
 
-        [KSPField(isPersistant = false, guiActive = false, guiActiveEditor = false, guiName = "Byproducts")]
+        [KSPField(isPersistant = false, guiActive = false, guiActiveEditor = false, guiName = "Byproducts", groupName = "ODFC", groupDisplayName = "On Demand Fuel Cells")]
         public string byproducts = "ERROR!";
 
-        [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "Enabled:"), UI_Toggle(disabledText = "No", enabledText = "Yes")]
+        [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "Enabled:", groupName = "ODFC", groupDisplayName = "On Demand Fuel Cells", groupStartCollapsed = true), UI_Toggle(disabledText = "No", enabledText = "Yes")]
         public bool fuelCellIsEnabled = true;
-
-        [KSPEvent(guiActive = true, guiActiveEditor = true, guiName = "Next Fuel Mode")]
+        // changed from false to true
+        [KSPEvent(guiActive = true, guiActiveEditor = true, guiName = "Next Fuel Mode", groupName = "ODFC", groupDisplayName = "On Demand Fuel Cells", groupStartCollapsed = true)]
         public void nextFuelMode()
         {
             if (++fuelMode >= ODFC_config.modes.Length)
@@ -64,7 +105,7 @@ namespace ODFC
             udft();
         }
 
-        [KSPEvent(guiActive = false, guiActiveEditor = false, guiName = "Previous Fuel Mode")]
+        [KSPEvent(guiActive = false, guiActiveEditor = false, guiName = "Previous Fuel Mode", groupName = "ODFC", groupDisplayName = "On Demand Fuel Cells", groupStartCollapsed = true)]
         public void previousFuelMode()
         {
             if (--fuelMode < 0)
@@ -72,11 +113,17 @@ namespace ODFC
 
             udft();
         }
-
-        [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "Rate Limit:", guiFormat = "P0"), UI_FloatRange(minValue = thresholdMin, maxValue = thresHoldMax, stepIncrement = thresHoldSteps)]
+        /*
+        future: convert rateLimit and threshold to use 
+        KSP 1.7.1 Added a new type for PAW fields, a double slider to set ranges with a min and max values
+        https://kerbalspaceprogram.com/api/class_u_i_part_action_min_max_range.html
+        TMPro.TMP_InputField UIPartActionMinMaxRange.inputFieldMax
+        TMPro.TMP_InputField UIPartActionMinMaxRange.inputFieldMin
+        */
+        [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "Rate Limit:", guiFormat = "P0", groupName = "ODFC", groupDisplayName = "On Demand Fuel Cells", groupStartCollapsed = true), UI_FloatRange(minValue = thresholdMin, maxValue = thresHoldMax, stepIncrement = thresHoldSteps)]
         public float rateLimit = 1f;
 
-        [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "Threshold:", guiFormat = "P0"), UI_FloatRange(minValue = thresholdMin, maxValue = thresHoldMax, stepIncrement = thresHoldSteps)]
+        [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "Threshold:", guiFormat = "P0", groupName = "ODFC", groupDisplayName = "On Demand Fuel Cells", groupStartCollapsed = true), UI_FloatRange(minValue = thresholdMin, maxValue = thresHoldMax, stepIncrement = thresHoldSteps)]
         public float threshold = thresholdMin;
 
         [KSPAction("Toggle")]
@@ -137,6 +184,9 @@ namespace ODFC
         #region Private Functions
         private void udfs(out string s, Fuel[] fuels)
         {
+            // DEBUG
+            //ScreenMessages.PostScreenMessage("a: " + fuels.Length.ToString(), 1, ScreenMessageStyle.LOWER_CENTER, true);
+
             if (fuels.Length == 0)
             {
                 s = "None";
@@ -155,6 +205,9 @@ namespace ODFC
                 resourceLa abr = lastResource.Find(x => x.resourceID == fuel.resourceID);
 
                 s += PartResourceLibrary.Instance.GetDefinition(fuel.resourceID).name;
+                
+                // DEBUG
+                //ScreenMessages.PostScreenMessage(s, 1, ScreenMessageStyle.UPPER_CENTER, true);
             }
         }
 
@@ -252,15 +305,15 @@ namespace ODFC
             foreach (Fuel fuel in fuels)
                 part.RequestResource(fuel.resourceID, fuel.rate * adjr);
         }
-        #endregion
+#endregion
 
-        #region Public Functions
+#region Public Functions
         public override void OnLoad(ConfigNode configNode)
         {
             if (string.IsNullOrEmpty(scn))
             {
                 this.configNode = configNode;           // Needed for GetInfo()
-                scn = configNode.ToString();    // Needed for marshalling
+                scn = configNode.ToString();    // Needed for marshaling
             }
         }
 
@@ -278,9 +331,14 @@ namespace ODFC
             udft();
 
             if (ODFC_config.modes.Length < 2)
-            {   // Disable unneccessary UI elements if we only have a single mode
+            {   // Disable unnecessary UI elements if we only have a single mode
                 Events["nextFuel"].guiActive = false;
                 Events["nextFuel"].guiActiveEditor = false;
+
+                // added next two lines for v0.0.1.9 because if only one mode, don't need any prev/next functions.
+                Events["previousFuel"].guiActive = false;
+                Events["previousFuel"].guiActiveEditor = false;
+
                 Fields["fuel_consumption"].guiActive = false;
                 Fields["fuel_consumption"].guiActiveEditor = false;
                 Actions["previousFuelModeAction"].active = false;
@@ -408,6 +466,6 @@ namespace ODFC
                 UpdateState(newState, newState == states.nominal ? 1 : 0, 1);
 			}
 		}
-		#endregion
+#endregion
 	}
 }

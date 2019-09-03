@@ -1,0 +1,86 @@
+goal: to create a simple formula / lookup for consumption/production for easy comparison and game balance																							
+																							
+author: zer0Kerbal																							
+license: CC-BY-NC-SA-4.0																							
+																							
+fuel	component			consumptionPerEC	ECper1Unit	density	units per kg	kgperEC	EC/kg	Liters	volume	cost	Effeciency	storage	1 hr	0.5	1	1.5	5	10	15	30	50
+						kg/unit						per unit											
+LFO		0.5	1	0.0025	400	0.005	200	0.0000125	"80,000.00"	"16,000.00"	5		0.25										
+	Liquid Fuel	0.5	0.45	0.001125		0.005	200	0.000005625	0.005625		5	0.8											
+	Oxidizer		0.55	0.001375		0.005	200	0.000006875	0.006875		5	0.18											
+																							
+MP		0.5	1	0.001	1000	0.004	250	0.25	"250,000.00"	"50,000.00"	5	1.2	0.25										
+	MonoProp		1	0.001																			
+																							
+HO		0.5	1	0.256464865213693	3.899	0.00000053179340236	1880429.497	0.0000125	"7,332,113.49"	"7,332,113.49"	1		0.25										
+	Hydrogen		0.67	0.170615208464631		0.0000000899	11123470.52	0.000000015338307	0.0000153383072410		1	0.000055836											
+	Oxygen		0.33	0.085849656749061		0.0000014100	709219.8582	0.000000121048016	0.0001210480160162		1	0.000055836											
+																							
+	Water	produced	0.00053814	0.000138014054431	7245.638889	0.001	1000	0.000000138014054	0.0001380140544312	0.000138014054431	1	0.0008											
+																							
+LFIA		0.5	1	0.001360000000000	735.294	0.005	200	0.0000068	"147,058.82"	"117,647.06"	1.25		0.25										
+	Liquid Fuel		0.0625	0.000085		0.005	200	0.000000425	0.000425		5	0.8											
+	Intake Air		0.9375	0.001275		0.005	200	0.000006375	0.006375		1	0											
+																							
+																							
+consumption converter																							
+LFO	100%	5																					
+	Liquid Fuel		5	0.005625																			
+	Oxidizer		11.11111111	0.015277778				Written explaination and definitions:															
+								Fuel Density represents the amount of EC produced by a unit of fuel															
+MP	100%	5	5	0.005				"Unit of Fuel is the sum of it parts so LF+O, MP, LF + IA, H+O"															
+	MonoProp																						
+																							
+HO	100%	5							FD = 1 / (F1c+F2c+f3c)														
+	Hydrogen		5	0.853076042																			
+	Oxygen		7.515885234	0.645236168																			
+																							
+	Water	produced	5	0.0006900702722																			
+																							
+LFIA	100%	5																					
+	Liquid Fuel		5	0.000425																			
+	Intake Air		80	0.102																			
+																							
+select these columns							\t\r\n																
+	MODULE {																						
+		name = ODFC																					
+		MODE																					
+		{																					
+			MaxEC = 5																				
+			FUELS																				
+			{																				
+				MonoProp = 0.005																			
+			}																				
+		}																					
+		MODE																					
+		{																					
+			MaxEC = 5																				
+			FUELS																				
+			{																				
+				Liquid Fuel = 0.005625																			
+				Oxidizer = 0.0152777777777778																			
+			}																				
+		}																					
+		MODE:NEEDS[CommunityResourcePack]																					
+		{																					
+			MaxEC = 5																				
+			FUELS																				
+			{																				
+				Hydrogen = 0.853076042323157																			
+				Oxygen = 0.645236167541124																			
+			}																				
+			BYPRODUCTS																				
+			{																				
+				Water = 0.00069007027215605																			
+			}																				
+		}																					
+		MODE																					
+		{																					
+			MaxEC = 5																				
+			FUELS																				
+			{																				
+				Liquid Fuel = 0.000425																			
+				Intake Air = 0.102																			
+			}																				
+		}																					
+	}																						

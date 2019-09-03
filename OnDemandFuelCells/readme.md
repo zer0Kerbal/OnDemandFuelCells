@@ -1,7 +1,7 @@
 <!-- Readme.md v1.9
 On Demand Fuel Cells Refueled
 created: 17 Jul 18
-updated: 03 Sep 19 -->
+updated: 03 Swp 19 -->
 
 <!-- Download on SpaceDock here or Github here.
 Also available on CKAN. -->
@@ -12,7 +12,7 @@ Also available on CKAN. -->
 ![CKAN listed](https://img.shields.io/badge/CKAN-Indexed-brightgreen.svg)
 #### Formerly known as On Demand Fuel Cells (ODFC)
 
-zer0Kerbal adopts for curation a continuation of *On Demand Fuel Cells (ODFC)* by `**Orum**', now continued by the cooperative efforts of 4x4cheesecake, LinuxGuruGamer, and zer0Kerbal.
+Continuation of *On Demand Fuel Cells (ODFC)* by `**Orum**', now continued by the cooperative efforts of 4x4cheesecake, LinuxGuruGamer, and zer0Kerbal.
 
 ![ODFC PAW](https://i.postimg.cc/7Pj7gQQD/image.png)
 
@@ -22,7 +22,7 @@ The plugin requires a set of Module Manager patches to function, as it does not 
 One set that copies the fuel cells from Stock, Universal Storage 2, Jatwaa Demolitions Co, and Solid Fuel Cells (soon more) and replaces the stock modules with ODFC with three modes (four if Community Resource Pack is installed correctly) of operation. Also adds a 0.5 EC/s multimode fuel cell to all stock command pods (easily disabled since in separate patch)
 Another set that modifies the same set of parts instead of copying them.
 
-### Features:
+###Features:
 - adjustable fuel cell use - much more than just On/Off operation
 - multiple fuel modes (serial usage - one mode at a time)
 - variable activation threshold
@@ -32,7 +32,7 @@ Another set that modifies the same set of parts instead of copying them.
 - PAW (Part Action Window / Right Click Menu) grouping with autocollapse, click the down arrow to drop the ODFC control panel down (KSP 1.7.1).
 - more features coming soon
 
-#### Installation Directions (assumes basic KSP mod installation knowledge):
+### Installation Directions (assumes basic KSP mod installation knowledge):
 - Extract to your KSP folder.
 - Install related ModuleManager patches.
 
@@ -42,18 +42,6 @@ Another set that modifies the same set of parts instead of copying them.
 #### STATUS:
  * ***Initial-Release***
 
- ####  0.0.1.9 (this is actually 1.1.1.9 and next release will switch to 1.1.2.0)
- * added item grouping in PAW.
- * [NEW][BUG 0.0.1.9a] - B9 module swapping - needs onLoad etc update to make work
- * [NEW][BUG 0.0.1.9b] next fuel mode should not be visible when only one mode
- * [D][BUG 0.0.1.9c] mangled config caused this. added error checking in cfg.cs - thank you LGG for this code.
- * [NEW][BUG 0.0.1.9c] ERROR!'s out when there is only one fuel mode. Stock pod patch only adds one mode (monoprop - because pods usually have monoprop if they have any fuel). This bug was temporarily fixed by added a second mode(it can be the same as the first so it appears like there only one fuel mode) in the patch (LFO).
- * Split patches into two categories, copy (green text) and modify (blue text)
- * Copy Patches now automatically rename the part with an ODFC prefix
- * Copy/Modify patches all add 50 cost, 0.001 mass, 5 EC battery, and 5 MP tank to all parts, even if part already has a battery / monoPropellant tank.
- * Added support for the following: JatwaaDemolitionsCo, SolidFuelCell, StockPods, UniversalStorage2,
- * Patches coming for the following: Bluedog Design Bureau, RLA, MiningExpansion, UniversalStorage
- * ad hoc, ergo promptus hoc: dropping the 'v' on all future version numbering.
 ## Known Issue Tracker
  * [BUG 0.0.1.6a] Does not seeming work with BackgroundProcessing or Background Resources mods (being looked at) (so ODFC doesn't work when doesn't have focus). Should not have both BackgroundProcessing and BackgroundResources installed.
 
@@ -91,12 +79,13 @@ Another set that modifies the same set of parts instead of copying them.
  -
 
  #### Conflicts:
- - ![ODFC - On Demand Fuel Cells by Orum](http://forum.kerbalspaceprogram.com/index.php?/topic/138431-111-*) >-- ORIGINAL (outdated)--<
+ - ![ODFC - On Demand Fuel Cells by Orum](http://forum.kerbalspaceprogram.com/index.php?/topic/138431-111-*)
  <hr>
  #### Known issues:
  - ![Background Processing]()
  - ![Background Resources]()
  - ![B9Partswitch]()
+ - ![Tweakscale]()
  - any mod that requires to use onLoad() instead of onStart() to update a part  
 
  <hr>
@@ -117,6 +106,7 @@ Another set that modifies the same set of parts instead of copying them.
 
  *Be Kind: Lithobrake, not jakebrake! Keep your Module Manager up to date*
 
+
 ##### All bundled mods are distributed under their own licenses
 ##### All art assets (textures, models, animations) are distributed under an All Rights Reserved License.
 
@@ -125,10 +115,10 @@ Another set that modifies the same set of parts instead of copying them.
 CC BY-NC-SA-4.0
 zer0Kerbal-->
 
-* ![Stack/Stock fuel cells balance survey](https://github.com/zer0Kerbal/ODFCr/issues/new?assignees=zer0Kerbal&labels=stackcells&template=stock_report.md&title=BalanceSurvey)
+*Stack/Stock fuel cells balance survey? Kindly do submit on ![github](https://github.com/zer0Kerbal/ODFCr/issues/new?assignees=zer0Kerbal&labels=stackcells&template=stock_report.md&title=BalanceSurvey)!*
 
-* ![Have a patch to add?](https://github.com/zer0Kerbal/ODFCr/issues/new?assignees=zer0Kerbal&labels=patches&template=feature_request.md&title=Patch)
+*Have a patch to add? Kindly do submit on ![github](https://github.com/zer0Kerbal/ODFCr/issues/new?assignees=zer0Kerbal&labels=patches&template=feature_request.md&title=Patch)!*
 
-* ![Bug report?](https://github.com/zer0Kerbal/ODFCr/issues/new?assignees=zer0Kerbal&labels=bug&template=bug_report.md&title=BUG_report)
+*Have a bug to report? Kindly do submit on ![github](https://github.com/zer0Kerbal/ODFCr/issues/new?assignees=zer0Kerbal&labels=bug&template=bug_report.md&title=BUG_report)!*
 
-* ![feature request?](https://github.com/zer0Kerbal/ODFCr/issues/new?assignees=zer0Kerbal&labels=feature&template=feature_request.md&title=feature_request)
+*Have a feature to request? Kindly do submit on ![github](https://github.com/zer0Kerbal/ODFCr/issues/new?assignees=zer0Kerbal&labels=feature&template=feature_request.md&title=feature_request)!*

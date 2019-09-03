@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("On Demand Fuel Cells Refueled")]
 [assembly: AssemblyDescription("On Demand Fuel Cells expands the capabilities of Kerbal Space Program (KSP) fuel cells")]
 [assembly: AssemblyConfiguration("Release")]
-[assembly: AssemblyCompany("Okram Industries")]
+[assembly: AssemblyCompany("KGEx and Okram Industries")]
 [assembly: AssemblyProduct("ODFC")]
 [assembly: AssemblyCopyright("CC BY-NC-SA-4.0")]
 [assembly: AssemblyTrademark("")]
@@ -33,6 +33,6 @@ using System.Runtime.InteropServices;
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
 
-[assembly: AssemblyVersion("0.0.1.8")]
-[assembly: AssemblyFileVersion("0.0.1.8")]
+[assembly: AssemblyVersion("0.0.1.9")]
+[assembly: AssemblyFileVersion("0.0.1.9")]
 // [assembly: AssemblyFileVersion("0.0.1.5")]
