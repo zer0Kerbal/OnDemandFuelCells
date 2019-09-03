@@ -2,3 +2,4 @@
 *.dll
 *.zip
 *.mdb
+*.lock
