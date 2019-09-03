@@ -61,12 +61,19 @@ namespace ODFC {
 		//public Double scaleHack;
 
 		public cfg(ConfigNode node, Part part) {
+            /*if (node.HasValues("MODE"))*/
+            { 
+			    ConfigNode[] nodes = node.GetNodes("MODE");	// Shouldn't need null coalescing as we should always have at least one MODE
+			    modes = new mode[nodes.Length];
 
-			ConfigNode[] nodes = node.GetNodes("MODE");	// Shouldn't need null coalescing as we should always have at least one MODE
-			modes = new mode[nodes.Length];
-
-			for(byte i = 0; i < nodes.Length; i++)
-				modes[i] = new mode(nodes[i], part);
-		}
+			    for(byte i = 0; i < nodes.Length; i++)
+				    modes[i] = new mode(nodes[i], part);
+            }
+/*            else
+            {
+                modes = null;
+                ScreenMessages.PostScreenMessage("Malformed config node: MODE", 2, ScreenMessageStyle.LOWER_CENTER, true);
+            }*/
+        }
 	}
 }
