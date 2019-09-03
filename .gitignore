@@ -5,3 +5,4 @@
 *.lock
 *.ide
 *.pdb
+*.cache
