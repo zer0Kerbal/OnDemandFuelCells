@@ -30,7 +30,7 @@ Plan is to release first week of September 2019, coinsiding with Hot Beverages i
   - [ ] megajoulesFirst = False *(KSP Interstellar)* (double slider for min/max/%)
 
 ##### Mod Compatability
-  - [] :NEEDS[Kethane] Kethane uses its own converter mode, but Kethane the resource (Kethane in, EC +xenonGas out)
+  - [ ] :NEEDS[Kethane] Kethane uses its own converter mode, but Kethane the resource (Kethane in, EC +xenonGas out)
 
 ##### implement into code.
   - [ ] autoSwitching fuel mode will be the most difficult.
