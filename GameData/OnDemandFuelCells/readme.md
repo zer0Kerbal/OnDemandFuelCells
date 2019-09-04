@@ -29,7 +29,10 @@ Another set that modifies the same set of parts instead of copying them.
 - configurable to produce byproducts (so O+H2 = EC + H2O)
 - very small memory footprint
 - Brown and Black out protection assistance
-- PAW (Part Action Window / Right Click Menu) grouping with autocollapse, click the down arrow to drop the ODFC control panel down (KSP 1.7.1).
+- PAW (Part Action Window / Right Click Menu) grouping with auto collapse, *click the down arrow to drop the ODFC control panel down (KSP 1.7.1).*
+- Two new features from the game settings:
+   - Stall: fuel cell stops working if vessel total electric charge falls to close to zero (0f) and will not start until there is more electric charge. Fuel cells require EC to work.
+   - autoSwitch: automatically switched fuel mode looking for fuel if the current mode becomes fuel deprived.
 - more features coming soon
 
 #### Installation Directions (assumes basic KSP mod installation knowledge):
