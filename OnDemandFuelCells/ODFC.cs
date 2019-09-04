@@ -2,7 +2,7 @@
 
 fix showing 'next' button when there is only one mode of operation
 implement double slider in B9Partswitch
-implement PAW status in group header
+DONE: implement PAW status in group header
 
 add to part module pulled from MODULE config nodes(use FSHORT code to read in)
 
@@ -471,6 +471,10 @@ namespace ODFC
             kommit(ODFC_config.modes[fuelMode].byproducts, adjr);           // Handle byproducts
 
             UpdateState(states.nominal, ECAmount / TimeWarp.fixedDeltaTime, fuelModeMaxECRateLimit);
+            // Fields["fuelMode"].group.displayName = status + " - EC: " + ECs_status + " / " + maxECs_status;
+
+            updateGroupLabel(status + " - EC: " + ECs_status /*+ " / " + maxECs_status*/);
+
         }
 
         public void Update()
@@ -489,8 +493,20 @@ namespace ODFC
                 UpdateState(newState, newState == states.nominal ? 1 : 0, 1);
 
 			}
-            header = status + " - EC: " + ECs_status + " / " + maxECs_status;
+            updateGroupLabel(status + " - EC: " + ECs_status /*+ " / " + maxECs_status*/);
 		}
+        private void updateGroupLabel(string newDisplayName)
+        {
+            UIPartActionWindow window = UIPartActionController.Instance.GetItem(part, false);
+            UIPartActionGroup group = window.parameterGroups["ODFC"];
+            group.Initialize("ODFC", "<#6495ED><b>ODFC:</b><pos=3> " + newDisplayName + "</color>", false, window);
+
+        }
 #endregion
 	}
+
 }
+            /*            UIPartActionWindow window = UIPartActionController.Instance.GetItem(part, false);
+                        UIPartActionGroup group = window.parameterGroups["ODFC"];
+                        bool collapsed = false; //GameSettings.collpasedPAWGroups.Contains("ODFC");
+                        group.Initialize("ODFC", newDisplayName, collapsed, window);*/
