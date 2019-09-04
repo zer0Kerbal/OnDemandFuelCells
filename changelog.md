@@ -6,7 +6,9 @@
  * ***Release***
 #### 1.1.2.0 - Stall Tactics
  * ***[NEW]*** Optional difficulty settings for moderate and hard play - stall. Don't run out of EC or the fuel cells will stop functioning since they need electricity to function. Thank you to LinuxGuruGamer for the Setting.cs code and assistance.
- * 
+ * ***[NEW]*** feature: autoSwitch (disabled for hard play). If current fuel mode is lacking fuel, will automatically look for another that has fuel.
+ * removed attempt at adding color to PAW group label
+ * continued working on [BUG 0.0.1.9b]
 
 ####  0.0.1.9 (this is actually 1.1.1.9 and next release will switch to 1.1.2.0)
 0.0.1.9 (this is actually 1.1.1.9 and next release will switch to 1.1.2.0)
