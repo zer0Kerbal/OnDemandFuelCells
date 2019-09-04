@@ -1,6 +1,4 @@
 ﻿/* ROADMAP TODO:
-implement 'stalled' mode - with a setting in the difficulty settings menu: this will 'stall' the fuel cell if the vessel (at least reachable) reaches below a certain level of EC (like <= 0),
-will not reset until the vessel has at least 0.5 EC
 
 fix showing 'next' button when there is only one mode of operation
 implement double slider in B9Partswitch
@@ -8,14 +6,11 @@ implement PAW status in group header
 
 add to part module pulled from MODULE config nodes(use FSHORT code to read in)
 
-implement and add autoSwitch fuel deprived auto mode switcher will be the most difficult.
-
- void huntPeck()
-{
-currentFuelMode++
-   if (currentMode <= totalModes) // check for depleted
-   else { currentmode = 0 }; // need to make sure not spamming autohunt
-}
+DONE: add page to game difficulty settings
+DONE: add stall variable and code
+DONE: implement 'stalled' mode - with a setting in the difficulty settings menu: this will 'stall' the fuel cell if the vessel (at least reachable) reaches below a certain level of EC (like <= 0),
+DONE: will not reset until the vessel has at least 0.5 EC
+DONE: implement and add autoSwitch fuel deprived auto mode switcher will be the most difficult.
 
 //MODULE variables
 double threshold = 0.05f, //thresHoldSteps
@@ -75,26 +70,28 @@ namespace ODFC
         // would really like the PAW to remember if the group was open
         // future: have the groupDisplayName display ODFC: [status] EC/s (cur/max)
         #region Fields Events Actions
-        [KSPField(isPersistant = true, guiActive = false, guiActiveEditor = false, groupName = "ODFC", groupDisplayName = "<#ADFF2F>On Demand Fuel Cells</color", groupStartCollapsed = true)]
+        [KSPField(isPersistant = true, guiActive = false, guiActiveEditor = false, groupName = "ODFC", groupDisplayName = "On Demand Fuel Cells", groupStartCollapsed = true)]
         public int fuelMode = 0;
-
-        [KSPField(isPersistant = false, guiActive = true, guiActiveEditor = false, guiName = "Status", groupName = "ODFC", groupDisplayName = "On Demand Fuel Cells", groupStartCollapsed = true)]
+//        public string header = "<On Demand Fuel Cells";
+        
+        [KSPField(isPersistant = false, guiActive = true, guiActiveEditor = false, guiName = "Status", groupName = "ODFC")]
         public string status = "ERROR!";
 
-        [KSPField(isPersistant = false, guiActive = true, guiActiveEditor = false, guiName = "EC/s (cur/max)", groupName = "ODFC", groupDisplayName = "On Demand Fuel Cells", groupStartCollapsed = true)]
+        [KSPField(isPersistant = false, guiActive = true, guiActiveEditor = false, guiName = "EC/s (cur/max)", groupName = "ODFC")]
         public string ECs_status = "ERROR!";
 
-        [KSPField(isPersistant = false, guiActive = false, guiActiveEditor = true, guiName = "Max EC/s", groupName = "ODFC", groupDisplayName = "On Demand Fuel Cells", groupStartCollapsed = true)]
+        [KSPField(isPersistant = false, guiActive = false, guiActiveEditor = true, guiName = "Max EC/s", groupName = "ODFC")]
         public string maxECs_status = "ERROR!";
 
-        [KSPField(isPersistant = false, guiActive = true, guiActiveEditor = true, guiName = "Fuel Used", groupName = "ODFC", groupDisplayName = "On Demand Fuel Cells", groupStartCollapsed = true)]
+        [KSPField(isPersistant = false, guiActive = true, guiActiveEditor = true, guiName = "Fuel Used", groupName = "ODFC")]
         public string fuel_consumption = "ERROR!";
 
-        [KSPField(isPersistant = false, guiActive = false, guiActiveEditor = false, guiName = "Byproducts", groupName = "ODFC", groupDisplayName = "On Demand Fuel Cells")]
+        [KSPField(isPersistant = false, guiActive = false, guiActiveEditor = false, guiName = "Byproducts", groupName = "ODFC")]
         public string byproducts = "ERROR!";
 
         [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "Enabled:", groupName = "ODFC", groupDisplayName = "On Demand Fuel Cells", groupStartCollapsed = true), UI_Toggle(disabledText = "No", enabledText = "Yes")]
         public bool fuelCellIsEnabled = true;
+
         // changed from false to true
         [KSPEvent(guiActive = true, guiActiveEditor = true, guiName = "Next Fuel Mode", groupName = "ODFC", groupDisplayName = "On Demand Fuel Cells", groupStartCollapsed = true)]
         public void nextFuelMode()
@@ -120,6 +117,7 @@ namespace ODFC
         TMPro.TMP_InputField UIPartActionMinMaxRange.inputFieldMax
         TMPro.TMP_InputField UIPartActionMinMaxRange.inputFieldMin
         */
+   
         [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "Rate Limit:", guiFormat = "P0", groupName = "ODFC", groupDisplayName = "On Demand Fuel Cells", groupStartCollapsed = true), UI_FloatRange(minValue = thresholdMin, maxValue = thresHoldMax, stepIncrement = thresHoldSteps)]
         public float rateLimit = 1f;
 
@@ -178,6 +176,13 @@ namespace ODFC
         public void increaseThresholdAction(KSPActionParam kap)
         {
             threshold = Math.Min(threshold + thresHoldSteps, thresHoldMax);
+        }
+
+// add action for action groups
+        [KSPAction("Toggle Fuel Auto Mode")]
+        public void toggleAutoSwitch(KSPActionParam kap)
+        {
+            HighLogic.CurrentGame.Parameters.CustomParams<ODFC_Options>().autoSwitch = !HighLogic.CurrentGame.Parameters.CustomParams<ODFC_Options>().autoSwitch;
         }
         #endregion
 
@@ -344,14 +349,15 @@ namespace ODFC
                 Events["previousFuel"].guiActive = false;
                 Events["previousFuel"].guiActiveEditor = false;
 
-                Fields["fuel_consumption"].guiActive = false;
-                Fields["fuel_consumption"].guiActiveEditor = false;
                 Actions["previousFuelModeAction"].active = false;
                 Actions["nextFuelModeAction"].active = false;
+
+                Fields["fuel_consumption"].guiActive = true; //false;
+                Fields["fuel_consumption"].guiActiveEditor = true; // false;
             }
             else
             {                       // If we have at least 2 modes
-                if (ODFC_config.modes.Length > 2)
+                if (ODFC_config.modes.Length > 1)
                 {       // If we have at least 3 modes
                     Events["previousFuelMode"].guiActive = true;
                     Events["previousFuelMode"].guiActiveEditor = true;
@@ -391,6 +397,8 @@ namespace ODFC
                         "\n<color=#FFFF00FF>Byproducts:</color>" + GetResourceRates(mds[n].GetNode("BYPRODUCTS"));
             }
 
+            ScreenMessages.PostScreenMessage(info, 1, ScreenMessageStyle.UPPER_CENTER, true);
+            Debug.Log(info);
             return info;
         }
 
@@ -420,7 +428,7 @@ namespace ODFC
                 fuelModeMaxECRateLimit = ODFC_config.modes[fuelMode].maxEC * rateLimit;
 
             // add stall code
-            if (amount == 0f)
+            if (HighLogic.CurrentGame.Parameters.CustomParams<ODFC_Options>().needsECtoStart && amount == 0f)
             {
                 UpdateState(states.stalled, 0, fuelModeMaxECRateLimit);
                 return;
@@ -443,12 +451,16 @@ namespace ODFC
                 foreach (PartResource r in resources)
                     amount += r.amount;
 
-                cfTime = Math.Min(cfTime, amount / (fuel.rate * rateLimit)); // (Double)amount)
+                cfTime = Math.Min(cfTime, amount / (fuel.rate * rateLimit));
             }
 
             if (cfTime == 0) // (Empty) // (Math.Round(cfTime, MidpointRounding.ToEven) == 0)
             {
+
                 UpdateState(states.fuelDeprived, 0, fuelModeMaxECRateLimit);
+                
+                // this looks for another fuel mode that isn't deprived if autoSwitch == true
+                if (HighLogic.CurrentGame.Parameters.CustomParams<ODFC_Options>().autoSwitch) nextFuelMode();
                 return;
             }
             Double adjr = rateLimit * cfTime;           // Calculate usage based on rate limiting and duty cycle
@@ -475,7 +487,9 @@ namespace ODFC
 
                 states newState = fuelCellIsEnabled ? states.nominal : states.off;
                 UpdateState(newState, newState == states.nominal ? 1 : 0, 1);
+
 			}
+            header = status + " - EC: " + ECs_status + " / " + maxECs_status;
 		}
 #endregion
 	}
