@@ -4,7 +4,7 @@ using System;
 using UnityEngine;
 
 namespace ODFC {
-	public class resourceLa { //resource la? 
+	public class resourceLa { //resource la? originally rla
 		public int resourceID;
 		public string resourceAbbreviation;
 
@@ -58,11 +58,14 @@ namespace ODFC {
 
 	public struct cfg {
 		public mode[] modes;
-		//public Double scaleHack;
+      //  public bool autoSwitch { get; private set; }
+        //public Double scaleHack;
 
-		public cfg(ConfigNode node, Part part) {
+        public cfg(ConfigNode node, Part part) {
             /*if (node.HasValues("MODE"))*/
-            { 
+            {
+        //        ConfigNode[] nodes = node.GetNodes("ODFC"); // shouldn't need null coalescing as we should always have at least one ODFC module
+
 			    ConfigNode[] nodes = node.GetNodes("MODE");	// Shouldn't need null coalescing as we should always have at least one MODE
 			    modes = new mode[nodes.Length];
 
