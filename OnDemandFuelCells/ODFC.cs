@@ -5,6 +5,7 @@ implement double slider in B9Partswitch
 DONE: implement PAW status in group header
 
 add to part module pulled from MODULE config nodes(use FSHORT code to read in)
+PAW isn't showing consumption / production fuel_consumption and byproducts
 
 DONE: add page to game difficulty settings
 DONE: add stall variable and code
@@ -68,25 +69,23 @@ namespace ODFC
         #endregion
         // added PAW grouping, set to autocollapse - introduced in KSP 1.7.1
         // would really like the PAW to remember if the group was open
-        // future: have the groupDisplayName display ODFC: [status] EC/s (cur/max)
         #region Fields Events Actions
         [KSPField(isPersistant = true, guiActive = false, guiActiveEditor = false, groupName = "ODFC", groupDisplayName = "On Demand Fuel Cells", groupStartCollapsed = true)]
         public int fuelMode = 0;
-//        public string header = "<On Demand Fuel Cells";
         
-        [KSPField(isPersistant = false, guiActive = true, guiActiveEditor = false, guiName = "Status", groupName = "ODFC")]
+        [KSPField(isPersistant = false, guiActive = true, guiActiveEditor = false, guiName = "Status", groupName = "ODFC", groupDisplayName = "On Demand Fuel Cells", groupStartCollapsed = true)]
         public string status = "ERROR!";
 
-        [KSPField(isPersistant = false, guiActive = true, guiActiveEditor = false, guiName = "EC/s (cur/max)", groupName = "ODFC")]
+        [KSPField(isPersistant = false, guiActive = true, guiActiveEditor = false, guiName = "EC/s (cur/max)", groupName = "ODFC", groupDisplayName = "On Demand Fuel Cells", groupStartCollapsed = true)]
         public string ECs_status = "ERROR!";
 
-        [KSPField(isPersistant = false, guiActive = false, guiActiveEditor = true, guiName = "Max EC/s", groupName = "ODFC")]
+        [KSPField(isPersistant = false, guiActive = false, guiActiveEditor = true, guiName = "Max EC/s", groupName = "ODFC", groupDisplayName = "On Demand Fuel Cells", groupStartCollapsed = true)]
         public string maxECs_status = "ERROR!";
 
-        [KSPField(isPersistant = false, guiActive = true, guiActiveEditor = true, guiName = "Fuel Used", groupName = "ODFC")]
+        [KSPField(isPersistant = false, guiActive = true, guiActiveEditor = true, guiName = "Fuel Used", groupName = "ODFC", groupDisplayName = "On Demand Fuel Cells", groupStartCollapsed = true)]
         public string fuel_consumption = "ERROR!";
 
-        [KSPField(isPersistant = false, guiActive = false, guiActiveEditor = false, guiName = "Byproducts", groupName = "ODFC")]
+        [KSPField(isPersistant = false, guiActive = false, guiActiveEditor = false, guiName = "Byproducts", groupName = "ODFC", groupDisplayName = "On Demand Fuel Cells", groupStartCollapsed = true)]
         public string byproducts = "ERROR!";
 
         [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "Enabled:", groupName = "ODFC", groupDisplayName = "On Demand Fuel Cells", groupStartCollapsed = true), UI_Toggle(disabledText = "No", enabledText = "Yes")]
@@ -340,7 +339,33 @@ namespace ODFC
 
             udft();
 
-            if (ODFC_config.modes.Length < 2)
+            // everything off unless more than one mode
+            Events["nextFuel"].guiActive = false;
+            Events["nextFuel"].guiActiveEditor = false;
+            Events["previousFuel"].guiActive = false;
+            Events["previousFuel"].guiActiveEditor = false;
+            Actions["previousFuelModeAction"].active = false;
+            Actions["nextFuelModeAction"].active = false;
+
+            Fields["fuel_consumption"].guiActive = true; //false;
+            Fields["fuel_consumption"].guiActiveEditor = true; // false;
+
+            // if two modes, turn on next only
+            if (ODFC_config.modes.Length > 1)
+            {
+                Events["nextFuel"].guiActive = true;
+                Events["nextFuel"].guiActiveEditor = true;
+                Actions["nextFuelModeAction"].active = true;
+            }
+            // if more than two modes, turn on prev
+            else if (ODFC_config.modes.Length >2)
+            {
+                Events["previousFuel"].guiActive = true;
+                Events["previousFuel"].guiActiveEditor = true;
+                Actions["previousFuelModeAction"].active = true;
+            }
+
+/*            if (ODFC_config.modes.Length < 2)
             {   // Disable unnecessary UI elements if we only have a single mode
                 Events["nextFuel"].guiActive = false;
                 Events["nextFuel"].guiActiveEditor = false;
@@ -365,7 +390,7 @@ namespace ODFC
                 else
                 {                           // If we have exactly 2 modes
                     Actions["previousFuelModeAction"].active = false;
-                }
+                }*/
 
                 foreach (mode m in ODFC_config.modes)
                 {   // Show byproducts tweakable if at least one mode has at least one byproduct
@@ -376,7 +401,7 @@ namespace ODFC
                         break;
                     }
                 }
-            }
+           // }
 
             if (state != StartState.Editor)
                 part.force_activate();
@@ -384,6 +409,7 @@ namespace ODFC
 
         public override string GetInfo()
         {
+            // this is what is show in the editor
             // As annoying as it is, pre-parsing the config MUST be done here, because this is called during part loading.
             // The config is only fully parsed after everything is fully loaded (which is why it's in OnStart())
             if (info == string.Empty)
@@ -471,9 +497,8 @@ namespace ODFC
             kommit(ODFC_config.modes[fuelMode].byproducts, adjr);           // Handle byproducts
 
             UpdateState(states.nominal, ECAmount / TimeWarp.fixedDeltaTime, fuelModeMaxECRateLimit);
-            // Fields["fuelMode"].group.displayName = status + " - EC: " + ECs_status + " / " + maxECs_status;
 
-            updateGroupLabel(status + " - EC: " + ECs_status /*+ " / " + maxECs_status*/);
+            updateGroupLabel(status, " - EC: " + ECs_status);
 
         }
 
@@ -493,13 +518,58 @@ namespace ODFC
                 UpdateState(newState, newState == states.nominal ? 1 : 0, 1);
 
 			}
-            updateGroupLabel(status + " - EC: " + ECs_status /*+ " / " + maxECs_status*/);
+            updateGroupLabel(status, " - EC: " + ECs_status);
 		}
-        private void updateGroupLabel(string newDisplayName)
+
+        private void updateGroupLabel(string statusStr, string newDisplayName)
         {
+            string colorStr = "<#ADFF2F>";
+
+            switch (state)
+            {
+                case states.fuelDeprived:
+                {
+                    colorStr = "<color=yellow>";
+                    break;
+                }
+                case states.noDemand:
+                {
+                    colorStr = "<#6495ED>"; // blue
+                    break;
+                }
+                case states.nominal:
+                {
+                    colorStr = "<#ADFF2F>"; // green
+                    break;
+                }
+                case states.off:
+                {
+                    colorStr = "<color=black>"; // black
+                    break;
+                }
+                case states.stalled:
+                {
+                    colorStr = "<color=red>";
+                    break;
+                    }
+                case states.error:
+                    {
+                        colorStr = "<color=orange>";
+                        break;
+                    }
+#if DEBUG
+                default:
+                {
+                    colorStr = "<color=orange>";
+                    break;
+                }
+#endif
+            }
+
             UIPartActionWindow window = UIPartActionController.Instance.GetItem(part, false);
             UIPartActionGroup group = window.parameterGroups["ODFC"];
-            group.Initialize("ODFC", "<#6495ED><b>ODFC:</b><pos=3> " + newDisplayName + "</color>", false, window);
+            bool collapsed = GameSettings.PAW_COLLAPSED_GROUP_NAMES.Contains("ODFC");
+            group.Initialize("ODFC", colorStr + "ODFC: " + statusStr + newDisplayName + "</color>", false, window);
 
         }
 #endregion
