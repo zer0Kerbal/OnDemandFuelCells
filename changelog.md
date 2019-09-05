@@ -6,7 +6,6 @@
 ***Initial-Release***
 
 ####  0.0.1.9 (this is actually 1.1.1.9 and next release will switch to 1.1.2.0)
-0.0.1.9 (this is actually 1.1.1.9 and next release will switch to 1.1.2.0)
  * added item grouping in PAW.
  * [NEW][BUG 0.0.1.9a] - B9 module swapping - needs onLoad etc update to make work
  * [NEW][BUG 0.0.1.9b] next fuel mode should not be visible when only one mode
