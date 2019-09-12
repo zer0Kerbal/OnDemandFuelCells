@@ -34,10 +34,16 @@ namespace ODFC
         public bool needsECtoStart = false;
 
         [GameParameters.CustomParameterUI("Auto Fuel Mode Switch",
-            toolTip = "if current fuel mode becomes fuel deprived, will 'hunt' or 'search' for a fuel mode that has fuel",
+            toolTip = "if current fuel mode becomes fuel deprived, will 'hunt' or 'search' for a fuel mode that has fuel.",
             newGameOnly = false,
             unlockedDuringMission = true)]
         public bool autoSwitch = true;
+
+        [GameParameters.CustomParameterUI("PAW Color",
+            toolTip = "allow color coding in ODC PAW (part action window) / part RMB (right menu button).",
+            newGameOnly = false,
+            unlockedDuringMission = true)]
+        public bool coloredPAW = true;
 
         // If you want to have some of the game settings default to enabled,  change 
         // the "if false" to "if true" and set the values as you like
