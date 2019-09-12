@@ -1,7 +1,7 @@
 d// On Demand Fuel Cells Refueled
-// Projects - v 1.0
+// Projects - v 1.1
 // created: 26 Aug 19
-// updated: 26 Aug 19
+// updated: 12 Aug 19
 
 # On Demand Fuel Cells Refueled
 ## next steps and projects
@@ -10,11 +10,11 @@ d// On Demand Fuel Cells Refueled
 
 Plan is to release first week of September 2019, coinsiding with Hot Beverages initial dev release(at least the fuel cell parts).
 #### PAW and Grouping
-  - [ ] color code type of patch - green for copy and blue for modify
-  - [ ] patches need to be MODULE,0 to keep ODFC near top
-  - [ ] color code RMB/PAW label with same color code
+  - [x] color code type of patch - green for copy and blue for modify
+  - [x] patches need to be MODULE,0 to keep ODFC near top
+  - [x] color code RMB/PAW label with same color code
   - [x] implement grouping and auto collapse
-  - [ ] implement summary status on grouping label (ODFC: *status* | EC/*s*: *currentEC/*maxEX*
+  - [x] implement summary status on grouping label (ODFC: *status* | EC/*s*: *currentEC/*maxEX*
   - [ ] have PAW remember collapse status of group
   - [ ] convert to using double slider (KSP 1.7.1)
 
@@ -47,4 +47,4 @@ Plan is to release first week of September 2019, coinsiding with Hot Beverages i
 
 
 // zer0Kerbal
-// CC-BY-NC-SA-4.0
+// CC-BY-NC-SA-4.0 

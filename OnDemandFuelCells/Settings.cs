@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEngine;
 using System.Collections.Generic;
 using System.Collections;
 using System.Reflection;
@@ -25,14 +26,30 @@ namespace ODFC
         public override int SectionOrder { get { return 1; } }
 
 
-        [GameParameters.CustomParameterUI("Require EC to start")]
+        [GameParameters.CustomParameterUI("Require EC to run",
+            toolTip = "if set to yes, the fuel cells will 'stall' if the vessels total electric charge reaches zero and will not function until vessel electric charge is above zero.",
+            newGameOnly = false,
+            unlockedDuringMission = true
+            )]
         public bool needsECtoStart = false;
+
+        [GameParameters.CustomParameterUI("Auto Fuel Mode Switch",
+            toolTip = "if current fuel mode becomes fuel deprived, will 'hunt' or 'search' for a fuel mode that has fuel.",
+            newGameOnly = false,
+            unlockedDuringMission = true)]
+        public bool autoSwitch = true;
+
+        [GameParameters.CustomParameterUI("PAW Color",
+            toolTip = "allow color coding in ODC PAW (part action window) / part RMB (right menu button).",
+            newGameOnly = false,
+            unlockedDuringMission = true)]
+        public bool coloredPAW = true;
 
         // If you want to have some of the game settings default to enabled,  change 
         // the "if false" to "if true" and set the values as you like
 
 
-#if false
+#if true
         public override bool HasPresets { get { return true; } }
         public override void SetDifficultyPreset(GameParameters.Preset preset)
         {
@@ -41,18 +58,22 @@ namespace ODFC
             {
                 case GameParameters.Preset.Easy:
                     needsECtoStart = false;
+                    autoSwitch = true;
                     break;
 
                 case GameParameters.Preset.Normal:
                     needsECtoStart = false;
+                    autoSwitch = true;
                     break;
 
                 case GameParameters.Preset.Moderate:
-                    needsECtoStart = false;
+                    needsECtoStart = true;
+                    autoSwitch = true;
                     break;
 
                 case GameParameters.Preset.Hard:
                     needsECtoStart = true;
+                    autoSwitch = false;
                     break;
             }
         }

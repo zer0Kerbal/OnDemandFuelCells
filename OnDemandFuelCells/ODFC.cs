@@ -1,21 +1,17 @@
 ﻿/* ROADMAP TODO:
-implement 'stalled' mode - with a setting in the difficulty settings menu: this will 'stall' the fuel cell if the vessel (at least reachable) reaches below a certain level of EC (like <= 0),
-will not reset until the vessel has at least 0.5 EC
 
 fix showing 'next' button when there is only one mode of operation
 implement double slider in B9Partswitch
-implement PAW status in group header
+DONE: implement PAW status in group header
 
 add to part module pulled from MODULE config nodes(use FSHORT code to read in)
+PAW isn't showing consumption / production fuel_consumption and byproducts
 
-implement and add autoSwitch fuel deprived auto mode switcher will be the most difficult.
-
- void huntPeck()
-{
-currentFuelMode++
-   if (currentMode <= totalModes) // check for depleted
-   else { currentmode = 0 }; // need to make sure not spamming autohunt
-}
+DONE: add page to game difficulty settings
+DONE: add stall variable and code
+DONE: implement 'stalled' mode - with a setting in the difficulty settings menu: this will 'stall' the fuel cell if the vessel (at least reachable) reaches below a certain level of EC (like <= 0),
+DONE: will not reset until the vessel has at least 0.5 EC
+DONE: implement and add autoSwitch fuel deprived auto mode switcher
 
 //MODULE variables
 double threshold = 0.05f, //thresHoldSteps
@@ -47,8 +43,7 @@ namespace ODFC
     public class ODFC : PartModule
     {
         #region Enums Vars
-        // add stalled state
-        public enum states : byte { error, off, nominal, fuelDeprived, noDemand }; // deploy, retract,
+        public enum states : byte { error, off, nominal, fuelDeprived, noDemand, stalled }; // deploy, retract,
         private const string FuelTransferFormat = "0.##"; //FuelTransferFormat?
         private const float
             thresHoldSteps = 0.05f, // increment the rate by this amount (default is 5)
@@ -68,62 +63,63 @@ namespace ODFC
         public static int ElectricChargeID;
         public string scn;
         public bool ns = true;
-        public cfg ODFC_config;
+        public Config ODFC_config;
         public states state = states.error;
         #endregion
         // added PAW grouping, set to autocollapse - introduced in KSP 1.7.1
         // would really like the PAW to remember if the group was open
-        // future: have the groupDisplayName display ODFC: [status] EC/s (cur/max)
         #region Fields Events Actions
-        [KSPField(isPersistant = true, guiActive = false, guiActiveEditor = false, groupName = "ODFC", groupDisplayName = "<#ADFF2F>On Demand Fuel Cells</color", groupStartCollapsed = true)]
-        public int fuelMode = 0;
+        [KSPField(isPersistant = false, guiActive = true, guiActiveEditor = true, guiName = " ")]
+        public string PAWStatus = "ODFC: booting up. FCOS 0.42... ";
 
-        [KSPField(isPersistant = false, guiActive = true, guiActiveEditor = false, guiName = "Status", groupName = "ODFC", groupDisplayName = "On Demand Fuel Cells", groupStartCollapsed = true)]
+        [KSPField(isPersistant = false, guiActive = true, guiActiveEditor = true, groupName = "ODFC", groupDisplayName = "On Demand Fuel Cells Control", groupStartCollapsed = true)]
+        public int fuelMode = 0;
+        
+        [KSPField(isPersistant = false, guiActive = false, guiActiveEditor = false, guiName = "Status", groupName = "ODFC")]
         public string status = "ERROR!";
 
-        [KSPField(isPersistant = false, guiActive = true, guiActiveEditor = false, guiName = "EC/s (cur/max)", groupName = "ODFC", groupDisplayName = "On Demand Fuel Cells", groupStartCollapsed = true)]
+        [KSPField(isPersistant = false, guiActive = true, guiActiveEditor = false, guiName = "EC/s (cur/max)", groupName = "ODFC")]
         public string ECs_status = "ERROR!";
 
-        [KSPField(isPersistant = false, guiActive = false, guiActiveEditor = true, guiName = "Max EC/s", groupName = "ODFC", groupDisplayName = "On Demand Fuel Cells", groupStartCollapsed = true)]
+        [KSPField(isPersistant = false, guiActive = false, guiActiveEditor = true, guiName = "Max EC/s", groupName = "ODFC")]
         public string maxECs_status = "ERROR!";
 
-        [KSPField(isPersistant = false, guiActive = true, guiActiveEditor = true, guiName = "Fuel Used", groupName = "ODFC", groupDisplayName = "On Demand Fuel Cells", groupStartCollapsed = true)]
+        [KSPField(isPersistant = false, guiActive = true, guiActiveEditor = true, guiName = "Fuel Used", groupName = "ODFC")]
         public string fuel_consumption = "ERROR!";
 
-        [KSPField(isPersistant = false, guiActive = false, guiActiveEditor = false, guiName = "Byproducts", groupName = "ODFC", groupDisplayName = "On Demand Fuel Cells")]
+        [KSPField(isPersistant = false, guiActive = false, guiActiveEditor = false, guiName = "Byproducts", groupName = "ODFC")]
         public string byproducts = "ERROR!";
 
-        [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "Enabled:", groupName = "ODFC", groupDisplayName = "On Demand Fuel Cells", groupStartCollapsed = true), UI_Toggle(disabledText = "No", enabledText = "Yes")]
+        [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "Enabled:", groupName = "ODFC"), UI_Toggle(disabledText = "No", enabledText = "Yes")]
         public bool fuelCellIsEnabled = true;
+
         // changed from false to true
-        [KSPEvent(guiActive = true, guiActiveEditor = true, guiName = "Next Fuel Mode", groupName = "ODFC", groupDisplayName = "On Demand Fuel Cells", groupStartCollapsed = true)]
+        [KSPEvent(guiActive = true, guiActiveEditor = true, guiName = "Next Fuel Mode", groupName = "ODFC")]
         public void nextFuelMode()
         {
             if (++fuelMode >= ODFC_config.modes.Length)
                 fuelMode = 0;
 
-            udft();
+            updateFT();
         }
 
-        [KSPEvent(guiActive = false, guiActiveEditor = false, guiName = "Previous Fuel Mode", groupName = "ODFC", groupDisplayName = "On Demand Fuel Cells", groupStartCollapsed = true)]
+        [KSPEvent(guiActive = false, guiActiveEditor = false, guiName = "Previous Fuel Mode", groupName = "ODFC")]
         public void previousFuelMode()
         {
             if (--fuelMode < 0)
                 fuelMode = ODFC_config.modes.Length - 1;
 
-            udft();
+            updateFT();
         }
         /*
         future: convert rateLimit and threshold to use 
         KSP 1.7.1 Added a new type for PAW fields, a double slider to set ranges with a min and max values
-        https://kerbalspaceprogram.com/api/class_u_i_part_action_min_max_range.html
-        TMPro.TMP_InputField UIPartActionMinMaxRange.inputFieldMax
-        TMPro.TMP_InputField UIPartActionMinMaxRange.inputFieldMin
+        UI_MinMaxRange
         */
-        [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "Rate Limit:", guiFormat = "P0", groupName = "ODFC", groupDisplayName = "On Demand Fuel Cells", groupStartCollapsed = true), UI_FloatRange(minValue = thresholdMin, maxValue = thresHoldMax, stepIncrement = thresHoldSteps)]
+        [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "Rate Limit:", guiFormat = "P0", groupName = "ODFC"), UI_FloatRange(minValue = thresholdMin, maxValue = thresHoldMax, stepIncrement = thresHoldSteps)]
         public float rateLimit = 1f;
 
-        [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "Threshold:", guiFormat = "P0", groupName = "ODFC", groupDisplayName = "On Demand Fuel Cells", groupStartCollapsed = true), UI_FloatRange(minValue = thresholdMin, maxValue = thresHoldMax, stepIncrement = thresHoldSteps)]
+        [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "Threshold:", guiFormat = "P0", groupName = "ODFC"), UI_FloatRange(minValue = thresholdMin, maxValue = thresHoldMax, stepIncrement = thresHoldSteps)]
         public float threshold = thresholdMin;
 
         [KSPAction("Toggle")]
@@ -179,13 +175,11 @@ namespace ODFC
         {
             threshold = Math.Min(threshold + thresHoldSteps, thresHoldMax);
         }
-        #endregion
+ #endregion
 
         #region Private Functions
-        private void udfs(out string s, Fuel[] fuels)
+        private void updateFS(out string s, Fuel[] fuels)
         {
-            // DEBUG
-            //ScreenMessages.PostScreenMessage("a: " + fuels.Length.ToString(), 1, ScreenMessageStyle.LOWER_CENTER, true);
 
             if (fuels.Length == 0)
             {
@@ -205,16 +199,13 @@ namespace ODFC
                 resourceLa abr = lastResource.Find(x => x.resourceID == fuel.resourceID);
 
                 s += PartResourceLibrary.Instance.GetDefinition(fuel.resourceID).name;
-                
-                // DEBUG
-                //ScreenMessages.PostScreenMessage(s, 1, ScreenMessageStyle.UPPER_CENTER, true);
             }
         }
 
-        private void udft()
-        { //udft?
-            udfs(out fuel_consumption, ODFC_config.modes[fuelMode].fuels);
-            udfs(out byproducts, ODFC_config.modes[fuelMode].byproducts);
+        private void updateFT()
+        { //updateFT?
+            updateFS(out fuel_consumption, ODFC_config.modes[fuelMode].fuels);
+            updateFS(out byproducts, ODFC_config.modes[fuelMode].byproducts);
         }
 
         private void UpdateState(states newstate, Double gen, Double max)
@@ -253,6 +244,11 @@ namespace ODFC
                             status = "Off";
                             break;
                         }
+                    case states.stalled:
+                        {
+                            status = "Stalled";
+                            break;
+                        }
 #if DEBUG
                     default:
                         {
@@ -269,6 +265,7 @@ namespace ODFC
                 lastTF = tf;
                 lastFuelMode = fuelMode;
             }
+            updatePAWLabel();
         }
 
         private string GetResourceRates(ConfigNode node)
@@ -313,10 +310,9 @@ namespace ODFC
             if (string.IsNullOrEmpty(scn))
             {
                 this.configNode = configNode;           // Needed for GetInfo()
-                scn = configNode.ToString();    // Needed for marshaling
+                scn = configNode.ToString();    // Needed for marshalling
             }
         }
-
         public override void OnStart(StartState state)
         {
 
@@ -324,25 +320,24 @@ namespace ODFC
                 ElectricChargeID = PartResourceLibrary.Instance.GetDefinition("ElectricCharge").id;
 
             configNode = ConfigNode.Parse(scn).GetNode("MODULE");
-            ODFC_config = new cfg(configNode, part);
+            ODFC_config = new Config(configNode, part);
 
             // One puppy will explode for every question you ask about this code.  Please, think of the puppies.
+            //ScreenMessages.PostScreenMessage(Convert.ToString(ODFC_config.modes.Length), 1, ScreenMessageStyle.UPPER_CENTER, true);
+            //Debug.Log(Convert.ToString(ODFC_config.modes.Length));
+            updateFT();
 
-            udft();
+
+
 
             if (ODFC_config.modes.Length < 2)
-            {   // Disable unnecessary UI elements if we only have a single mode
+            {   // Disable unneccessary UI elements if we only have a single mode
                 Events["nextFuel"].guiActive = false;
                 Events["nextFuel"].guiActiveEditor = false;
-
-                // added next two lines for v0.0.1.9 because if only one mode, don't need any prev/next functions.
-                Events["previousFuel"].guiActive = false;
-                Events["previousFuel"].guiActiveEditor = false;
-
                 Fields["fuel_consumption"].guiActive = false;
                 Fields["fuel_consumption"].guiActiveEditor = false;
                 Actions["previousFuelModeAction"].active = false;
-                Actions["nextFuelModeAction"].active = false;
+               // Actions["nextFuelModeAction"].active = false;
             }
             else
             {                       // If we have at least 2 modes
@@ -367,12 +362,42 @@ namespace ODFC
                 }
             }
 
+            /*            if (ODFC_config.modes.Length < 2)
+                        {   // Disable unnecessary UI elements if we only have a single mode
+                            Events["nextFuel"].guiActive = false;
+                            Events["nextFuel"].guiActiveEditor = false;
+
+                            // added next two lines for v0.0.1.9 because if only one mode, don't need any prev/next functions.
+                            Events["previousFuel"].guiActive = false;
+                            Events["previousFuel"].guiActiveEditor = false;
+
+                            Actions["previousFuelModeAction"].active = false;
+                            Actions["nextFuelModeAction"].active = false;
+
+                            Fields["fuel_consumption"].guiActive = true; //false;
+                            Fields["fuel_consumption"].guiActiveEditor = true; // false;
+                        }
+                        else
+                        {                       // If we have at least 2 modes
+                            if (ODFC_config.modes.Length > 1)
+                            {       // If we have at least 3 modes
+                                Events["previousFuelMode"].guiActive = true;
+                                Events["previousFuelMode"].guiActiveEditor = true;
+                            }
+                            else
+                            {                           // If we have exactly 2 modes
+                                Actions["previousFuelModeAction"].active = false;
+                            }*/
+
+            // }
+
             if (state != StartState.Editor)
                 part.force_activate();
         }
 
         public override string GetInfo()
         {
+            // this is what is show in the editor
             // As annoying as it is, pre-parsing the config MUST be done here, because this is called during part loading.
             // The config is only fully parsed after everything is fully loaded (which is why it's in OnStart())
             if (info == string.Empty)
@@ -414,6 +439,13 @@ namespace ODFC
                 ECNeed = (Double)(maxAmount * threshold - amount),
                 fuelModeMaxECRateLimit = ODFC_config.modes[fuelMode].maxEC * rateLimit;
 
+            // add stall code
+            if (HighLogic.CurrentGame.Parameters.CustomParams<ODFC_Options>().needsECtoStart && amount == 0f)
+            {
+                UpdateState(states.stalled, 0, fuelModeMaxECRateLimit);
+                return;
+            }
+
             cfTime = Math.Min(cfTime, ECNeed / fuelModeMaxECRateLimit); // Determine activity based on supply/demand
 
             if (cfTime <= 0)
@@ -431,15 +463,18 @@ namespace ODFC
                 foreach (PartResource r in resources)
                     amount += r.amount;
 
-                cfTime = Math.Min(cfTime, amount / (fuel.rate * rateLimit)); // (Double)amount)
+                cfTime = Math.Min(cfTime, amount / (fuel.rate * rateLimit));
             }
 
             if (cfTime == 0) // (Empty) // (Math.Round(cfTime, MidpointRounding.ToEven) == 0)
             {
+
                 UpdateState(states.fuelDeprived, 0, fuelModeMaxECRateLimit);
+                
+                // this looks for another fuel mode that isn't deprived if autoSwitch == true
+                if (HighLogic.CurrentGame.Parameters.CustomParams<ODFC_Options>().autoSwitch) nextFuelMode();
                 return;
             }
-
             Double adjr = rateLimit * cfTime;           // Calculate usage based on rate limiting and duty cycle
             Double ECAmount = fuelModeMaxECRateLimit * cfTime;
             part.RequestResource(ElectricChargeID, -ECAmount);   // Don't forget the most important part
@@ -464,8 +499,120 @@ namespace ODFC
 
                 states newState = fuelCellIsEnabled ? states.nominal : states.off;
                 UpdateState(newState, newState == states.nominal ? 1 : 0, 1);
+
 			}
-		}
+        }
+
+        private void updatePAWLabel()
+        {
+            string colorStr = "<#ADFF2F>";
+            //string colorStrEnd = "";
+            string begStr = "<size=+1><b>";
+            string endStr = "</color></b></size>";
+
+/*            Events["nextFuel"].guiActive = false;
+            Events["nextFuel"].guiActiveEditor = false;
+            Events["previousFuel"].guiActive = false;
+            Events["previousFuel"].guiActiveEditor = false;
+            Actions["previousFuelModeAction"].active = false;
+            Actions["nextFuelModeAction"].active = false;
+            Fields["byproducts"].guiActive = false;
+            Fields["byproducts"].guiActiveEditor = false;
+
+            Fields["fuel_consumption"].guiActive = true; //false;
+            Fields["fuel_consumption"].guiActiveEditor = true; // false;
+
+            // if two modes, turn on next only
+            if (ODFC_config.modes.Length >= 2)
+            {
+                Events["nextFuel"].guiActive = true;
+                Events["nextFuel"].guiActiveEditor = true;
+                Actions["nextFuelModeAction"].active = true;
+            }
+            // if more than two modes, turn on prev
+            if (ODFC_config.modes.Length >= 2)
+            {
+                Events["previousFuel"].guiActive = true;
+                Events["previousFuel"].guiActiveEditor = true;
+                Actions["previousFuelModeAction"].active = true;
+            }
+
+            foreach (mode m in ODFC_config.modes)
+            {   // Show byproducts tweakable if at least one mode has at least one byproduct
+                if (m.byproducts.Length > 0)
+                {
+                    Fields["byproducts"].guiActive = true;
+                    Fields["byproducts"].guiActiveEditor = true;
+                    break;
+                }
+            }*/
+
+            if (HighLogic.CurrentGame.Parameters.CustomParams<ODFC_Options>().coloredPAW)
+            {
+                //endStr = 
+                //colorStr = "<#ADFF2F>";
+                // colorStrEnd = "</color>";
+                switch (state)
+                {
+                    case states.fuelDeprived:
+                    {
+                        colorStr = "<color=yellow>";
+                        break;
+                    }
+                    case states.noDemand:
+                    {
+                        colorStr = "<#6495ED>"; // blue
+                        break;
+                    }
+                    case states.nominal:
+                    {
+                        colorStr = "<#ADFF2F>"; // green
+                        break;
+                    }
+                    case states.off:
+                    {
+                        colorStr = "<color=black>"; // black
+                        break;
+                    }
+                    case states.stalled:
+                    {
+                        colorStr = "<color=red>";
+                        break;
+                    }
+                    case states.error:
+                    {
+                        colorStr = "<color=orange>";
+                        break;
+                    }
+#if DEBUG
+                    default:
+                    {
+                        colorStr = "<color=orange>";
+                        break;
+                    }
+                }
+#endif
+            }
+
+            if (HighLogic.LoadedSceneIsFlight) PAWStatus = begStr + colorStr + "Fuel Cell: " + status + " - " + ECs_status + " EC/s" + endStr;
+            if (HighLogic.LoadedSceneIsEditor) PAWStatus = begStr + colorStr + "Fuel Cell: " + fuel_consumption + " - " + maxECs_status + " EC/s:" + endStr;
+
+        }
 #endregion
 	}
+
 }
+            /*            UIPartActionWindow window = UIPartActionController.Instance.GetItem(part, false);
+                        UIPartActionGroup group = window.parameterGroups["ODFC"];
+                        bool collapsed = GameSettings.PAW_COLLAPSED_GROUP_NAMES.Contains("ODFC");
+                        group.Initialize("ODFC", colorStr + "ODFC: " + statusStr + newDisplayName + colorStrEnd, false, window);*/
+            
+    /*            UIPartActionWindow window = UIPartActionController.Instance.GetItem(part, false);
+                        UIPartActionGroup group = window.parameterGroups["ODFC"];
+                        bool collapsed = false; //GameSettings.collpasedPAWGroups.Contains("ODFC");
+                        group.Initialize("ODFC", newDisplayName, collapsed, window);*/
+
+/*            ScreenMessages.PostScreenMessage(info, 1, ScreenMessageStyle.UPPER_CENTER, true);
+            Debug.Log(info);*/
+            // DEBUG
+            //ScreenMessages.PostScreenMessage("a: " + fuels.Length.ToString(), 1, ScreenMessageStyle.LOWER_CENTER, true);

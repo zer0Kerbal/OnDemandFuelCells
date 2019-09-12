@@ -7,7 +7,7 @@ updated: 03 Sep 19 -->
 Also available on CKAN. -->
 
 # On Demand Fuel Cells Refueled (ODFCr)
-![Mod v0.0.1.9](https://img.shields.io/badge/MOD%20version-0.0.1.9-orange.svg?style=flat-square)
+![Mod v1.1.2.0](https://img.shields.io/badge/MOD%20version-v1.1.2.0-orange.svg?style=flat-square)
 ![KSP 1.7.x](https://img.shields.io/badge/KSP%20version-1.7.x-66ccff.svg?style=flat-square)
 ![CKAN listed](https://img.shields.io/badge/CKAN-Indexed-brightgreen.svg)
 #### Formerly known as On Demand Fuel Cells (ODFC)
@@ -29,7 +29,10 @@ Another set that modifies the same set of parts instead of copying them.
 - configurable to produce byproducts (so O+H2 = EC + H2O)
 - very small memory footprint
 - Brown and Black out protection assistance
-- PAW (Part Action Window / Right Click Menu) grouping with autocollapse, click the down arrow to drop the ODFC control panel down (KSP 1.7.1).
+- PAW (Part Action Window / Right Click Menu) grouping with auto collapse, *click the down arrow to drop the ODFC control panel down (KSP 1.7.1).*
+- Two new features from the game settings:
+   - Stall: fuel cell stops working if vessel total electric charge falls to close to zero (0f) and will not start until there is more electric charge. Fuel cells require EC to work.
+   - autoSwitch: automatically switched fuel mode looking for fuel if the current mode becomes fuel deprived.
 - more features coming soon
 
 #### Installation Directions (assumes basic KSP mod installation knowledge):
