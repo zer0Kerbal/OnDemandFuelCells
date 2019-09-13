@@ -4,6 +4,9 @@
 ### Changelog
 #### STATUS:
  * ***Release***
+#### 1.1.2.1 - insert title HotBeverageReheated
+ * [BUG 1.1.2.0a] TweakScale
+
 #### 1.1.2.0 - Stall Alert! aka Stall Tactics
  * ***[NEW]*** Optional difficulty settings for moderate and hard play - stall. Don't run out of EC or the fuel cells will stop functioning since they need electricity to function. Thank you to LinuxGuruGamer for the Setting.cs code and assistance.
  * ***[NEW]*** feature: autoSwitch (disabled for hard play). If current fuel mode is lacking fuel, will automatically look for another that has fuel.
@@ -13,7 +16,7 @@
  * continued working on [BUG 0.0.1.9b]
  * /*CODE*/ udfs - updateFS
  * /*CODE*/ udft - updateFT
- * [NEW][BUG 1.1.2.0a] Tweakscale will not scale module ODFC because onLoad() vs onStart issues?
+ * [NEW][BUG 1.1.2.0a] TweakScale will not scale module ODFC because onLoad() vs onStart issues?
  * reversed removal of color coding PAW label. those coders have been sacked, and those sackers of the previously sacked are now extra-judicially *sacked*
  * PAW label now acts as a color coded STATUS label - dynamically updating
  * [NEW][BUG 1.1.2.0b] Kerbalism doesn't seem to recognize the unique brilliance of ODFC, not their fault hard to see when its that bright. :D
