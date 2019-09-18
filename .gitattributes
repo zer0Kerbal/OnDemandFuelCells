@@ -13,6 +13,7 @@
 *.h text
 *.cs     diff=csharp
 *.csproj text=auto merge=union
+*.cfg KSP configs
 
 
 # Declare files that will always have CRLF line endings on checkout.
