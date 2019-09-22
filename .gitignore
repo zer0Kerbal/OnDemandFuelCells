@@ -24,3 +24,4 @@ Release/
 *.log
 TestResult.xml
 *.VisualState.xml
+.vs/
