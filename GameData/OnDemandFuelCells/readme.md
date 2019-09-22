@@ -1,15 +1,16 @@
-<!-- Readme.md v1.9
+<!-- Readme.md v2.1
 On Demand Fuel Cells Refueled
 created: 17 Jul 18
-updated: 03 Sep 19 -->
+updated: 21 Sep 19 -->
 
 <!-- Download on SpaceDock here or Github here.
 Also available on CKAN. -->
 
 # On Demand Fuel Cells Refueled (ODFCr)
-![Mod v1.1.2.0](https://img.shields.io/badge/MOD%20version-v1.1.2.0-orange.svg?style=flat-square)
+![Mod v1.1.2.1](https://img.shields.io/badge/MOD%20version-v1.1.2.1-orange.svg?style=flat-square)
 ![KSP 1.7.x](https://img.shields.io/badge/KSP%20version-1.7.x-66ccff.svg?style=flat-square)
-![CKAN listed](https://img.shields.io/badge/CKAN-Indexed-brightgreen.svg)
+![CKAN listed](https://img.shields.io/badge/CKAN-Indexed-brightgreen.svg)  ![CC 4.0 BY-NC-SA](https://img.shields.io/badge/license-CC--4.0--BY--SA-lightgrey)
+
 #### Formerly known as On Demand Fuel Cells (ODFC)
 
 zer0Kerbal adopts for curation a continuation of *On Demand Fuel Cells (ODFC)* by `**Orum**', now continued by the cooperative efforts of 4x4cheesecake, LinuxGuruGamer, and zer0Kerbal.
@@ -39,35 +40,32 @@ Another set that modifies the same set of parts instead of copying them.
 - Extract to your KSP folder.
 - Install related ModuleManager patches.
 
-### Summary Changelog
+### Changelog Summary
 *See ![ChangeLog](https://github.com/zer0Kerbal/ODFCr/blob/master/changelog.md) for full details of mod changes*
-<hr>
-#### STATUS:
- * ***Initial-Release***
+ #### 1.1.2.1 - Set SCE to AUX
+STATUS: *Release*
+  * [NEW][BUG 1.1.2.1a] AmpYear doesn't seem to recognize ODFC
+  * [NEW][BUG 1.1.2.0b] Kerbalism is not compatible with ODFC - Kerbalism developers have chosen to not integrate since they have their own version.
+  * [D][BUG 1.1.2.1b] `Found the problem, Bill left a torque converter, which was set to moar, in the innards. Plus Val thought it would be fun to hide her signature in the code of the FCOS (Fuel Cell Operating System). In doing so, she overwrote the code to remember the editor settings when translating over to flight. This has been fixed by moving her signature into another mod's code. She's still happy.`
 
- ####  0.0.1.9 (this is actually 1.1.1.9 and next release will switch to 1.1.2.0)
- * added item grouping in PAW.
- * [NEW][BUG 0.0.1.9a] - B9 module swapping - needs onLoad etc update to make work
- * [NEW][BUG 0.0.1.9b] next fuel mode should not be visible when only one mode
- * [D][BUG 0.0.1.9c] mangled config caused this. added error checking in cfg.cs - thank you LGG for this code.
- * [NEW][BUG 0.0.1.9c] ERROR!'s out when there is only one fuel mode. Stock pod patch only adds one mode (monoprop - because pods usually have monoprop if they have any fuel). This bug was temporarily fixed by added a second mode(it can be the same as the first so it appears like there only one fuel mode) in the patch (LFO).
- * Split patches into two categories, copy (green text) and modify (blue text)
- * Copy Patches now automatically rename the part with an ODFC prefix
- * Copy/Modify patches all add 50 cost, 0.001 mass, 5 EC battery, and 5 MP tank to all parts, even if part already has a battery / monoPropellant tank.
- * Added support for the following: JatwaaDemolitionsCo, SolidFuelCell, StockPods, UniversalStorage2,
- * Patches coming for the following: Bluedog Design Bureau, RLA, MiningExpansion, UniversalStorage
- * ad hoc, ergo promptus hoc: dropping the 'v' on all future version numbering.
-## Known Issue Tracker
- * [BUG 0.0.1.6a] Does not seeming work with BackgroundProcessing or Background Resources mods (being looked at) (so ODFC doesn't work when doesn't have focus). Should not have both BackgroundProcessing and BackgroundResources installed.
+#### Known Issue Tracker
+* [NEW][BUG 1.1.2.1a] AmpYear doesn't seem to recognize ODFC
+* [BUG 1.1.2.0a] TweakScale will not scale module ODFC
+* [BUG 1.1.2.0b] Kerbalism doesn't recognize ODFC, ODFC still functions correctly
+* [BUG 0.0.1.9a] B9 doesn't work on ODFC enabled parts
+* [BUG 0.0.1.9b] next fuel mode should not be visible when only one mode
+* [BUG 0.0.1.6a] BackgroundProcessing or Background Resources mods don't see ODFC, so ODFC doesn't work when doesn't have focus. Should not have both BackgroundProcessing and BackgroundResources installed.
+* *any mod that requires to use onLoad() instead of onStart() to update a part*
 
 <hr>
+
  #### Requires:
  - ****Parts designed to use, or patches to modify existing parts**** *This mod (addon) does nothing by itself.*
 
  #### Dependencies
  - ![Kerbal Space Program](https://kerbalspaceprogram.com) v1.7.3, ***may*** work on earlier versions
  - ![Module Manager](http://forum.kerbalspaceprogram.com/index.php?/topic/50533-105-*)
- - ![ODFC Modify Patches]() and/or - ![ODFC Copy Patches]()  
+ - ![ODFC Modify Patches](https://spacedock.info/mod/2220/On%20Demand%20Fuel%20Cells%20-%20Modify%20Patches) and/or - ![ODFC Copy Patches](https://spacedock.info/mod/2221/On%20Demand%20Fuel%20Cells%20-%20Copy%20Patches)  
 
  #### Supports
  - ![AllYAll](http://forum.kerbalspaceprogram.com/index.php?/topic/155858-ksp-122-all) - supports by removing
@@ -95,12 +93,6 @@ Another set that modifies the same set of parts instead of copying them.
 
  #### Conflicts:
  - ![ODFC - On Demand Fuel Cells by Orum](http://forum.kerbalspaceprogram.com/index.php?/topic/138431-111-*) >-- ORIGINAL (outdated)--<
- <hr>
- #### Known issues:
- - ![Background Processing]()
- - ![Background Resources]()
- - ![B9Partswitch]()
- - any mod that requires to use onLoad() instead of onStart() to update a part  
 
  <hr>
  ## links to original:  
@@ -123,7 +115,7 @@ Another set that modifies the same set of parts instead of copying them.
 ##### All bundled mods are distributed under their own licenses
 ##### All art assets (textures, models, animations) are distributed under an All Rights Reserved License.
 
-###### v0.0.1.9 original: 11 Aug 2018 zed'K | updated: 30 Aug 2019 zed'K & 4x4cheesecake & LinuxGuruGamer
+###### v1.1.2.1 original: 11 Aug 2018 zed'K | updated: 21 Sep 2019 zed'K & 4x4cheesecake & LinuxGuruGamer
 <!--
 CC BY-NC-SA-4.0
 zer0Kerbal-->
