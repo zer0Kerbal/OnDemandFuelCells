@@ -54,6 +54,9 @@
       <Private>False</Private>
       <HintPath>..\..\..\..\..\LIB\managed\1.7.3\UnityEngine.UI.dll</HintPath>
     </Reference>
+    <Reference Include="Scale_Redist">
+      <HintPath>..\..\..\..\..\LIB\plugins\Scale_Redist.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ODFC.cs" />
@@ -61,6 +64,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="InstallChecker.cs" />
     <Compile Include="Settings.cs" />
+    <Compile Include="TweakScaleSupport.cs" />
     <Compile Include="Properties\Version.cs">
       <DependentUpon>Version.tt</DependentUpon>
     </Compile>

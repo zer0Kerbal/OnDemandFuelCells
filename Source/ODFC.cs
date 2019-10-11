@@ -36,6 +36,7 @@ bool ventExcess = True(byproducts, vent excess over maximum Amount)
 
 using System;
 using System.Collections.Generic;
+using TweakScale;
 using UnityEngine;
 
 namespace ODFC
@@ -461,8 +462,13 @@ namespace ODFC
             if (HighLogic.LoadedSceneIsEditor) PAWStatus = begStr + colorStr + "Fuel Cell: " + fuel_consumption + " - " + maxECs_status + " EC/s:" + endStr;
 
         }
-#endregion
-	}
+
+        internal void OnRescale(ScalingFactor.FactorSet scaleFactor)
+        {
+            throw new NotImplementedException();
+        }
+        #endregion
+    }
 
 }
             /*            UIPartActionWindow window = UIPartActionController.Instance.GetItem(part, false);
