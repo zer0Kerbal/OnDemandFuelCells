@@ -44,6 +44,9 @@ namespace ODFC
     {
         #region Enums Vars
         public enum states : byte { error, off, nominal, fuelDeprived, noDemand, stalled }; // deploy, retract,
+        private static readonly string[] STATES_STR     = {"ERROR!",         "Off",           "Nominal",    "Fuel Deprived",  "No Demand", "Stalled"};
+        private static readonly string[] STATES_COLOUR  = {"<color=orange>", "<color=black>", "<#ADFF2F>",  "<color=yellow>", "<#6495ED>", "<color=red>"};
+        //                                                                                      (Green)                          (Blue)
         private const string FuelTransferFormat = "0.##"; //FuelTransferFormat?
         private const float
             thresHoldSteps = 0.05f, // increment the rate by this amount (default is 5)
@@ -224,42 +227,7 @@ namespace ODFC
             if (state != newstate)
             {
                 state = newstate;
-
-                switch (state)
-                {
-                    case states.fuelDeprived:
-                        {
-                            status = "Fuel Deprived";
-                            break;
-                        }
-                    case states.noDemand:
-                        {
-                            status = "No Demand";
-                            break;
-                        }
-                    case states.nominal:
-                        {
-                            status = "Nominal";
-                            break;
-                        }
-                    case states.off:
-                        {
-                            status = "Off";
-                            break;
-                        }
-                    case states.stalled:
-                        {
-                            status = "Stalled";
-                            break;
-                        }
-#if DEBUG
-                    default:
-                        {
-                            status = "ERROR!";
-                            break;
-                        }
-#endif
-                }
+                status = STATES_STR[(int)state];
             }
 
             Double tf = gen / max * rateLimit;
@@ -486,46 +454,7 @@ namespace ODFC
                 //endStr = 
                 //colorStr = "<#ADFF2F>";
                 // colorStrEnd = "</color>";
-                switch (state)
-                {
-                    case states.fuelDeprived:
-                    {
-                        colorStr = "<color=yellow>";
-                        break;
-                    }
-                    case states.noDemand:
-                    {
-                        colorStr = "<#6495ED>"; // blue
-                        break;
-                    }
-                    case states.nominal:
-                    {
-                        colorStr = "<#ADFF2F>"; // green
-                        break;
-                    }
-                    case states.off:
-                    {
-                        colorStr = "<color=black>"; // black
-                        break;
-                    }
-                    case states.stalled:
-                    {
-                        colorStr = "<color=red>";
-                        break;
-                    }
-                    case states.error:
-                    {
-                        colorStr = "<color=orange>";
-                        break;
-                    }
-#if DEBUG
-                    default:
-                    {
-                        colorStr = "<color=orange>";
-                        break;
-                    }
-                }
-#endif
+                colorStr = STATES_COLOUR[(int)state];
             }
 
             if (HighLogic.LoadedSceneIsFlight) PAWStatus = begStr + colorStr + "Fuel Cell: " + status + " - " + ECs_status + " EC/s" + endStr;
