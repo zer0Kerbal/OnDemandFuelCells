@@ -36,7 +36,6 @@ bool ventExcess = True(byproducts, vent excess over maximum Amount)
 
 using System;
 using System.Collections.Generic;
-using TweakScale;
 using UnityEngine;
 
 namespace ODFC
@@ -73,8 +72,10 @@ namespace ODFC
         // added PAW grouping, set to autocollapse - introduced in KSP 1.7.1
         // would really like the PAW to remember if the group was open
         #region Fields Events Actions
-        [KSPField(isPersistant = true, guiActive = false, guiActiveEditor = true, guiName = "scaleFactor")]
-        public double scaleFactor = 0f; // allows for scaling of ODFC elements
+
+        // This is on TweakScale
+        //[KSPField(isPersistant = true, guiActive = false, guiActiveEditor = true, guiName = "scaleFactor")]
+        //public double scaleFactor = 0f; // allows for scaling of ODFC elements
 
         [KSPField(isPersistant = false, guiActive = true, guiActiveEditor = true, guiName = " ")]
         public string PAWStatus = "ODFC: booting up. FCOS 0.42... ";
@@ -365,10 +366,9 @@ namespace ODFC
             }
 
             Double amount = 0, maxAmount = 0;
-            List<PartResource> resources = new List<PartResource>();
             part.GetConnectedResourceTotals(ElectricChargeID, out amount, out maxAmount);
 
-            foreach (PartResource resource in resources)
+            foreach (PartResource resource in this.part.Resources)
             {
                 maxAmount += resource.maxAmount;
                 amount += resource.amount;
@@ -400,7 +400,7 @@ namespace ODFC
 				amount = 0;
                 part.GetConnectedResourceTotals(fuel.resourceID , out amount, out maxAmount);
 
-                foreach (PartResource r in resources)
+                foreach (PartResource r in this.part.Resources)
                     amount += r.amount;
 
                 cfTime = Math.Min(cfTime, amount / (fuel.rate * rateLimit));
@@ -463,9 +463,15 @@ namespace ODFC
 
         }
 
-        internal void OnRescale(ScalingFactor.FactorSet scaleFactor)
+        internal void OnRescale(TweakScale.ScalingFactor.FactorSet scaleFactor)
         {
-            throw new NotImplementedException();
+            foreach (PartResource resource in this.part.Resources)
+            {
+                resource.maxAmount *= scaleFactor.cubic;
+                resource.amount *= scaleFactor.cubic;
+            }
+
+            this.updateFT();
         }
         #endregion
     }

@@ -14,7 +14,7 @@ namespace ODFC
 
             public void OnRescale(TweakScale.ScalingFactor factor)
             {
-                pm.OnRescale(factor.relative);
+                pm.OnRescale(factor.absolute);
             }
         }
     }
