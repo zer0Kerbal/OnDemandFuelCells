@@ -25,3 +25,4 @@ Release/
 TestResult.xml
 *.VisualState.xml
 .vs/
+Version.cs

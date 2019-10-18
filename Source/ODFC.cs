@@ -44,6 +44,9 @@ namespace ODFC
     {
         #region Enums Vars
         public enum states : byte { error, off, nominal, fuelDeprived, noDemand, stalled }; // deploy, retract,
+        private static readonly string[] STATES_STR     = {"ERROR!",         "Off",           "Nominal",    "Fuel Deprived",  "No Demand", "Stalled"};
+        private static readonly string[] STATES_COLOUR  = {"<color=orange>", "<color=black>", "<#ADFF2F>",  "<color=yellow>", "<#6495ED>", "<color=red>"};
+        //                                                                                      (Green)                          (Blue)
         private const string FuelTransferFormat = "0.##"; //FuelTransferFormat?
         private const float
             thresHoldSteps = 0.05f, // increment the rate by this amount (default is 5)
@@ -69,8 +72,10 @@ namespace ODFC
         // added PAW grouping, set to autocollapse - introduced in KSP 1.7.1
         // would really like the PAW to remember if the group was open
         #region Fields Events Actions
-        [KSPField(isPersistant = true, guiActive = false, guiActiveEditor = true, guiName = "scaleFactor")]
-        public double scaleFactor = 0f; // allows for scaling of ODFC elements
+
+        // This is on TweakScale
+        //[KSPField(isPersistant = true, guiActive = false, guiActiveEditor = true, guiName = "scaleFactor")]
+        //public double scaleFactor = 0f; // allows for scaling of ODFC elements
 
         [KSPField(isPersistant = false, guiActive = true, guiActiveEditor = true, guiName = " ")]
         public string PAWStatus = "ODFC: booting up. FCOS 0.42... ";
@@ -224,42 +229,7 @@ namespace ODFC
             if (state != newstate)
             {
                 state = newstate;
-
-                switch (state)
-                {
-                    case states.fuelDeprived:
-                        {
-                            status = "Fuel Deprived";
-                            break;
-                        }
-                    case states.noDemand:
-                        {
-                            status = "No Demand";
-                            break;
-                        }
-                    case states.nominal:
-                        {
-                            status = "Nominal";
-                            break;
-                        }
-                    case states.off:
-                        {
-                            status = "Off";
-                            break;
-                        }
-                    case states.stalled:
-                        {
-                            status = "Stalled";
-                            break;
-                        }
-#if DEBUG
-                    default:
-                        {
-                            status = "ERROR!";
-                            break;
-                        }
-#endif
-                }
+                status = STATES_STR[(int)state];
             }
 
             Double tf = gen / max * rateLimit;
@@ -396,10 +366,9 @@ namespace ODFC
             }
 
             Double amount = 0, maxAmount = 0;
-            List<PartResource> resources = new List<PartResource>();
             part.GetConnectedResourceTotals(ElectricChargeID, out amount, out maxAmount);
 
-            foreach (PartResource resource in resources)
+            foreach (PartResource resource in this.part.Resources)
             {
                 maxAmount += resource.maxAmount;
                 amount += resource.amount;
@@ -431,7 +400,7 @@ namespace ODFC
 				amount = 0;
                 part.GetConnectedResourceTotals(fuel.resourceID , out amount, out maxAmount);
 
-                foreach (PartResource r in resources)
+                foreach (PartResource r in this.part.Resources)
                     amount += r.amount;
 
                 cfTime = Math.Min(cfTime, amount / (fuel.rate * rateLimit));
@@ -486,54 +455,26 @@ namespace ODFC
                 //endStr = 
                 //colorStr = "<#ADFF2F>";
                 // colorStrEnd = "</color>";
-                switch (state)
-                {
-                    case states.fuelDeprived:
-                    {
-                        colorStr = "<color=yellow>";
-                        break;
-                    }
-                    case states.noDemand:
-                    {
-                        colorStr = "<#6495ED>"; // blue
-                        break;
-                    }
-                    case states.nominal:
-                    {
-                        colorStr = "<#ADFF2F>"; // green
-                        break;
-                    }
-                    case states.off:
-                    {
-                        colorStr = "<color=black>"; // black
-                        break;
-                    }
-                    case states.stalled:
-                    {
-                        colorStr = "<color=red>";
-                        break;
-                    }
-                    case states.error:
-                    {
-                        colorStr = "<color=orange>";
-                        break;
-                    }
-#if DEBUG
-                    default:
-                    {
-                        colorStr = "<color=orange>";
-                        break;
-                    }
-                }
-#endif
+                colorStr = STATES_COLOUR[(int)state];
             }
 
             if (HighLogic.LoadedSceneIsFlight) PAWStatus = begStr + colorStr + "Fuel Cell: " + status + " - " + ECs_status + " EC/s" + endStr;
             if (HighLogic.LoadedSceneIsEditor) PAWStatus = begStr + colorStr + "Fuel Cell: " + fuel_consumption + " - " + maxECs_status + " EC/s:" + endStr;
 
         }
-#endregion
-	}
+
+        internal void OnRescale(TweakScale.ScalingFactor.FactorSet scaleFactor)
+        {
+            foreach (PartResource resource in this.part.Resources)
+            {
+                resource.maxAmount *= scaleFactor.cubic;
+                resource.amount *= scaleFactor.cubic;
+            }
+
+            this.updateFT();
+        }
+        #endregion
+    }
 
 }
             /*            UIPartActionWindow window = UIPartActionController.Instance.GetItem(part, false);
