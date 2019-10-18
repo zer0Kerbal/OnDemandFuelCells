@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("Release")]
 [assembly: AssemblyCompany("KGEx and Okram Industries")]
 [assembly: AssemblyProduct("ODFC")]
-[assembly: AssemblyCopyright("CC BY-NC-SA-4.0")]
+[assembly: AssemblyCopyright("CC BY-NC-SA-4.0 and GPLv3")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

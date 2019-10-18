@@ -40,7 +40,7 @@ namespace ODFC
         public bool autoSwitch = true;
 
         [GameParameters.CustomParameterUI("PAW Color",
-            toolTip = "allow color coding in ODC PAW (part action window) / part RMB (right menu button).",
+            toolTip = "allow color coding in ODFC PAW (part action window) / part RMB (right menu button).",
             newGameOnly = false,
             unlockedDuringMission = true)]
         public bool coloredPAW = true;

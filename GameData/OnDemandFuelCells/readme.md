@@ -7,9 +7,11 @@ updated: 21 Sep 19 -->
 Also available on CKAN. -->
 
 # On Demand Fuel Cells Refueled (ODFCr)
-![Mod v1.1.2.1](https://img.shields.io/badge/MOD%20version-v1.1.2.1-orange.svg?style=flat-square)
-![KSP 1.7.x](https://img.shields.io/badge/KSP%20version-1.7.x-66ccff.svg?style=flat-square)
-![CKAN listed](https://img.shields.io/badge/CKAN-Indexed-brightgreen.svg)  ![CC 4.0 BY-NC-SA](https://img.shields.io/badge/license-CC--4.0--BY--SA-lightgrey)
+![Mod Version](https://img.shields.io/github/v/release/zer0Kerbal/ODFCr?include_prereleases) 
+![KSP 1.7.x](https://img.shields.io/badge/KSP%20version-1.7.x-66ccff.svg?style=flat-square) 
+![CKAN listed](https://img.shields.io/badge/CKAN-Indexed-brightgreen.svg) 
+![Software License GPLv3](https://img.shields.io/badge/SoftwareLicense-GPLv3-red) 
+![NonSoftware License CC 4.0 BY-NC-SA](https://img.shields.io/badge/NonSoftwareLicense-CC--4.0--BY--SA-lightgrey)
 
 #### Formerly known as On Demand Fuel Cells (ODFC)
 

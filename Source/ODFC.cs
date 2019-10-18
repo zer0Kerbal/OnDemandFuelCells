@@ -1,5 +1,5 @@
-﻿/* ROADMAP TODO:
-
+﻿#region ROADMAP TODO:
+/*
 fix showing 'next' button when there is only one mode of operation
 implement double slider in B9Partswitch
 DONE: implement PAW status in group header
@@ -31,6 +31,7 @@ eventually want to add the following for each fuel/ byproducts:
 bool ventExcess = True(byproducts, vent excess over maximum Amount)
     // flowMode = All;
  */
+#endregion
 
 #define DEBUG
 
@@ -77,32 +78,69 @@ namespace ODFC
         //[KSPField(isPersistant = true, guiActive = false, guiActiveEditor = true, guiName = "scaleFactor")]
         //public double scaleFactor = 0f; // allows for scaling of ODFC elements
 
-        [KSPField(isPersistant = false, guiActive = true, guiActiveEditor = true, guiName = " ")]
+        [KSPField(isPersistant = false, 
+            guiActive = true, 
+            guiActiveEditor = true,
+            guiName = " ")]
         public string PAWStatus = "ODFC: booting up. FCOS 0.42... ";
 
-        [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, groupName = "ODFC", groupDisplayName = "On Demand Fuel Cells Control", groupStartCollapsed = true)]
+        [KSPField(isPersistant = true, 
+            guiActive = true, 
+            guiActiveEditor = true, 
+            groupName = "ODFC", 
+            groupDisplayName = "On Demand Fuel Cells Control", 
+            groupStartCollapsed = true)]
         public int fuelMode = 0;
         
-        [KSPField(isPersistant = false, guiActive = false, guiActiveEditor = false, guiName = "Status", groupName = "ODFC")]
+        [KSPField(isPersistant = false, 
+            guiActive = false, 
+            guiActiveEditor = false, 
+            guiName = "Status", 
+            groupName = "ODFC")]
         public string status = "ERROR!";
 
-        [KSPField(isPersistant = false, guiActive = true, guiActiveEditor = false, guiName = "EC/s (cur/max)", groupName = "ODFC")]
+        [KSPField(isPersistant = false, 
+            guiActive = true, 
+            guiActiveEditor = false, 
+            guiName = "EC/s (cur/max)", 
+            groupName = "ODFC")]
         public string ECs_status = "ERROR!";
 
-        [KSPField(isPersistant = false, guiActive = false, guiActiveEditor = true, guiName = "Max EC/s", groupName = "ODFC")]
+        [KSPField(isPersistant = false, 
+            guiActive = false, 
+            guiActiveEditor = true, 
+            guiName = "Max EC/s", 
+            groupName = "ODFC")]
         public string maxECs_status = "ERROR!";
 
-        [KSPField(isPersistant = false, guiActive = true, guiActiveEditor = true, guiName = "Fuel Used", groupName = "ODFC")]
+        [KSPField(isPersistant = false, 
+            guiActive = true, 
+            guiActiveEditor = true, 
+            guiName = "Fuel Used", 
+            groupName = "ODFC")]
         public string fuel_consumption = "ERROR!";
 
-        [KSPField(isPersistant = false, guiActive = false, guiActiveEditor = false, guiName = "Byproducts", groupName = "ODFC")]
+        [KSPField(isPersistant = false, 
+            guiActive = false, 
+            guiActiveEditor = false, 
+            guiName = "Byproducts", 
+            groupName = "ODFC")]
         public string byproducts = "ERROR!";
 
-        [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "Enabled:", groupName = "ODFC"), UI_Toggle(disabledText = "No", enabledText = "Yes")]
+        [KSPField(isPersistant = true, 
+            guiActive = true, 
+            guiActiveEditor = true, 
+            guiName = "Enabled:", 
+            groupName = "ODFC"), 
+            UI_Toggle(disabledText = "No", 
+            enabledText = "Yes")]
         public bool fuelCellIsEnabled = true;
 
         // changed from false to true
-        [KSPEvent(guiActive = true, guiActiveEditor = true, guiName = "Next Fuel Mode", groupName = "ODFC")]
+        [KSPEvent(guiActive = true, 
+            guiActiveEditor = true, 
+            guiName = "Next Fuel Mode", 
+            groupName = "ODFC")]
         public void nextFuelMode()
         {
             if (++fuelMode >= ODFC_config.modes.Length)
@@ -111,7 +149,10 @@ namespace ODFC
             updateFT();
         }
 
-        [KSPEvent(guiActive = false, guiActiveEditor = false, guiName = "Previous Fuel Mode", groupName = "ODFC")]
+        [KSPEvent(guiActive = false, 
+            guiActiveEditor = false, 
+            guiName = "Previous Fuel Mode", 
+            groupName = "ODFC")]
         public void previousFuelMode()
         {
             if (--fuelMode < 0)
@@ -124,68 +165,65 @@ namespace ODFC
         KSP 1.7.1 Added a new type for PAW fields, a double slider to set ranges with a min and max values
         UI_MinMaxRange
         */
-        [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "Rate Limit:", guiFormat = "P0", groupName = "ODFC"), UI_FloatRange(minValue = thresholdMin, maxValue = thresHoldMax, stepIncrement = thresHoldSteps)]
+        [KSPField(isPersistant = true, 
+            guiActive = true, 
+            guiActiveEditor = true, 
+            guiName = "Rate Limit:", 
+            guiFormat = "P0", 
+            groupName = "ODFC"), 
+            UI_FloatRange(minValue = thresholdMin, maxValue = thresHoldMax, stepIncrement = thresHoldSteps)]
         public float rateLimit = 1f;
 
-        [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "Threshold:", guiFormat = "P0", groupName = "ODFC"), UI_FloatRange(minValue = thresholdMin, maxValue = thresHoldMax, stepIncrement = thresHoldSteps)]
+        [KSPField(isPersistant = true, 
+            guiActive = true, 
+            guiActiveEditor = true, 
+            guiName = "Threshold:", 
+            guiFormat = "P0", 
+            groupName = "ODFC"), 
+            UI_FloatRange(minValue = thresholdMin, maxValue = thresHoldMax, stepIncrement = thresHoldSteps)]
         public float threshold = thresholdMin;
 
         [KSPAction("Toggle Fuel Cell")]
         public void toggleAction(KSPActionParam kap)
-        {
-            fuelCellIsEnabled = !fuelCellIsEnabled;
-        }
+        { fuelCellIsEnabled = !fuelCellIsEnabled; }
 
         [KSPAction("Enable Fuel Cell")]
         public void enableAction(KSPActionParam kap)
-        {
-            fuelCellIsEnabled = true;
-        }
+        { fuelCellIsEnabled = true; }
 
         [KSPAction("Disable Fuel Cell")]
         public void disableAction(KSPActionParam kap)
-        {
-            fuelCellIsEnabled = false;
-        }
+        { fuelCellIsEnabled = false; }
 
         [KSPAction("Next Fuel Mode")]
         public void nextFuelmodeAction(KSPActionParam kap)
-        {
-            nextFuelMode();
-        }
+        { nextFuelMode(); }
 
         [KSPAction("Previous Fuel Mode")]
         public void previousFuelModeAction(KSPActionParam kap)
-        {
-            previousFuelMode();
-        }
+        { previousFuelMode(); }
 
         [KSPAction("Decrease Rate Limit")]
         public void decreaseRateLimitAction(KSPActionParam kap)
-        {
-            rateLimit = Math.Max(rateLimit - thresHoldSteps, thresholdMin);
-        }
+        { rateLimit = Math.Max(rateLimit - thresHoldSteps, thresholdMin); }
 
         [KSPAction("Increase Rate Limit")]
         public void increaseRateLimitAction(KSPActionParam kap)
-        {
-            rateLimit = Math.Min(rateLimit + thresHoldSteps, thresHoldMax);
-        }
+        { rateLimit = Math.Min(rateLimit + thresHoldSteps, thresHoldMax); }
 
         [KSPAction("Decrease Threshold")]
         public void decreaseThresholdAction(KSPActionParam kap)
-        {
-            threshold = Math.Max(threshold - thresHoldSteps, thresholdMin);
-        }
+        { threshold = Math.Max(threshold - thresHoldSteps, thresholdMin); }
 
         [KSPAction("Increase Threshold")]
         public void increaseThresholdAction(KSPActionParam kap)
-        {
-            threshold = Math.Min(threshold + thresHoldSteps, thresHoldMax);
-        }
- #endregion
+        { threshold = Math.Min(threshold + thresHoldSteps, thresHoldMax); }
+        #endregion
 
         #region Private Functions
+        /// <summary>Updates the fs.</summary>
+        /// <param name="s">The s.</param>
+        /// <param name="fuels">The fuels.</param>
         private void updateFS(out string s, Fuel[] fuels)
         {
 
@@ -210,6 +248,7 @@ namespace ODFC
             }
         }
 
+        /// <summary>Updates the ft.</summary>
         private void updateFT()
         { //updateFT?
             updateFS(out fuel_consumption, ODFC_config.modes[fuelMode].fuels);
@@ -275,9 +314,11 @@ namespace ODFC
             foreach (Fuel fuel in fuels)
                 part.RequestResource(fuel.resourceID, fuel.rate * adjr);
         }
-#endregion
+        #endregion
 
-#region Public Functions
+        #region Public Functions
+        /// <summary>Called when [load].</summary>
+        /// <param name="configNode">The configuration node.</param>
         public override void OnLoad(ConfigNode configNode)
         {
             if (string.IsNullOrEmpty(scn))
@@ -286,6 +327,8 @@ namespace ODFC
                 scn = configNode.ToString();    // Needed for marshalling
             }
         }
+        /// <summary>Called when [start].</summary>
+        /// <param name="state">The state.</param>
         public override void OnStart(StartState state)
         {
 
@@ -336,6 +379,8 @@ namespace ODFC
                 part.force_activate();
         }
 
+        /// <summary>Gets the information for the part information in the editors.</summary>
+        /// <returns>info</returns>
         public override string GetInfo()
         {
             // this is what is show in the editor
@@ -355,6 +400,7 @@ namespace ODFC
             return info;
         }
 
+        /// <summary>Called when [fixed update].</summary>
         public override void OnFixedUpdate()
         {
             states ns = fuelCellIsEnabled ? states.nominal : states.off;
@@ -425,13 +471,13 @@ namespace ODFC
             UpdateState(states.nominal, ECAmount / TimeWarp.fixedDeltaTime, fuelModeMaxECRateLimit);
         }
 
+        /// <summary>Updates this instance.</summary>
         public void Update()
         {
             if (HighLogic.LoadedSceneIsEditor)
             {
                 Double newMax = ODFC_config.modes[fuelMode].maxEC * rateLimit;
 
-  		
 				if(lastMax != newMax) {
 					lastMax = newMax;
 					maxECs_status = lastMax.ToString(FuelTransferFormat);
@@ -443,6 +489,7 @@ namespace ODFC
 			}
         }
 
+        /// <summary>Updates the paw label.</summary>
         private void updatePAWLabel()
         {
             string colorStr = "<#ADFF2F>";
@@ -451,18 +498,19 @@ namespace ODFC
             string endStr = "</color></b></size>";
 
             if (HighLogic.CurrentGame.Parameters.CustomParams<ODFC_Options>().coloredPAW)
-            {
-                //endStr = 
-                //colorStr = "<#ADFF2F>";
-                // colorStrEnd = "</color>";
-                colorStr = STATES_COLOUR[(int)state];
-            }
+            { colorStr = STATES_COLOUR[(int)state]; }
 
             if (HighLogic.LoadedSceneIsFlight) PAWStatus = begStr + colorStr + "Fuel Cell: " + status + " - " + ECs_status + " EC/s" + endStr;
             if (HighLogic.LoadedSceneIsEditor) PAWStatus = begStr + colorStr + "Fuel Cell: " + fuel_consumption + " - " + maxECs_status + " EC/s:" + endStr;
 
         }
 
+        /// <summary>
+        ///   <para>
+        ///  Called when [rescale].
+        /// </para>
+        /// </summary>
+        /// <param name="scaleFactor">The scale factor.</param>
         internal void OnRescale(TweakScale.ScalingFactor.FactorSet scaleFactor)
         {
             foreach (PartResource resource in this.part.Resources)
@@ -477,17 +525,19 @@ namespace ODFC
     }
 
 }
-            /*            UIPartActionWindow window = UIPartActionController.Instance.GetItem(part, false);
-                        UIPartActionGroup group = window.parameterGroups["ODFC"];
-                        bool collapsed = GameSettings.PAW_COLLAPSED_GROUP_NAMES.Contains("ODFC");
-                        group.Initialize("ODFC", colorStr + "ODFC: " + statusStr + newDisplayName + colorStrEnd, false, window);*/
-            
-    /*            UIPartActionWindow window = UIPartActionController.Instance.GetItem(part, false);
-                        UIPartActionGroup group = window.parameterGroups["ODFC"];
-                        bool collapsed = false; //GameSettings.collpasedPAWGroups.Contains("ODFC");
-                        group.Initialize("ODFC", newDisplayName, collapsed, window);*/
+#region notes
+/*            UIPartActionWindow window = UIPartActionController.Instance.GetItem(part, false);
+            UIPartActionGroup group = window.parameterGroups["ODFC"];
+            bool collapsed = GameSettings.PAW_COLLAPSED_GROUP_NAMES.Contains("ODFC");
+            group.Initialize("ODFC", colorStr + "ODFC: " + statusStr + newDisplayName + colorStrEnd, false, window);*/
+
+/*            UIPartActionWindow window = UIPartActionController.Instance.GetItem(part, false);
+                    UIPartActionGroup group = window.parameterGroups["ODFC"];
+                    bool collapsed = false; //GameSettings.collpasedPAWGroups.Contains("ODFC");
+                    group.Initialize("ODFC", newDisplayName, collapsed, window);*/
 
 /*            ScreenMessages.PostScreenMessage(info, 1, ScreenMessageStyle.UPPER_CENTER, true);
             Debug.Log(info);*/
-            // DEBUG
-            //ScreenMessages.PostScreenMessage("a: " + fuels.Length.ToString(), 1, ScreenMessageStyle.LOWER_CENTER, true);
+// DEBUG
+//ScreenMessages.PostScreenMessage("a: " + fuels.Length.ToString(), 1, ScreenMessageStyle.LOWER_CENTER, true);
+#endregion

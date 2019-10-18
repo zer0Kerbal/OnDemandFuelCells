@@ -29,6 +29,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <DebugSymbols>true</DebugSymbols>
+    <DocumentationFile>bin\Release\ODFC.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -37,25 +38,14 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="Scale_Redist">
-      <HintPath>..\..\..\..\..\LIB\plugins\Scale_Redist.dll</HintPath>
-    </Reference>
-    <Reference Include="Assembly-CSharp">
-      <HintPath>..\..\..\..\..\LIB\managed\1.7.3\Assembly-CSharp.dll</HintPath>
-    </Reference>
-    <Reference Include="Assembly-CSharp-firstpass">
-      <HintPath>..\..\..\..\..\LIB\managed\1.7.3\Assembly-CSharp-firstpass.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine">
-      <HintPath>..\..\..\..\..\LIB\managed\1.7.3\UnityEngine.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.UI">
-      <HintPath>$(DevDir)\KSP_x64_Data\Managed\UnityEngine.UI.dll</HintPath>
+    <Reference Include="$(DevDir)\KSP_x64_Data\Managed\Assembly-CSharp*.dll">
       <Private>False</Private>
-      <HintPath>..\..\..\..\..\LIB\managed\1.7.3\UnityEngine.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="$(DevDir)\KSP_x64_Data\Managed\UnityEngine*.dll">
+      <Private>False</Private>
     </Reference>
     <Reference Include="Scale_Redist">
-      <HintPath>..\..\..\..\..\LIB\plugins\Scale_Redist.dll</HintPath>
+      <HintPath>$(DevDir)\KSP_x64_Data\Managed\Scale_Redist.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -67,6 +57,8 @@
     <Compile Include="TweakScaleSupport.cs" />
     <Compile Include="Properties\Version.cs">
       <DependentUpon>Version.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -80,12 +72,12 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <!-- PostBuildEvent>start /D $(ProjectDir)..\  /WAIT deploy.bat  $(TargetDir) $(TargetFileName)
-if $(ConfigurationName) == Release start /D $(ProjectDir)..\   /WAIT buildRelease.bat $(TargetDir) $(TargetFileName)</PostBuildEvent -->
+    <PostBuildEvent>start /D $(ProjectDir)..\  /WAIT deploy.bat  $(TargetDir) $(TargetFileName)
+if $(ConfigurationName) == Release start /D $(ProjectDir)..\   /WAIT buildRelease.bat $(TargetDir) $(TargetFileName)</PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <!-- PreBuildEvent>set textTemplatingPath="$(DevEnvDir)texttransform.exe"
-%25textTemplatingPath%25 "$(ProjectDir)AssemblyVersion.tt"</PreBuildEvent -->
+    <!-- <PreBuildEvent>set textTemplatingPath="$(DevEnvDir)texttransform.exe"
+%25textTemplatingPath%25 "$(ProjectDir)AssemblyVersion.tt"</PreBuildEvent> -->
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
