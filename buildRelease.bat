@@ -25,6 +25,8 @@ set VERSIONFILE=%GAMEDIR%.version
 set LICENSE="License.txt"
 Set LICENSETEXT="CC-BY-NC-SA-4.0.txt"
 set README="ReadMe.md"
+set TSLICENSE=""
+set TweakScale="Scale_Redist.dll"
 set JQ=C:\ProgramData\chocolatey\lib\jq\tools\jq.exe
 
 set RELEASEDIR=C:\KSP_DEV\Releases
@@ -39,6 +41,9 @@ copy /Y Changelog.cfg %GAMEDATA%\%GAMEDIR%
 if "%LICENSE%" NEQ "" copy /y  %LICENSE% %GAMEDATA%\%GAMEDIR%
 if "%LICENSETEXT%" NEQ "" copy /y  %LICENSETEXT% %GAMEDATA%\%GAMEDIR%
 if "%README%" NEQ "" copy /Y %README% %GAMEDATA%\%GAMEDIR%
+
+if "%TSLICENSE%" NEQ "" copy /y  %TSLICENSE% %GAMEDATA%\%GAMEDIR%\Plugins
+if %TweakScale% NEQ "" copy /y %TweakScale% %GAMEDATA%\%GAMEDIR%\Plugins
 
 rem Get Version info
 

@@ -165,6 +165,8 @@ namespace ODFC
         KSP 1.7.1 Added a new type for PAW fields, a double slider to set ranges with a min and max values
         UI_MinMaxRange
         */
+        /// <summary>The rate limit
+        /// (max % production)</summary>
         [KSPField(isPersistant = true, 
             guiActive = true, 
             guiActiveEditor = true, 
@@ -174,6 +176,7 @@ namespace ODFC
             UI_FloatRange(minValue = thresholdMin, maxValue = thresHoldMax, stepIncrement = thresHoldSteps)]
         public float rateLimit = 1f;
 
+        /// <summary>The current threshold (%) which needs to be equal or below before production begins.</summary>
         [KSPField(isPersistant = true, 
             guiActive = true, 
             guiActiveEditor = true, 
@@ -379,7 +382,7 @@ namespace ODFC
                 part.force_activate();
         }
 
-        /// <summary>Gets the information for the part information in the editors.</summary>
+        /// <summary>Formats the information for the part information in the editors.</summary>
         /// <returns>info</returns>
         public override string GetInfo()
         {
@@ -405,8 +408,7 @@ namespace ODFC
         {
             states ns = fuelCellIsEnabled ? states.nominal : states.off;
 
-            if (ns != states.nominal)
-            {
+            if (ns != states.nominal) {
                 UpdateState(ns, 0, 0);
                 return;
             }
@@ -414,8 +416,7 @@ namespace ODFC
             Double amount = 0, maxAmount = 0;
             part.GetConnectedResourceTotals(ElectricChargeID, out amount, out maxAmount);
 
-            foreach (PartResource resource in this.part.Resources)
-            {
+            foreach (PartResource resource in this.part.Resources) {
                 maxAmount += resource.maxAmount;
                 amount += resource.amount;
             }
@@ -426,16 +427,14 @@ namespace ODFC
                 fuelModeMaxECRateLimit = ODFC_config.modes[fuelMode].maxEC * rateLimit;
 
             // add stall code
-            if (HighLogic.CurrentGame.Parameters.CustomParams<ODFC_Options>().needsECtoStart && amount == 0f)
-            {
+            if (HighLogic.CurrentGame.Parameters.CustomParams<ODFC_Options>().needsECtoStart && amount == 0f) {
                 UpdateState(states.stalled, 0, fuelModeMaxECRateLimit);
                 return;
             }
 
             cfTime = Math.Min(cfTime, ECNeed / fuelModeMaxECRateLimit); // Determine activity based on supply/demand
 
-            if (cfTime <= 0)
-            {
+            if (cfTime <= 0) {
                 UpdateState(states.noDemand, 0, fuelModeMaxECRateLimit);
                 return;
             }
@@ -513,10 +512,19 @@ namespace ODFC
         /// <param name="scaleFactor">The scale factor.</param>
         internal void OnRescale(TweakScale.ScalingFactor.FactorSet scaleFactor)
         {
+            /// this scales any resources on the part with ODFC:
             foreach (PartResource resource in this.part.Resources)
             {
                 resource.maxAmount *= scaleFactor.cubic;
                 resource.amount *= scaleFactor.cubic;
+            }
+
+            /// this scales the actual fuel cell, fuels, byproducts, and maxEC
+            foreach (mode m in ODFC_config.modes)
+            {
+                foreach (Fuel[m].fuel *= scaleFactor.cubic;
+                foreach (Fuel[m].byproducts *= scaleFactor.cubic;
+                foreach (Fuel[m].maxEC *= scaleFactor.cubic;
             }
 
             this.updateFT();

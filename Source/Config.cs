@@ -14,7 +14,8 @@ namespace ODFC {
 		}
 	}
 
-	public struct Fuel {
+    /// <summary></summary>
+    public struct Fuel {
 		public int resourceID;
 		public float rate;
 		public ResourceFlowMode resourceFlowMode;
@@ -26,7 +27,8 @@ namespace ODFC {
 		}
 	}
 
-	public struct mode {
+    /// <summary></summary>
+    public struct mode {
 		public Fuel[] fuels, byproducts;
 		public Double maxEC;
 
