@@ -2,8 +2,13 @@
 ## On Demand Fuel Cells Refueled (ODFCr)  
 
 ### Changelog
-#### STATUS:
- * ***Release***
+#### 1.2.0.0 - To Boldly Go
+ - update to .NET Framework 4.8
+ - update to Kerbal Space Program (KSP) 1.8.1
+ - update .csproj: <code>Reference Include="$(DevDir)\KSP_x64_Data\Managed\UnityEngine*.dll" /</code>
+ - now can enter numbers instead of using slider by using the # on PAW
+ - recompile for KSP 1.8.1
+
 #### 1.1.2.1 - Set SCE to AUX
  * [BUG 1.1.2.0a] TweakScale
  * [NEW][BUG 1.1.2.1a] AmpYear doesn't seem to recognize ODFC
@@ -135,7 +140,7 @@
 {
    VERSION
    {
-    version = v.0.0.1.2
+	    version = v.0.0.1.2
 		change = released:  
 		change = [REVERTED] updated .version to 1.7.3.1  
 		change = recompiled against KSP 1.7.3  
@@ -146,7 +151,7 @@
 		change = [NEW][BUG 0.0.1.2a] log spam - Val was singing offkey in the OnStart method
 		change = [NEW][BUG 0.0.1.2b] Must have some EC to function, if EC == 0 does not charge
 		change = [NEW][BUG 0.0.1.2c] Does not decrement fuel (all or any)
-  }
+	}
 // >-- ORIGINAL --<
 	VERSION
 	{

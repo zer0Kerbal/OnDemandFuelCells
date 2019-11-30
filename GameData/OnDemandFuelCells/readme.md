@@ -1,15 +1,17 @@
-<!-- Readme.md v2.1
+<!-- Readme.md v1.2.0.0
 On Demand Fuel Cells Refueled
 created: 17 Jul 18
-updated: 21 Sep 19 -->
+updated: 29 Nov 19 -->
 
 <!-- Download on SpaceDock here or Github here.
 Also available on CKAN. -->
 
 # On Demand Fuel Cells Refueled (ODFCr)
-![Mod v1.1.2.1](https://img.shields.io/badge/MOD%20version-v1.1.2.1-orange.svg?style=flat-square)
-![KSP 1.7.x](https://img.shields.io/badge/KSP%20version-1.7.x-66ccff.svg?style=flat-square)
-![CKAN listed](https://img.shields.io/badge/CKAN-Indexed-brightgreen.svg)  ![CC 4.0 BY-NC-SA](https://img.shields.io/badge/license-CC--4.0--BY--SA-lightgrey)
+![Mod Version](https://img.shields.io/github/v/release/zer0Kerbal/ODFCr?include_prereleases) 
+![KSP 1.7.x](https://img.shields.io/badge/KSP%20version-1.7.x-66ccff.svg?style=flat-square) 
+![CKAN listed](https://img.shields.io/badge/CKAN-Indexed-brightgreen.svg) 
+![Software License GPLv3](https://img.shields.io/badge/SoftwareLicense-GPLv3-red) 
+![NonSoftware License CC 4.0 BY-NC-SA](https://img.shields.io/badge/NonSoftwareLicense-CC--4.0--BY--SA-lightgrey)
 
 #### Formerly known as On Demand Fuel Cells (ODFC)
 
@@ -42,11 +44,6 @@ Another set that modifies the same set of parts instead of copying them.
 
 ### Changelog Summary
 *See ![ChangeLog](https://github.com/zer0Kerbal/ODFCr/blob/master/changelog.md) for full details of mod changes*
- #### 1.1.2.1 - Set SCE to AUX
-STATUS: *Release*
-  * [NEW][BUG 1.1.2.1a] AmpYear doesn't seem to recognize ODFC
-  * [NEW][BUG 1.1.2.0b] Kerbalism is not compatible with ODFC - Kerbalism developers have chosen to not integrate since they have their own version.
-  * [D][BUG 1.1.2.1b] `Found the problem, Bill left a torque converter, which was set to moar, in the innards. Plus Val thought it would be fun to hide her signature in the code of the FCOS (Fuel Cell Operating System). In doing so, she overwrote the code to remember the editor settings when translating over to flight. This has been fixed by moving her signature into another mod's code. She's still happy.`
 
 #### Known Issue Tracker
 * [NEW][BUG 1.1.2.1a] AmpYear doesn't seem to recognize ODFC
@@ -63,7 +60,7 @@ STATUS: *Release*
  - ****Parts designed to use, or patches to modify existing parts**** *This mod (addon) does nothing by itself.*
 
  #### Dependencies
- - ![Kerbal Space Program](https://kerbalspaceprogram.com) v1.7.3, ***may*** work on earlier versions
+ - ![Kerbal Space Program](https://kerbalspaceprogram.com) v1.8.1, ***may*** work on earlier versions
  - ![Module Manager](http://forum.kerbalspaceprogram.com/index.php?/topic/50533-105-*)
  - ![ODFC Modify Patches](https://spacedock.info/mod/2220/On%20Demand%20Fuel%20Cells%20-%20Modify%20Patches) and/or - ![ODFC Copy Patches](https://spacedock.info/mod/2221/On%20Demand%20Fuel%20Cells%20-%20Copy%20Patches)  
 
