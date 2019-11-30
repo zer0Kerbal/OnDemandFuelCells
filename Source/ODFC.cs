@@ -41,6 +41,10 @@ using UnityEngine;
 
 namespace ODFC
 {
+    /// <summary>
+    /// On Demand Fuel Cells (ODFC) part module
+    /// </summary>
+    /// <seealso cref="PartModule" />
     public class ODFC : PartModule
     {
         #region Enums Vars
@@ -62,12 +66,19 @@ namespace ODFC
         private int lastFuelMode = -1;
         private string info = string.Empty;
 
+        /// <summary>The configuration node</summary>
         public ConfigNode configNode;
+        /// <summary>List: The last resource</summary>
         public static List<resourceLa> lastResource = new List<resourceLa>();
+        /// <summary>ElectricCharge identification number</summary>
         public static int ElectricChargeID;
+        /// <summary>The SCN</summary>
         public string scn;
+        /// <summary>The ns</summary>
         public bool ns = true;
+        /// <summary>The odfc configuration</summary>
         public Config ODFC_config;
+        /// <summary>The state of the Fuel Cell (nominal, off et al)</summary>
         public states state = states.error;
         #endregion
         // added PAW grouping, set to autocollapse - introduced in KSP 1.7.1
@@ -225,8 +236,8 @@ namespace ODFC
 
         #region Private Functions
         /// <summary>Updates the fs.</summary>
-        /// <param name="s">The s.</param>
-        /// <param name="fuels">The fuels.</param>
+        /// <param name="s">The string to be used to update the fuels list.</param>
+        /// <param name="fuels">The fuels list.</param>
         private void updateFS(out string s, Fuel[] fuels)
         {
 
@@ -488,7 +499,7 @@ namespace ODFC
 			}
         }
 
-        /// <summary>Updates the paw label.</summary>
+        /// <summary>Updates the PAW label.</summary>
         private void updatePAWLabel()
         {
             string colorStr = "<#ADFF2F>";
@@ -512,26 +523,40 @@ namespace ODFC
         /// <param name="scaleFactor">The scale factor.</param>
         internal void OnRescale(TweakScale.ScalingFactor.FactorSet scaleFactor)
         {
-            /// this scales any resources on the part with ODFC:
+            /// this scales any resources on the part with ODFC:            
             foreach (PartResource resource in this.part.Resources)
             {
+
+                Log.dbg("[ODFC TweakScale] Resource: " + resource.amount + " / " + resource.maxAmount);
                 resource.maxAmount *= scaleFactor.cubic;
                 resource.amount *= scaleFactor.cubic;
+                Log.dbg("[ODFC TweakScale] Resource: " + resource.amount + " / " + resource.maxAmount);
             }
 
             /// this scales the actual fuel cell, fuels, byproducts, and maxEC
-            foreach (mode m in ODFC_config.modes)
-            {
-                foreach (Fuel[m].fuel *= scaleFactor.cubic;
-                foreach (Fuel[m].byproducts *= scaleFactor.cubic;
-                foreach (Fuel[m].maxEC *= scaleFactor.cubic;
-            }
+            //foreach (mode m in modes(0, MAX_VALUE))
+            ////foreach (var m in ODFC_config.modes)
+            //{
+            //    /*foreach (Fuel fuel in ODFC_config.modes[].fuels)*/
+            //    foreach (Fuel fuel in modes[m].fuels)
+            //    {
+            //        fuel.mode.rate *= scaleFactor.cubic;
+            //        Log.dbg("[ODFC TweakScale] Fuel: " + PartResourceLibrary.Instance.GetDefinition(fuel.resourceID).name + " = " + fuel.rate);
+            //    }
 
+            //    foreach (var byproduct in m.byproducts)
+            //    {
+            //        byproduct.rate *= scaleFactor.cubic;
+            //        Log.dbg("[ODFC TweakScale] byproduct: " + PartResourceLibrary.Instance.GetDefinition(byproduct.resourceID).name + " = " + byproduct.rate);
+            //    }
+
+            //    m.maxEC *= scaleFactor.cubic;
+            //    Log.dbg("[ODFC TweakScale] maxEC: " + m.maxEC);
+            //}
             this.updateFT();
         }
         #endregion
     }
-
 }
 #region notes
 /*            UIPartActionWindow window = UIPartActionController.Instance.GetItem(part, false);

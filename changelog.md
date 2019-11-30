@@ -2,8 +2,11 @@
 ## On Demand Fuel Cells Refueled (ODFCr)  
 
 ### Changelog
-#### STATUS:
- * ***Release***
+#### 1.2.0.0 - Gone to Plaid
+ - <mark>Recompiled for KSP 1.8.x</mark>
+ - Using .NET Franework 4.8
+ - [BUG 1.1.2.0a] TweakScale
+
 #### 1.1.2.1 - Set SCE to AUX
  * [BUG 1.1.2.0a] TweakScale
  * [NEW][BUG 1.1.2.1a] AmpYear doesn't seem to recognize ODFC
