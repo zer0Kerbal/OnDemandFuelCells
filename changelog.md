@@ -2,10 +2,16 @@
 ## On Demand Fuel Cells Refueled (ODFCr)  
 
 ### Changelog
-#### 1.2.0.0 - Gone to Plaid
+### 1.2.0.1 - Gone to Plaid
+ - correct .version file max KSP version from 1.8.1 to 1.8.9999
+ - Minor corrections to Changelog
+ - [D][BUG 1.1.2.0a] - TweakScale support added.
+ 
+#### 1.2.0.0 - To Go Boldly
  - <mark>Recompiled for KSP 1.8.x</mark>
  - Using .NET Franework 4.8
- - [BUG 1.1.2.0a] TweakScale
+ - Using Unity 2019.2.2f1
+ - Continued working on [BUG 1.1.2.0a] TweakScale 
 
 #### 1.1.2.1 - Set SCE to AUX
  * [BUG 1.1.2.0a] TweakScale

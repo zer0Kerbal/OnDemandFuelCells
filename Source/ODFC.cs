@@ -57,7 +57,6 @@ namespace ODFC
             thresHoldSteps = 0.05f, // increment the rate by this amount (default is 5)
             thresholdMin = thresHoldSteps,
             thresHoldMax = 1;
-  
 
         private Double
             lastGen = -1,
@@ -534,25 +533,30 @@ namespace ODFC
             }
 
             /// this scales the actual fuel cell, fuels, byproducts, and maxEC
-            //foreach (mode m in modes(0, MAX_VALUE))
-            ////foreach (var m in ODFC_config.modes)
-            //{
-            //    /*foreach (Fuel fuel in ODFC_config.modes[].fuels)*/
-            //    foreach (Fuel fuel in modes[m].fuels)
-            //    {
-            //        fuel.mode.rate *= scaleFactor.cubic;
-            //        Log.dbg("[ODFC TweakScale] Fuel: " + PartResourceLibrary.Instance.GetDefinition(fuel.resourceID).name + " = " + fuel.rate);
-            //    }
+            //foreach (mode m in ODFC_config.modes(0, ODFC_config.modes.Length))
+            //foreach (var m in ODFC_config.modes)
+            {
+                /*foreach (Fuel fuel in ODFC_config.modes[].fuels)*/
+                for (int m = 0; m <=ODFC_config.modes.Length; m++)
+                {
+                    ODFC_config.modes[m].maxEC *= scaleFactor.cubic;
+                    Log.dbg("[ODFC TweakScale] maxEC: " + ODFC_config.modes[m].maxEC);
 
-            //    foreach (var byproduct in m.byproducts)
-            //    {
-            //        byproduct.rate *= scaleFactor.cubic;
-            //        Log.dbg("[ODFC TweakScale] byproduct: " + PartResourceLibrary.Instance.GetDefinition(byproduct.resourceID).name + " = " + byproduct.rate);
-            //    }
+                    for (int n = 0; n <= ODFC_config.modes[m].fuels.Length;)
+                    //foreach(Fuel fuels in ODFC_config.modes)
+                    {
+                        ODFC_config.modes[m].fuels[n].rate *= scaleFactor.cubic;
+                        Log.dbg("[ODFC TweakScale] Fuel: " + PartResourceLibrary.Instance.GetDefinition(ODFC_config.modes[m].fuels[n].resourceID).name + " = " + ODFC_config.modes[m].fuels[n].rate);
+                    }
 
-            //    m.maxEC *= scaleFactor.cubic;
-            //    Log.dbg("[ODFC TweakScale] maxEC: " + m.maxEC);
-            //}
+                    for (int n = 0; n <= ODFC_config.modes[m].byproducts.Length;)
+                    //foreach (Fuel byproducts in ODFC_config.modes)
+                    {
+                        ODFC_config.modes[m].byproducts[n].rate *= scaleFactor.cubic;
+                        Log.dbg("[ODFC TweakScale] byproduct: " + PartResourceLibrary.Instance.GetDefinition(ODFC_config.modes[m].byproducts[n].resourceID).name + " = " + ODFC_config.modes[m].byproducts[n].rate);
+                    }
+                }
+            }
             this.updateFT();
         }
         #endregion
