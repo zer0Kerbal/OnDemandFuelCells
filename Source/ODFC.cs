@@ -352,16 +352,16 @@ namespace ODFC
             ODFC_config = new Config(configNode, part);
 
             // One puppy will explode for every question you ask about this code.  Please, think of the puppies.
-            //ScreenMessages.PostScreenMessage(Convert.ToString(ODFC_config.modes.Length), 1, ScreenMessageStyle.UPPER_CENTER, true);
-            //Debug.Log(Convert.ToString(ODFC_config.modes.Length));
+
+            Log.dbg("[ODFC TweakScale] Modes.Length: " + Convert.ToString(ODFC_config.modes.Length));
             updateFT();
 
             if (ODFC_config.modes.Length < 2)
             {   // Disable unneccessary UI elements if we only have a single mode
                 Events["nextFuel"].guiActive = false;
                 Events["nextFuel"].guiActiveEditor = false;
-                Fields["fuel_consumption"].guiActive = false;
-                Fields["fuel_consumption"].guiActiveEditor = false;
+                Fields["fuel_consumption"].guiActive = true; // false;
+                Fields["fuel_consumption"].guiActiveEditor = true; // false;
                 Actions["previousFuelModeAction"].active = false;
                // Actions["nextFuelModeAction"].active = false;
             }
@@ -436,22 +436,21 @@ namespace ODFC
                 ECNeed = (Double)(maxAmount * threshold - amount),
                 fuelModeMaxECRateLimit = ODFC_config.modes[fuelMode].maxEC * rateLimit;
 
-            // add stall code
+        // add stall code
             if (HighLogic.CurrentGame.Parameters.CustomParams<ODFC_Options>().needsECtoStart && amount == 0f) {
                 UpdateState(states.stalled, 0, fuelModeMaxECRateLimit);
                 return;
             }
 
-            cfTime = Math.Min(cfTime, ECNeed / fuelModeMaxECRateLimit); // Determine activity based on supply/demand
-
+        // Determine activity based on supply/demand
+            cfTime = Math.Min(cfTime, ECNeed / fuelModeMaxECRateLimit); 
             if (cfTime <= 0) {
                 UpdateState(states.noDemand, 0, fuelModeMaxECRateLimit);
                 return;
             }
-
-            //Boolean Empty = false;
-
-            foreach (Fuel fuel in ODFC_config.modes[fuelMode].fuels) {	// Determine activity based on available fuel
+            
+        // Determine activity based on available fuel
+            foreach (Fuel fuel in ODFC_config.modes[fuelMode].fuels) {	
 				amount = 0;
                 part.GetConnectedResourceTotals(fuel.resourceID , out amount, out maxAmount);
 
@@ -461,21 +460,28 @@ namespace ODFC
                 cfTime = Math.Min(cfTime, amount / (fuel.rate * rateLimit));
             }
 
-            if (cfTime == 0) // (Empty) // (Math.Round(cfTime, MidpointRounding.ToEven) == 0)
+            if (cfTime == 0)
             {
 
                 UpdateState(states.fuelDeprived, 0, fuelModeMaxECRateLimit);
                 
-                // this looks for another fuel mode that isn't deprived if autoSwitch == true
+            // this looks for another fuel mode that isn't deprived if autoSwitch == true
                 if (HighLogic.CurrentGame.Parameters.CustomParams<ODFC_Options>().autoSwitch) nextFuelMode();
                 return;
             }
-            Double adjr = rateLimit * cfTime;           // Calculate usage based on rate limiting and duty cycle
+            
+        // Calculate usage based on rate limiting and duty cycle
+            Double adjr = rateLimit * cfTime;           
             Double ECAmount = fuelModeMaxECRateLimit * cfTime;
-            part.RequestResource(ElectricChargeID, -ECAmount);   // Don't forget the most important part
+            
+        // Don't forget the most important part (add ElectricCharge (EC))
+            part.RequestResource(ElectricChargeID, -ECAmount);   
 
-            kommit(ODFC_config.modes[fuelMode].fuels, adjr);            // Commit changes to fuel used
-            kommit(ODFC_config.modes[fuelMode].byproducts, adjr);           // Handle byproducts
+        // Commit changes to fuel used
+            kommit(ODFC_config.modes[fuelMode].fuels, adjr);            
+
+        // Handle byproducts
+            kommit(ODFC_config.modes[fuelMode].byproducts, adjr);           
 
             UpdateState(states.nominal, ECAmount / TimeWarp.fixedDeltaTime, fuelModeMaxECRateLimit);
         }
@@ -502,7 +508,6 @@ namespace ODFC
         private void updatePAWLabel()
         {
             string colorStr = "<#ADFF2F>";
-            //string colorStrEnd = "";
             string begStr = "<size=+1><b>";
             string endStr = "</color></b></size>";
 
@@ -522,39 +527,42 @@ namespace ODFC
         /// <param name="scaleFactor">The scale factor.</param>
         internal void OnRescale(TweakScale.ScalingFactor.FactorSet scaleFactor)
         {
-            /// this scales any resources on the part with ODFC:            
+            Log.dbg("[ODFC TweakScale] scaleFactor: " + scaleFactor.cubic);
+
+            // this scales any resources on the part with ODFC:            
             foreach (PartResource resource in this.part.Resources)
             {
 
-                Log.dbg("[ODFC TweakScale] Resource: " + resource.amount + " / " + resource.maxAmount);
+                Log.dbg("[ODFC TweakScale] Pre Scaled Resource: " + resource.resourceName + ": " + resource.amount + " / " + resource.maxAmount);
                 resource.maxAmount *= scaleFactor.cubic;
                 resource.amount *= scaleFactor.cubic;
-                Log.dbg("[ODFC TweakScale] Resource: " + resource.amount + " / " + resource.maxAmount);
+                Log.dbg("[ODFC TweakScale] Post Scaled Resource: " + resource.resourceName + ": " + resource.amount + " / " + resource.maxAmount);
             }
 
-            /// this scales the actual fuel cell, fuels, byproducts, and maxEC
-            //foreach (mode m in ODFC_config.modes(0, ODFC_config.modes.Length))
-            //foreach (var m in ODFC_config.modes)
+        // this scales the actual fuel cell, fuels, byproducts, and maxEC
+        // shouldn't scale rateLimit and threshold because are percentages
+            for (byte m = 0; m <= ODFC_config.modes.Length - 1 ; m++)
             {
-                /*foreach (Fuel fuel in ODFC_config.modes[].fuels)*/
-                for (int m = 0; m <=ODFC_config.modes.Length; m++)
+            // scale MaxEC
+                ODFC_config.modes[m].maxEC *= scaleFactor.cubic;
+                Log.dbg("[ODFC TweakScale] maxEC: " + ODFC_config.modes[m].maxEC);
+
+            // scale fuels in ODFC_config.modes
+                Log.dbg("[ODFC TweakScale] Fuels in mode: " + ODFC_config.modes[m].fuels.Length);
+                for (int n = 0; n <= ODFC_config.modes[m].fuels.Length - 1; n++)
+                
                 {
-                    ODFC_config.modes[m].maxEC *= scaleFactor.cubic;
-                    Log.dbg("[ODFC TweakScale] maxEC: " + ODFC_config.modes[m].maxEC);
+                    ODFC_config.modes[m].fuels[n].rate *= scaleFactor.cubic;
+                    Log.dbg("[ODFC TweakScale] Fuel: " + PartResourceLibrary.Instance.GetDefinition(ODFC_config.modes[m].fuels[n].resourceID).name + " = " + ODFC_config.modes[m].fuels[n].rate);
+                }
 
-                    for (int n = 0; n <= ODFC_config.modes[m].fuels.Length;)
-                    //foreach(Fuel fuels in ODFC_config.modes)
-                    {
-                        ODFC_config.modes[m].fuels[n].rate *= scaleFactor.cubic;
-                        Log.dbg("[ODFC TweakScale] Fuel: " + PartResourceLibrary.Instance.GetDefinition(ODFC_config.modes[m].fuels[n].resourceID).name + " = " + ODFC_config.modes[m].fuels[n].rate);
-                    }
-
-                    for (int n = 0; n <= ODFC_config.modes[m].byproducts.Length;)
-                    //foreach (Fuel byproducts in ODFC_config.modes)
-                    {
-                        ODFC_config.modes[m].byproducts[n].rate *= scaleFactor.cubic;
-                        Log.dbg("[ODFC TweakScale] byproduct: " + PartResourceLibrary.Instance.GetDefinition(ODFC_config.modes[m].byproducts[n].resourceID).name + " = " + ODFC_config.modes[m].byproducts[n].rate);
-                    }
+            // scale byproducts in ODFC_config.modes
+                Log.dbg("[ODFC TweakScale] Byproducts in mode: " + ODFC_config.modes[m].byproducts.Length);
+                for (int n = 0; n <= ODFC_config.modes[m].byproducts.Length - 1; n++)
+                
+                {
+                    ODFC_config.modes[m].byproducts[n].rate *= scaleFactor.cubic;
+                    Log.dbg("[ODFC TweakScale] byproduct: " + PartResourceLibrary.Instance.GetDefinition(ODFC_config.modes[m].byproducts[n].resourceID).name + " = " + ODFC_config.modes[m].byproducts[n].rate);
                 }
             }
             this.updateFT();

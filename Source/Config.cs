@@ -68,7 +68,8 @@ namespace ODFC {
             {
         //        ConfigNode[] nodes = node.GetNodes("ODFC"); // shouldn't need null coalescing as we should always have at least one ODFC module
 
-			    ConfigNode[] nodes = node.GetNodes("MODE");	// Shouldn't need null coalescing as we should always have at least one MODE
+            // Shouldn't need null coalescing as we should always have at least one MODE
+			    ConfigNode[] nodes = node.GetNodes("MODE");	
 			    modes = new mode[nodes.Length];
 
 			    for(byte i = 0; i < nodes.Length; i++)
@@ -77,7 +78,7 @@ namespace ODFC {
 /*            else
             {
                 modes = null;
-                ScreenMessages.PostScreenMessage("Malformed config node: MODE", 2, ScreenMessageStyle.LOWER_CENTER, true);
+                Log.dbg("Malformed config node: MODE");
             }*/
         }
 	}
