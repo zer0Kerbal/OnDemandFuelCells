@@ -2,38 +2,10 @@
 ## On Demand Fuel Cells Refueled (ODFCr)  
 
 ### Changelog
-### 1.2.1.0 - Gone to Plaid
+### 1.2.0.1 - Gone to Plaid
  - correct .version file max KSP version from 1.8.1 to 1.8.9999
  - Minor corrections to Changelog
- - [D][BUG 1.1.2.0a] - TweakScale support added. Properly scales ODFC module (maxEC, Fuels, Byproducts) and resources in a part with ODFC installed. Requires TweakScale to be installed.
- 
- ## Known Issue Tracker
- + [WIP] Work In Progress[BUG 1.1.2.0a] TweakScale
- * [BUG 1.1.2.1a] AmpYear doesn't seem to recognize ODFC
- * [BUG 1.1.2.0b] Kerbalism is not compatible with ODFC - Kerbalism developers have chosen to not integrate since they have their own version.
- * [BUG 0.0.1.6a] Doesn't seem to work with BackgroundResources mod (so ODFC doesn't work when doesn't have focus)
-
- + Swatted with the big can of KAID bug zapper
- * [D][BUG 0.0.1.5] the paw label is created from the FSHORT node name in the part.cfg (or patch)
- * [D][BUG 0.0.1.4a] fuel cell doesn't switch to the "Fuel Deprived" state if you run out of any of the currently used resources and continues to produce EC
- * [D][BUG 0.0.1.4b] the H2O+water mode causes the part to mis-function (ERROR) - probably has to do with resourceAbbreviations
- * [D][BUG 0.0.1.4c] if ECneed > ECsupply & ECtotal = 0 will make the PAW fluctuate in size.
- * [D][BUG 0.0.1.3a] upon vehicle load, PAW showing errors that go away with activation/EC production
- * [D][BUG 0.0.1.3b] missing 'prev' fuel button
- * [D][BUG 0.0.1.3c] current/max display just showing ECRateLimit/ECRateLimit instead of ECRateLimit/maxECRateLimit
- * [D][BUG 0.0.1.3d] when in LiquidFuel+IntakeAir (LF+AI) mode - LF consumption too low
- * [R][BUG 0.0.1.3e] byproduct (heat) missing from StockFuelCells.cfg or should be in .dll?
- * [D][BUG 0.0.1.2a] log spam - Val was singing offkey in the OnStart method
- * [D][BUG 0.0.1.2b] must have some EC to function, if EC == 0 causes ODFC to hang
- * [D][BUG 0.0.1.2c] Does not decrement fuel (all or any)
-
-## Feature Request Tracker
- + AYA integration
- + Add Heat production
- + Convert to On-Demand Resource Converter (still base of ODFC) by either adding or modifying
- * Copy/Modify patches add 5 storedCharge (and DischargeCapacitor module) if Near Future Electrical installed
- * Copy/Modify patches add 5 ReservePower if AmpYear installed
- * Copy/Modify patches add 0.01 megaJoules if InterstellarFuelSwitch installed
+ - [D][BUG 1.1.2.0a] - TweakScale support added.
  
 #### 1.2.0.0 - To Go Boldly
  - <mark>Recompiled for KSP 1.8.x</mark>
@@ -42,8 +14,9 @@
  - Continued working on [BUG 1.1.2.0a] TweakScale 
 
 #### 1.1.2.1 - Set SCE to AUX
- * v
- * [BUG 1.1.2.0b] Kerbalism is not compatible with ODFC - Kerbalism developers have chosen to not integrate since they have their own version.
+ * [BUG 1.1.2.0a] TweakScale
+ * [NEW][BUG 1.1.2.1a] AmpYear doesn't seem to recognize ODFC
+ * BUG 1.1.2.0b] Kerbalism is not compatible with ODFC - Kerbalism developers have chosen to not integrate since they have their own version.
  * [D][BUG 1.1.2.1b] Found the problem, Bill left a torque converter, which was set to moar, in the innards. Plus Val thought it would be fun to hide her signature in the code of the FCOS (Fuel Cell Operating System). In doing so, she overwrote the code to remember the editor settings when translating over to flight. This has been fixed by moving her signature into another mod's code. She's still happy.
  * Updated to automated build (deploy.bat,buildRelease.bat/Assembly.tt)
 
@@ -84,6 +57,33 @@
  * fixed typo in StockFuelCells.cfg (replaced '-' with '=')
  * [D][BUG 0.0.1.2b] must have some EC to function, if EC == 0 causes ODFC to hang - just had to move two lines of code to execute earlier. Reason this works, why it wasn't working if vessel EC == 0 was the order of execution. Needed to add the generated EC before handling byproducts, and remove fuel which triggered update state.
  * Release to Beta-Testers
+
+## Known Issue Tracker
+ + [WIP] Work In Progress
+ * [BUG 0.0.1.6a] Doesn't seem to work with BackgroundResources mod (so ODFC doesn't work when doesn't have focus)
+
+ + Swatted with the big can of KAID bug zapper
+ * [D][BUG 0.0.1.5] the paw label is created from the FSHORT node name in the part.cfg (or patch)
+ * [D][BUG 0.0.1.4a] fuel cell doesn't switch to the "Fuel Deprived" state if you run out of any of the currently used resources and continues to produce EC
+ * [D][BUG 0.0.1.4b] the H2O+water mode causes the part to mis-function (ERROR) - probably has to do with resourceAbbreviations
+ * [D][BUG 0.0.1.4c] if ECneed > ECsupply & ECtotal = 0 will make the PAW fluctuate in size.
+ * [D][BUG 0.0.1.3a] upon vehicle load, PAW showing errors that go away with activation/EC production
+ * [D][BUG 0.0.1.3b] missing 'prev' fuel button
+ * [D][BUG 0.0.1.3c] current/max display just showing ECRateLimit/ECRateLimit instead of ECRateLimit/maxECRateLimit
+ * [D][BUG 0.0.1.3d] when in LiquidFuel+IntakeAir (LF+AI) mode - LF consumption too low
+ * [R][BUG 0.0.1.3e] byproduct (heat) missing from StockFuelCells.cfg or should be in .dll?
+ * [D][BUG 0.0.1.2a] log spam - Val was singing offkey in the OnStart method
+ * [D][BUG 0.0.1.2b] must have some EC to function, if EC == 0 causes ODFC to hang
+ * [D][BUG 0.0.1.2c] Does not decrement fuel (all or any)
+
+## Feature Request Tracker
+ + AYA integration
+ + Add Heat production
+ + Convert to On-Demand Resource Converter (still base of ODFC) by either adding or modifying
+ * Copy/Modify patches add 5 storedCharge (and DischargeCapacitor module) if Near Future Electrical installed
+ * Copy/Modify patches add 5 ReservePower if AmpYear installed
+ * Copy/Modify patches add 0.01 megaJoules if InterstellarFuelSwitch installed
+ +
 
 ####  v.0.0.1.7
  * [D][BUG 0.0.1.4c] other fixes seems to have fixed this.
