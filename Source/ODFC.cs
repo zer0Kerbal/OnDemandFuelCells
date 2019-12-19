@@ -527,15 +527,15 @@ namespace ODFC
         /// <param name="scaleFactor">The scale factor.</param>
         internal void OnRescale(TweakScale.ScalingFactor.FactorSet scaleFactor)
         {
-            Log.dbg("[ODFC TweakScale] scaleFactor: " + scaleFactor.cubic);
+            Log.dbg("[ODFC TweakScale] scaleFactor: " + scaleFactor.quadratic);
 
             /// <summary>this scales any resources on the part with ODFC:  </summary>           
             foreach (PartResource resource in this.part.Resources)
             {
 
                 Log.dbg("[ODFC TweakScale] unscaled resource: " + resource.resourceName + ": " + resource.amount + " / " + resource.maxAmount);
-                resource.maxAmount *= scaleFactor.cubic;
-                resource.amount *= scaleFactor.cubic;
+                resource.maxAmount *= scaleFactor.quadratic; // .cubic;
+                resource.amount *= scaleFactor.quadratic; // cubic;
                 Log.dbg("[ODFC TweakScale] scaled resource: " + resource.resourceName + ": " + resource.amount + " / " + resource.maxAmount);
             }
 
