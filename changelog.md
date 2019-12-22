@@ -5,8 +5,10 @@
 ### 1.2.1.0 - Gone to Plaid
  - correct .version file max KSP version from 1.8.1 to 1.8.9999
  - Minor corrections to Changelog
+ - part and fuel cell now scales if TweakScale is installed. Quadratic scaling.
  - [D][BUG 1.1.2.0a] - TweakScale support added. Properly scales ODFC module (maxEC, Fuels, Byproducts) and resources in a part with ODFC installed. Requires TweakScale to be installed.
- 
+ - [NEW][BUG 1.2.0.0a] fuel consumption and byproduct production should be seen on PAW - it is not
+
  ## Known Issue Tracker
  + [WIP] Work In Progress[BUG 1.1.2.0a] TweakScale
  * [BUG 1.1.2.1a] AmpYear doesn't seem to recognize ODFC
@@ -34,12 +36,12 @@
  * Copy/Modify patches add 5 storedCharge (and DischargeCapacitor module) if Near Future Electrical installed
  * Copy/Modify patches add 5 ReservePower if AmpYear installed
  * Copy/Modify patches add 0.01 megaJoules if InterstellarFuelSwitch installed
- 
+
 #### 1.2.0.0 - To Go Boldly
  - <mark>Recompiled for KSP 1.8.x</mark>
  - Using .NET Franework 4.8
  - Using Unity 2019.2.2f1
- - Continued working on [BUG 1.1.2.0a] TweakScale 
+ - Continued working on [BUG 1.1.2.0a] TweakScale
 
 #### 1.1.2.1 - Set SCE to AUX
  * v
