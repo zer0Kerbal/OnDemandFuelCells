@@ -4,11 +4,11 @@ using System;
 using UnityEngine;
 
 namespace ODFC {
-	public class resourceLa { //resource la? originally rla
+	public class resourceLabel { //resource la? originally rla
 		public int resourceID;
 		public string resourceAbbreviation;
 
-		public resourceLa(int resourceID, string resourceAbbreviation) {
+		public resourceLabel(int resourceID, string resourceAbbreviation) {
 			this.resourceID = resourceID;
 			this.resourceAbbreviation = resourceAbbreviation;
 		}

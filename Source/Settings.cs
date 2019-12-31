@@ -45,6 +45,12 @@ namespace ODFC
             unlockedDuringMission = true)]
         public bool coloredPAW = true;
 
+        [GameParameters.CustomParameterUI("Global Scaling Factor",
+            toolTip = "Scales production and consumption Globally on all ODFC modules.",
+            newGameOnly = false,
+            unlockedDuringMission = true)]
+        public double globalScalingFactor = 1.0f;
+
         // If you want to have some of the game settings default to enabled,  change 
         // the "if false" to "if true" and set the values as you like
 
@@ -59,21 +65,24 @@ namespace ODFC
                 case GameParameters.Preset.Easy:
                     needsECtoStart = false;
                     autoSwitch = true;
+                    // globalScalingFacotr = 1.5f
                     break;
 
                 case GameParameters.Preset.Normal:
                     needsECtoStart = false;
                     autoSwitch = true;
+                    // globalScalingFacotr = 1.0f
                     break;
 
                 case GameParameters.Preset.Moderate:
                     needsECtoStart = true;
                     autoSwitch = true;
+                    // globalScalingFacotr = 0.75f
                     break;
-
                 case GameParameters.Preset.Hard:
                     needsECtoStart = true;
                     autoSwitch = false;
+                    // globalScalingFacotr = 0.5f
                     break;
             }
         }
