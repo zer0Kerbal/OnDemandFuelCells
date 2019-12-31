@@ -156,7 +156,7 @@ namespace ODFC
             if (++fuelMode >= ODFC_config.modes.Length)
                 fuelMode = 0;
 
-            updateFT();
+            updateEditor(); // updateFT();
         }
 
         [KSPEvent(guiActive = false, 
@@ -168,7 +168,7 @@ namespace ODFC
             if (--fuelMode < 0)
                 fuelMode = ODFC_config.modes.Length - 1;
 
-            updateFT();
+            updateEditor(); // updateFT();
         }
         /*
         future: convert rateLimit and threshold to use 
@@ -354,7 +354,7 @@ namespace ODFC
             // One puppy will explode for every question you ask about this code.  Please, think of the puppies.
 
             Log.dbg("[ODFC TweakScale] Modes.Length: " + Convert.ToString(ODFC_config.modes.Length));
-            updateFT();
+            updateEditor(); // updateFT();
 
             if (ODFC_config.modes.Length < 2)
             {   // Disable unneccessary UI elements if we only have a single mode
@@ -504,6 +504,15 @@ namespace ODFC
 			}
         }
 
+        /// <summary>Updates the PAW with scaleFactor</summary>
+        private void updateEditor()
+        {
+
+            // following needed for TweakScale et al. Thank you to Lisias. 
+            GameEvents.onEditorShipModified.Fire(EditorLogic.fetch.ship);
+            updateFT();
+        }
+
         /// <summary>Updates the PAW label.</summary>
         private void updatePAWLabel()
         {
@@ -571,7 +580,7 @@ namespace ODFC
                     Log.dbg("[ODFC TweakScale] scaled byproduct: " + PartResourceLibrary.Instance.GetDefinition(ODFC_config.modes[m].byproducts[n].resourceID).name + " = " + ODFC_config.modes[m].byproducts[n].rate);
                 }
             }
-            this.updateFT();
+            this.updateEditor(); // updateFT();
         }
         #endregion
     }
