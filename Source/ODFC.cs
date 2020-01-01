@@ -162,6 +162,7 @@ namespace ODFC
             guiActiveEditor = true,
             groupName = "ODFC",
             groupDisplayName = "On Demand Fuel Cells Control",
+            
             groupStartCollapsed = true)]
         public int fuelMode = 0; 
 
@@ -541,9 +542,9 @@ namespace ODFC
                 info += "Modes: " + mds.Length.ToString();
 
                 for (byte n = 0; n < mds.Length; n++)
-                    info += "\n\n<color=#99FF00FF>Mode: " + n.ToString() + "</color> - Max EC: " + mds[n].GetValue("MaxEC") +
-                        "/s\n<color=#FFFF00FF>Fuels:</color>" + GetResourceRates(mds[n].GetNode("FUELS")) +
-                        "\n<color=#FFFF00FF>Byproducts:</color>" + GetResourceRates(mds[n].GetNode("BYPRODUCTS"));
+                    info += "\n\n<color=#99FF00>Mode: " + n.ToString() + "</color> - Max EC: " + mds[n].GetValue("MaxEC") +
+                        "/s\n<color=#FFFF00>Fuels:</color>" + GetResourceRates(mds[n].GetNode("FUELS")) +
+                        "\n<color=#FFFF00>Byproducts:</color>" + GetResourceRates(mds[n].GetNode("BYPRODUCTS"));
             }
 
             return info;
