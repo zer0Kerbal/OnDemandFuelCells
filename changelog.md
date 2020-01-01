@@ -9,6 +9,19 @@
  - [D][BUG 1.1.2.0a] - TweakScale support added. Properly scales ODFC module (maxEC, Fuels, Byproducts) and resources in a part with ODFC installed. Requires TweakScale to be installed.
  - [NEW][BUG 1.2.0.0a] fuel consumption and byproduct production should be seen on PAW - it is not
 
+### 1.2.0.8 dev build
+ - added and adjusted fuel_consumption and byproducts strings to include fuel.rate
+ - honors PAW color settings
+ - need to figure out how to format the number string to limit the max # of characters (MAYBE)
+
+### 1.2.0.7 dev build
+ - TweakScale working in editor, not flight
+ - fixed the issue causing ODFC to error out in flight
+ - started adding GlobalScalingFactor (added on settings page)
+
+### 1.2.0.6 dev build
+ - added revised tweakscale support by adding private void UpdateEditor();
+
  ## Known Issue Tracker
  + [WIP] Work In Progress[BUG 1.1.2.0a] TweakScale
  * [BUG 1.1.2.1a] AmpYear doesn't seem to recognize ODFC

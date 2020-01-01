@@ -33,7 +33,7 @@ NEW:
         * so standard set of consumptions for producing 1 EC/s
         * scaleFactor then set to default of 1
         * if the module is supposed to produce 10 EC/s set scaleFactor to 10
-        * conversly, if module is supposed to produce 0.5 EC/s; set scaleFactor to 10
+        * conversely, if module is supposed to produce 0.5 EC/s; set scaleFactor to 10
 
 // Most Wanted:
     * PAW isn't showing consumption / production fuel_consumption and byproducts
@@ -343,15 +343,15 @@ namespace ODFC
 
             string fuelColorStr = "";
             string fuelRateColorStr = "";
-            string endCStr = "";
+            string endStr = "";
 
             // would like to have and if s = fuel_consumption then else byproducts then 
             // ie different colors for fuel_consumption and byproducts
             if (HighLogic.CurrentGame.Parameters.CustomParams<ODFC_Options>().coloredPAW)
             {
-                fuelColorStr = "<color =#FFFF00FF>";
-                fuelRateColorStr = "<color =#FFFF00FF>";
-                endCStr = "</ color>";
+                fuelColorStr = "<#FFFF00>";
+                fuelRateColorStr = "<#FFFF00>";
+                endStr = "</color>";
             }
 
             if (fuels.Length == 0)
@@ -360,20 +360,21 @@ namespace ODFC
                 return;
             }
 
-            //s = "";
-            s = "Fuels: ";
+            s = "";
             bool plus = false;
 
             foreach (Fuel fuel in fuels)
             {
                 resourceLabel abr = lastResource.Find(x => x.resourceID == fuel.resourceID);
+                if (plus)
+                {
+                    s += "/s";
+                    plus = true;
+                }
 
                 // THIS IS WHERE have to add code to include consumption/production #
-                s += "\n" + fuelColorStr + PartResourceLibrary.Instance.GetDefinition(fuel.resourceID).name + ": " + fuelRateColorStr + fuel.rate + endCStr;
-                if (plus)
-                    s += " + ";
+                s += "\n" + fuelColorStr + PartResourceLibrary.Instance.GetDefinition(fuel.resourceID).name + ": " + fuelRateColorStr + fuel.rate + endStr;
                 // add code to verify found exists to prevent nullref
-                plus = true;
                 Log.dbg("[ODFC PAW] Fuels (string): " + s);
             }
         }
@@ -459,7 +460,7 @@ namespace ODFC
         private void kommit(Fuel[] fuels, Double adjr)
         {
             foreach (Fuel fuel in fuels)
-                //part.RequestResource(fuel.resourceID, fuel.rate * adjr);
+                // part.RequestResource(fuel.resourceID, fuel.rate * adjr);
                 part.RequestResource(fuel.resourceID, fuel.rate * adjr * HighLogic.CurrentGame.Parameters.CustomParams<ODFC_Options>().globalScalingFactor);
         }
         #endregion
@@ -665,7 +666,8 @@ namespace ODFC
             { colorStr = STATES_COLOUR[(int)state]; }
 
             if (HighLogic.LoadedSceneIsFlight) PAWStatus = begStr + colorStr + "Fuel Cell: " + status + " - " + ECs_status + " EC/s" + endStr;
-            if (HighLogic.LoadedSceneIsEditor) PAWStatus = begStr + colorStr + "Fuel Cell: " + fuel_consumption + " - " + maxECs_status + " EC/s:" + endStr;
+            // if (HighLogic.LoadedSceneIsEditor) PAWStatus = begStr + colorStr + "Fuel Cell: " + fuel_consumption + " - " + maxECs_status + " EC/s:" + endStr;
+            if (HighLogic.LoadedSceneIsEditor) PAWStatus = begStr + colorStr + "Fuel Cell: " + status + " - " + maxECs_status + " EC/s:" + endStr;
 
         }
 

@@ -16,7 +16,8 @@ namespace ODFC
         {
             #if DEBUG
                 ScreenMessages.PostScreenMessage(msg, 1, ScreenMessageStyle.UPPER_CENTER, true);
-                // for ingame mail UnityEngine.Debug.Log(msg);
+                // for ingame mail 
+                UnityEngine.Debug.Log(msg);
             #endif
         }
     }

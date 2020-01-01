@@ -25,7 +25,9 @@ namespace ODFC
         public override string DisplaySection { get { return "On Demand Fuel Cells"; } }
         public override int SectionOrder { get { return 1; } }
 
-
+        /// <summary>
+        /// The needs EC to start in GameParameters
+        /// </summary>
         [GameParameters.CustomParameterUI("Require EC to run",
             toolTip = "if set to yes, the fuel cells will 'stall' if the vessels total electric charge reaches zero and will not function until vessel electric charge is above zero.",
             newGameOnly = false,
@@ -33,30 +35,54 @@ namespace ODFC
             )]
         public bool needsECtoStart = false;
 
+        /// <summary>
+        /// The automatic switch in GameParameters
+        /// </summary>
         [GameParameters.CustomParameterUI("Auto Fuel Mode Switch",
             toolTip = "if current fuel mode becomes fuel deprived, will 'hunt' or 'search' for a fuel mode that has fuel.",
             newGameOnly = false,
             unlockedDuringMission = true)]
         public bool autoSwitch = true;
 
+        /// <summary>
+        /// The colored paw
+        /// </summary>
         [GameParameters.CustomParameterUI("PAW Color",
             toolTip = "allow color coding in ODFC PAW (part action window) / part RMB (right menu button).",
             newGameOnly = false,
             unlockedDuringMission = true)]
         public bool coloredPAW = true;
 
-        [GameParameters.CustomParameterUI("Global Scaling Factor",
+        /// <summary>
+        /// Sets the globalScalingFactor in GameParameters
+        /// </summary>
+        [GameParameters.CustomFloatParameterUI("Global Scaling Factor",
             toolTip = "Scales production and consumption Globally on all ODFC modules.",
             newGameOnly = false,
-            unlockedDuringMission = true)]
-        public double globalScalingFactor = 1.0f;
+            unlockedDuringMission = true,
+            minValue = 0.05f,
+            maxValue = 5.0f,
+            stepCount = 101,
+            displayFormat = "F2",
+            asPercentage = false)]
+        public float globalScalingFactor = 1.0f;
 
         // If you want to have some of the game settings default to enabled,  change 
         // the "if false" to "if true" and set the values as you like
 
 
-#if true
+#if true        
+        /// <summary>
+        /// Gets a value indicating whether this instance has presets.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if this instance has presets; otherwise, <c>false</c>.
+        /// </value>
         public override bool HasPresets { get { return true; } }
+        /// <summary>
+        /// Sets the difficulty preset.
+        /// </summary>
+        /// <param name="preset">The preset.</param>
         public override void SetDifficultyPreset(GameParameters.Preset preset)
         {
             Debug.Log("Setting difficulty preset");
@@ -65,24 +91,25 @@ namespace ODFC
                 case GameParameters.Preset.Easy:
                     needsECtoStart = false;
                     autoSwitch = true;
-                    // globalScalingFacotr = 1.5f
+                    globalScalingFactor = 1.5f;
                     break;
 
                 case GameParameters.Preset.Normal:
                     needsECtoStart = false;
                     autoSwitch = true;
-                    // globalScalingFacotr = 1.0f
+                    globalScalingFactor = 1.0f;
                     break;
 
                 case GameParameters.Preset.Moderate:
                     needsECtoStart = true;
                     autoSwitch = true;
-                    // globalScalingFacotr = 0.75f
+                    globalScalingFactor = 0.75f;
                     break;
+
                 case GameParameters.Preset.Hard:
                     needsECtoStart = true;
                     autoSwitch = false;
-                    // globalScalingFacotr = 0.5f
+                    globalScalingFactor = 0.5f;
                     break;
             }
         }
