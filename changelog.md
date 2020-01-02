@@ -5,14 +5,27 @@
 ### 1.2.1.0 - Gone to Plaid
  - correct .version file max KSP version from 1.8.1 to 1.8.9999
  - Minor corrections to Changelog
- - part and fuel cell now scales if TweakScale is installed. Quadratic scaling.
- - [D][BUG 1.1.2.0a] - TweakScale support added. Properly scales ODFC module (maxEC, Fuels, Byproducts) and resources in a part with ODFC installed. Requires TweakScale to be installed.
- - [NEW][BUG 1.2.0.0a] fuel consumption and byproduct production should be seen on PAW - it is not
+ - ***[NEW]*** TweakScale support added. part and fuel cell now scales if TweakScale is installed. Quadratic scaling.
+ - ***[NEW]*** Optional difficulty settings for moderate and hard play - Diminished Returns - the harder the game setting, the less EC/s produced for same fuel. GlobalScalingFactor.
+ - ***[NEW]*** Fuel Consumption and Byproduct production rates now show in PAW instead of just the names of the fuels consumed and byproducts produced.
+ - [D][BUG 1.1.2.0a] Properly scales ODFC module (maxEC, Fuels, Byproducts) and resources in a part with ODFC installed. Requires TweakScale to be installed.
+ - [D][BUG 1.2.0.0a] fuel consumption and byproduct production should be seen on PAW - it is not
+
+### 1.2.0.9 dev build
+ - started to add boilerplate basic backgroundProcessing code structure and supporting docs
+ - added try {} exception handling code to see if better best practices
+ - added additional debug.log code (so screen message, in game mail, and now ksp.log)
+ - added CurrentVesselChargeState to the PAW - not final placement - shows % current/max vessel EC
+ - started moving specific related code sections into #regions
+ - continued added / editing / clarifying /// <summary> sections
 
 ### 1.2.0.8 dev build
- - added and adjusted fuel_consumption and byproducts strings to include fuel.rate
+ - added and adjusted fuel_consumption and byproducts strings to include rate
  - honors PAW color settings
  - need to figure out how to format the number string to limit the max # of characters (MAYBE)
+ - found an issue where color HexDec codes included extra FF at end - so instead of being 6 characters long, they were 8. Okay, who tried signing the code?
+ - GlobalScalingFactor now included on Game Settings Page, and difficulty settings.
+ - Code: resourceLa -> resourceLabel (string)
 
 ### 1.2.0.7 dev build
  - TweakScale working in editor, not flight
@@ -23,12 +36,13 @@
  - added revised tweakscale support by adding private void UpdateEditor();
 
  ## Known Issue Tracker
- + [WIP] Work In Progress[BUG 1.1.2.0a] TweakScale
  * [BUG 1.1.2.1a] AmpYear doesn't seem to recognize ODFC
  * [BUG 1.1.2.0b] Kerbalism is not compatible with ODFC - Kerbalism developers have chosen to not integrate since they have their own version.
  * [BUG 0.0.1.6a] Doesn't seem to work with BackgroundResources mod (so ODFC doesn't work when doesn't have focus)
 
  + Swatted with the big can of KAID bug zapper
+ + [WIP] Work In Progress[BUG 1.1.2.0a] TweakScale
+ + [BUG 1.2.0.0a] fuel consumption and byproduct production should be seen on PAW - it is not
  * [D][BUG 0.0.1.5] the paw label is created from the FSHORT node name in the part.cfg (or patch)
  * [D][BUG 0.0.1.4a] fuel cell doesn't switch to the "Fuel Deprived" state if you run out of any of the currently used resources and continues to produce EC
  * [D][BUG 0.0.1.4b] the H2O+water mode causes the part to mis-function (ERROR) - probably has to do with resourceAbbreviations

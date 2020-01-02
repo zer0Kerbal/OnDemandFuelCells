@@ -2,6 +2,22 @@
 /* 
      * resourceLa -> resourceLabel (string)
      * HighLogic.CurrentGame.Parameters.CustomParams<ODFC_Options>().globalScalingFacotr (kommit)
+     * 
+     * 
+     *  public double CurrentVesselChargeState; and supporting code
+     *  to add Vessel EC % display in PAW - eventually merge into another line?
+     *  
+     *  added additional debug.log code
+     *  
+     *  added to FixedUpdate() - don't know if better, but seems to be better / more resiliant code method
+        try
+        {
+            base.OnFixedUpdate();
+            ...
+        }
+        catch (Exception e) { DebugLog(m: e); }
+     *  
+     *  added basic backgroundProcessing code structure and supporting docs
 */
 
 #endregion
@@ -15,15 +31,15 @@ NEW:
         * max 1000
         * step 0.05
         * have both < > and << >> buttons and allow for freeScale
-    * add globalScalingFactor to Settings
++   * add globalScalingFactor to Settings
         * add to PAW?
     * add Math - (part.cfg - PAW) * globalScalingFactor (Settings)
-    * double globalScalingFactor
-        * Difficulty settings:
-            * Easy = x globalScalingFacotr = 2.0 
-            * Normal = x globalScalingFacotr = 1.0
-            * Moderate = x globalScalingFacotr = 0.75
-            * Hard = x globalScalingFacotr = 0.5
++    * double globalScalingFactor
++        * Difficulty settings:
++            * Easy = x globalScalingFacotr = 2.0 
++            * Normal = x globalScalingFacotr = 1.0
++            * Moderate = x globalScalingFacotr = 0.75
++            * Hard = x globalScalingFacotr = 0.5
     * allows for the scaling (up/down) of (fuel) cell module without scaling the part attached to
     * add * scaleFactor to code
     * only available in part and only in editor.
@@ -36,7 +52,8 @@ NEW:
         * conversely, if module is supposed to produce 0.5 EC/s; set scaleFactor to 10
 
 // Most Wanted:
-    * PAW isn't showing consumption / production fuel_consumption and byproducts
++   * PAW isn't showing consumption / production fuel_consumption and byproducts
+        * add formatting to be private const string FuelTransferFormat = "0.######"; //FuelTransferFormat?
     * fix showing 'next' button when there is only one mode of operation
     * 
     * 
@@ -45,7 +62,7 @@ NEXT BIG THING (Project):
     * Background Processing support
     * 
 
-* implement double slider in B9Partswitch
+* implement double slider like in B9Partswitch
 
 * DONE: implement PAW status in group header
 * DONE: add page to game difficulty settings
@@ -130,6 +147,11 @@ namespace ODFC
         /// <summary>ElectricCharge identification number</summary>
         public static int ElectricChargeID;
 
+        /// <summary>
+        /// vessel's current total ElectricCharge(EC)
+        /// </summary>
+        private PartResource _electricCharge;
+
         /// <summary>The SCN</summary>
         public string scn;
 
@@ -156,15 +178,32 @@ namespace ODFC
             guiActiveEditor = true,
             guiName = " ")]
         public string PAWStatus = "ODFC: booting up. FCOS 0.42... ";
+        
+        // for display purposes only    
+        /// <summary>
+        ///   The current ElectricCharge %
+        /// </summary>
+        // [UI_Label(scene = UI_Scene.All)]
+        [KSPField(
+            advancedTweakable = true,
+            isPersistant = false,
+            guiActive = true,
+            guiActiveEditor = true,
+            guiName = "ElectricCharge",
+            guiFormat = "F2",
+            guiUnits = "%"
+            //groupName = "ODFC"
+          )]
+        public double CurrentVesselChargeState;
 
         [KSPField(isPersistant = true,
             guiActive = true,
             guiActiveEditor = true,
             groupName = "ODFC",
             groupDisplayName = "On Demand Fuel Cells Control",
-            
+
             groupStartCollapsed = true)]
-        public int fuelMode = 0; 
+        public int fuelMode = 0;
 
         [KSPField(isPersistant = false,
             guiActive = false,
@@ -477,18 +516,33 @@ namespace ODFC
                 scn = configNode.ToString();    // Needed for marshalling
             }
         }
-        /// <summary>Called when [start].</summary>
+
+        /// <summary>
+        ///   Called by unity API on game start.
+        /// </summary>
         /// <param name="state">The state.</param>
         public override void OnStart(StartState state)
         {
 
+            // obtain the ElectricCharge (EC) resourceID
             if (ElectricChargeID == default(int))
                 ElectricChargeID = PartResourceLibrary.Instance.GetDefinition("ElectricCharge").id;
 
+            // obtain the EC resource
+            // warn if not found, this module cannot function without.
+            _electricCharge = part.Resources?.Get(name: "ElectricCharge");
+            if  (_electricCharge == null) Log.dbg("[Error: ODFC failed to obtain ElectricCharge resource ID" +  _electricCharge);
+            
+/* alternate method - is it better?
+            _electricCharge = part.Resources?.Get(name: EC);
+            if (_electricCharge == null) DebugLog(m: "Error: failed to obtain EC resource"); 
+*/
             configNode = ConfigNode.Parse(scn).GetNode("MODULE");
             ODFC_config = new Config(configNode, part);
 
             // One puppy will explode for every question you ask about this code.  Please, think of the puppies.
+
+
 
             Log.dbg("[ODFC TweakScale] Modes.Length: " + Convert.ToString(ODFC_config.modes.Length));
             updateFT();
@@ -553,79 +607,96 @@ namespace ODFC
         /// <summary>Called when [fixed update].</summary>
         public override void OnFixedUpdate()
         {
-            states ns = fuelCellIsEnabled ? states.nominal : states.off;
-
-            if (ns != states.nominal)
+            try
             {
-                UpdateState(ns, 0, 0);
-                return;
+                base.OnFixedUpdate();
+                if (_electricCharge == null ) //|| _resourceConverter == null)
+                {
+                    Log.dbg("Something is null");
+                    return; // already checked for this in OnStart()
+                }
+                CurrentVesselChargeState = _electricCharge.amount / _electricCharge.maxAmount * 100; // compute current EC, in percent
+                //Log.dbg("Current Charge = {CurrentVesselChargeState:F2}" + _electricCharge.amount + " / " + _electricCharge.maxAmount * 100);
+                // spams the log
+                
+                states ns = fuelCellIsEnabled ? states.nominal : states.off;
+
+                if (ns != states.nominal)
+                {
+                    UpdateState(ns, 0, 0);
+                    return;
+                }
+
+                Double amount = 0, maxAmount = 0;
+                part.GetConnectedResourceTotals(ElectricChargeID, out amount, out maxAmount);
+
+                foreach (PartResource resource in this.part.Resources)
+                {
+                    maxAmount += resource.maxAmount;
+                    amount += resource.amount;
+                }
+
+                Double
+                    cfTime = TimeWarp.fixedDeltaTime,
+                    ECNeed = (Double)(maxAmount * threshold - amount),
+                    fuelModeMaxECRateLimit = ODFC_config.modes[fuelMode].maxEC * rateLimit;
+
+                // add stall code
+                if (HighLogic.CurrentGame.Parameters.CustomParams<ODFC_Options>().needsECtoStart && amount == 0f)
+                {
+                    UpdateState(states.stalled, 0, fuelModeMaxECRateLimit);
+                    return;
+                }
+
+                // Determine activity based on supply/demand
+                cfTime = Math.Min(cfTime, ECNeed / fuelModeMaxECRateLimit);
+                if (cfTime <= 0)
+                {
+                    UpdateState(states.noDemand, 0, fuelModeMaxECRateLimit);
+                    return;
+                }
+
+                // Determine activity based on available fuel
+                foreach (Fuel fuel in ODFC_config.modes[fuelMode].fuels)
+                {
+                    amount = 0;
+                    part.GetConnectedResourceTotals(fuel.resourceID, out amount, out maxAmount);
+
+                    foreach (PartResource r in this.part.Resources)
+                        amount += r.amount;
+
+                    cfTime = Math.Min(cfTime, amount / (fuel.rate * rateLimit));
+                }
+
+                if (cfTime == 0)
+                {
+
+                    UpdateState(states.fuelDeprived, 0, fuelModeMaxECRateLimit);
+
+                    // this looks for another fuel mode that isn't deprived if autoSwitch == true
+                    if (HighLogic.CurrentGame.Parameters.CustomParams<ODFC_Options>().autoSwitch) nextFuelMode();
+                    return;
+                }
+
+                // Calculate usage based on rate limiting and duty cycle
+                Double adjr = rateLimit * cfTime;
+                Double ECAmount = fuelModeMaxECRateLimit * cfTime;
+
+                // Don't forget the most important part (add ElectricCharge (EC))
+                part.RequestResource(ElectricChargeID, -ECAmount);
+
+                // Commit changes to fuel used
+                kommit(ODFC_config.modes[fuelMode].fuels, adjr);
+
+                // Handle byproducts
+                kommit(ODFC_config.modes[fuelMode].byproducts, adjr);
+
+                UpdateState(states.nominal, ECAmount / TimeWarp.fixedDeltaTime, fuelModeMaxECRateLimit);
             }
-
-            Double amount = 0, maxAmount = 0;
-            part.GetConnectedResourceTotals(ElectricChargeID, out amount, out maxAmount);
-
-            foreach (PartResource resource in this.part.Resources)
-            {
-                maxAmount += resource.maxAmount;
-                amount += resource.amount;
+            catch (Exception e) 
+            { 
+                Log.dbg(e.Message); 
             }
-
-            Double
-                cfTime = TimeWarp.fixedDeltaTime,
-                ECNeed = (Double)(maxAmount * threshold - amount),
-                fuelModeMaxECRateLimit = ODFC_config.modes[fuelMode].maxEC * rateLimit;
-
-            // add stall code
-            if (HighLogic.CurrentGame.Parameters.CustomParams<ODFC_Options>().needsECtoStart && amount == 0f)
-            {
-                UpdateState(states.stalled, 0, fuelModeMaxECRateLimit);
-                return;
-            }
-
-            // Determine activity based on supply/demand
-            cfTime = Math.Min(cfTime, ECNeed / fuelModeMaxECRateLimit);
-            if (cfTime <= 0)
-            {
-                UpdateState(states.noDemand, 0, fuelModeMaxECRateLimit);
-                return;
-            }
-
-            // Determine activity based on available fuel
-            foreach (Fuel fuel in ODFC_config.modes[fuelMode].fuels)
-            {
-                amount = 0;
-                part.GetConnectedResourceTotals(fuel.resourceID, out amount, out maxAmount);
-
-                foreach (PartResource r in this.part.Resources)
-                    amount += r.amount;
-
-                cfTime = Math.Min(cfTime, amount / (fuel.rate * rateLimit));
-            }
-
-            if (cfTime == 0)
-            {
-
-                UpdateState(states.fuelDeprived, 0, fuelModeMaxECRateLimit);
-
-                // this looks for another fuel mode that isn't deprived if autoSwitch == true
-                if (HighLogic.CurrentGame.Parameters.CustomParams<ODFC_Options>().autoSwitch) nextFuelMode();
-                return;
-            }
-
-            // Calculate usage based on rate limiting and duty cycle
-            Double adjr = rateLimit * cfTime;
-            Double ECAmount = fuelModeMaxECRateLimit * cfTime;
-
-            // Don't forget the most important part (add ElectricCharge (EC))
-            part.RequestResource(ElectricChargeID, -ECAmount);
-
-            // Commit changes to fuel used
-            kommit(ODFC_config.modes[fuelMode].fuels, adjr);
-
-            // Handle byproducts
-            kommit(ODFC_config.modes[fuelMode].byproducts, adjr);
-
-            UpdateState(states.nominal, ECAmount / TimeWarp.fixedDeltaTime, fuelModeMaxECRateLimit);
         }
 
         /// <summary>Updates this instance.</summary>
@@ -646,17 +717,12 @@ namespace ODFC
 
             }
         }
+        #endregion
+        #region Update PAW code
 
-        /// <summary>Updates the PAW with scaleFactor and advises KSP that the ship has changed</summary>
-        private void UpdateEditor()
-        {
-
-            updateFT();
-            // following needed to advise KSP that the ship has been modified and it needs to update itself. (Lisias)
-            GameEvents.onEditorShipModified.Fire(EditorLogic.fetch.ship);
-        }
-
-        /// <summary>Updates the PAW label.</summary>
+        /// <summary>
+        /// Updates the PAW label.
+        /// </summary>
         private void UpdatePAWLabel()
         {
             string colorStr = "<#ADFF2F>";
@@ -670,6 +736,16 @@ namespace ODFC
             // if (HighLogic.LoadedSceneIsEditor) PAWStatus = begStr + colorStr + "Fuel Cell: " + fuel_consumption + " - " + maxECs_status + " EC/s:" + endStr;
             if (HighLogic.LoadedSceneIsEditor) PAWStatus = begStr + colorStr + "Fuel Cell: " + status + " - " + maxECs_status + " EC/s:" + endStr;
 
+        }
+        #endregion
+        #region TweakScale Support
+        /// <summary>Updates the PAW with scaleFactor and advises KSP that the ship has changed</summary>
+        private void UpdateEditor()
+        {
+
+            updateFT();
+            // following needed to advise KSP that the ship has been modified and it needs to update itself. (Lisias)
+            GameEvents.onEditorShipModified.Fire(EditorLogic.fetch.ship);
         }
 
         /// <summary>
@@ -727,6 +803,136 @@ namespace ODFC
             this.UpdateEditor(); // updateFT();
         }
         #endregion
+        #region Background Processing Code
+        /// <summary>
+        /// Background Processing FixedBackgroundUpdate (A)
+        /// </summary>
+        /// <param name="v"></param>
+        /// <param name="partFlightID"></param>
+        /// <param name="data"></param>
+        public static void FixedBackgroundUpdate(Vessel v, uint partFlightID, ref System.Object data)
+        {
+            Log.dbg("ODFC BackgroundProcessing: FixedBackgroundUpdate overload a");
+        }
+
+        /// <summary>
+        /// Background Processing FixedBackgroundUpdate (B)
+        /// </summary>
+        /// <param name="v"></param>
+        /// <param name="partFlightID"></param>
+        /// <param name="resourceRequest"></param>
+        /// <param name="data"></param>
+        public static void FixedBackgroundUpdate(Vessel v, uint partFlightID, Func<Vessel, float, string, float> resourceRequest, ref System.Object data)
+        {
+            Log.dbg("ODFC BackgroundProcessing: FixedBackgroundUpdate overload b");
+        }
+
+        /* These two functions are the 'simple' and 'complex' background update functions. If you implement either of them, BackgroundProcessing will call it 
+         * at FixedUpdate() intervals (if you implement both, only the complex version will get called). The function will only be called for unloaded vessels, 
+         * and it will be called once per part per partmodule type - so if you have more than one of the same PartModule on the same part you'll only get one 
+         * update for all of those PartModules. Vessel v is the Vessel object that you should update - be careful, it's quite likely unloaded and very little 
+         * of it is there. partFlightID is the flightID of the Part this update was associated with. resourceRequest is a function that provides an analog of 
+         * Part.RequestResource. It takes a vessel, an amount of resource to take, and a resource name, and returns the amount of resource that you got. Like 
+         * Part.RequestResource, you can ask for a negative amount of some resource to fill up the tanks. The resource is consumed as if it can be reached from the entire vessel - be very careful with resources like liquid fuel that should only flow through crossfeeds. data is arbitrary per-part-per-partmodule-type storage - you can stash anything you want there, and it will persist between FixedBackgroundUpdate calls. 
+        */
+
+        /// <summary>
+        /// BackgroundLoad 
+        /// </summary>
+        /// <param name="v"></param>
+        /// <param name="partFlightId"></param>
+        /// <param name="data"></param>
+        public static void BackgroundLoad(Vessel v, uint partFlightId, ref System.Object data)
+        {
+            Log.dbg("ODFC BackgroundProcessing: Background Load");
+        }
+
+        /* This function will be called once prior to FixedBackgroundUpdate, and it gives you a chance to load data out of the ConfigNodes on the vessel's 
+         * protovessel into the storage BackgroundProcessing manages for you.
+        */
+
+        /// <summary>
+        /// BackgroundSave
+        /// </summary>
+        /// <param name="v"></param>
+        /// <param name="partFlightId"></param>
+        /// <param name="data"></param>
+        public static void BackgroundSave(Vessel v, uint partFlightId, System.Object data)
+        {
+            Log.dbg("ODFC BackgroundProcessing: Background Save");
+        }
+                     
+        /* This function will be called prior to the game scene changing or the game otherwise being saved.Use it to persist background data to the vessel's confignodes.
+         * Note that System.Object data is *not* a ref type here, unlike the other functions that have it as an argument.
+        */
+ 
+        /// <summary>
+        /// GetInterestingResources
+        /// </summary>
+        /// <returns></returns>
+        public static List<string> GetInterestingResources()
+        {
+            Log.dbg("ODFC BackgroundProcessing: GetInterestingResources");
+            return null;
+        }
+                     
+        /* Implement this function to return a list of resources that your PartModule would like BackgroundProcessing to handle in the background. It's okay if multiple 
+         * PartModules say a given resource is interesting.
+        */ 
+
+         /// <summary>
+         /// GetBackgroundResourceCount
+         /// </summary>
+         /// <returns></returns>
+        public static int GetBackgroundResourceCount()
+        {
+            Log.dbg("ODFC BackgroundProcessing: GetBackgroundResourceCount");
+            return 0;
+        }
+
+        /// <summary>
+        /// GetBackgroundResource
+        /// </summary>
+        /// <param name="index"></param>
+        /// <param name="resourceName"></param>
+        /// <param name="resourceRate"></param>
+        public static void GetBackgroundResource(int index, out string resourceName, out float resourceRate)
+        {
+            resourceName = "none";
+            resourceRate = 0f;
+            Log.dbg("ODFC BackgroundProcessing: GetBackgroundResource: " + resourceName + " : " + resourceRate);
+            return;
+        }
+
+        /* Implement these functions to inform BackgroundProcessing that your PartModule should be considered to produce or consume a resource in the background.
+         * GetBackgroundResourceCount() should return the number of different resources that your PartModule produces/consumes.GetBackgroundResource() will then 
+         * be called with each index from 0 up to one less than the count you indicated, and you should set resourceName and resourceRate to the appropriate values 
+         * for the index-th resource your PartModule produces.resourceRate is the amount of resource your part should produce each second - if your part consumes 
+         * resources, it should be negative.If your part only consumes or produces resources in some situation, it's better to implement the complex background 
+         * update and use the resource request function.
+
+        How do I distribute a mod that uses BackgroundProcessing?
+
+          * Having multiple copies of the BackgroundProcessing DLL in a GameData directory is fine - only the most recent version will run.If your mod absolutely 
+          * needs BackgroundProcessing present to be useful, consider including the BackgroundProcessing DLL in your mod's zip file, the same way ModuleManager is 
+          * handled.
+
+        If BackgroundProcessing isn't central to your mod, feel free not to distribute it at all. If players don't have this mod installed, they just won't get your off-rails features.
+
+        Are there any caveats when writing code that uses BackgroundProcessing?
+
+            * BackgroundProcessing works optimally with PartModules that are present in prefab parts.The list of modules that has BackgroundProcessing handling is 
+            * constructed by walking all the AvailablePart objects in PartLoader.LoadedPartLists at the main menu.If your partmodule isn't in that set, very little will 
+            * work. Similarly, if your PartModule is added to a part's module list after part instantiation, and isn't present in the part's prefab module list, resource 
+            * handling will likely not work. This is all only relevant if your PartModule is added dynamically to parts, after construction. It isn't relevant to PartModules 
+            * that are present in config files, or to PartModules added by ModuleManager (which appropriately modifies prefab parts). The takeaway is that if you intend 
+            * to dynamically add PartModules to parts, and those dynamically-added PartModules should have BackgroundProcessing behaviour, make sure you add them to the 
+            * appropriate part prefab before the main menu, like ModuleManager.
+
+        Edited August 3, 2016 by jamespicone
+        */
+
+#endregion
     }
 }
 #region notes
