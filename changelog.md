@@ -8,16 +8,27 @@
  - ***[NEW]*** TweakScale support added. part and fuel cell now scales if TweakScale is installed. Quadratic scaling.
  - ***[NEW]*** Optional difficulty settings for moderate and hard play - Diminished Returns - the harder the game setting, the less EC/s produced for same fuel. GlobalScalingFactor.
  - ***[NEW]*** Fuel Consumption and Byproduct production rates now show in PAW instead of just the names of the fuels consumed and byproducts produced.
+ - ***[NEW]*** B9 Fuel Swapping is now working with parts with ODFC installed; its either that or Bill flubbed up the B9partswtich patches.
+ - changed default thresHoldMax = 1 to 0.85f
  - [D][BUG 1.1.2.0a] Properly scales ODFC module (maxEC, Fuels, Byproducts) and resources in a part with ODFC installed. Requires TweakScale to be installed.
  - [D][BUG 1.2.0.0a] fuel consumption and byproduct production should be seen on PAW - it is not
 
-### 1.2.0.9 dev build
+ ### 1.2.0.10 dev build
+  - PAW updated
+    - fixed formatting issues breaking the PAW
+    - added suffix to fuel rate (/s /m /h)
+    - should now be rounding to 6 decimal places
+  - initial code changes to implement min/max on/off thresholds (turn on %, turn off %)
+  - initial code changes to implement min/max EC production rate (min %, max %)
+
+ ### 1.2.0.9 dev build
  - started to add boilerplate basic backgroundProcessing code structure and supporting docs
  - added try {} exception handling code to see if better best practices
  - added additional debug.log code (so screen message, in game mail, and now ksp.log)
  - added CurrentVesselChargeState to the PAW - not final placement - shows % current/max vessel EC
  - started moving specific related code sections into #regions
  - continued added / editing / clarifying /// <summary> sections
+ - contined updating code variables from public to private
 
 ### 1.2.0.8 dev build
  - added and adjusted fuel_consumption and byproducts strings to include rate

@@ -3,13 +3,23 @@
      * resourceLa -> resourceLabel (string)
      * HighLogic.CurrentGame.Parameters.CustomParams<ODFC_Options>().globalScalingFacotr (kommit)
      * 
-     * 
+     *  public static int ElectricChargeID -> private static int ElectricChargeID;
      *  public double CurrentVesselChargeState; and supporting code
+     *  
      *  to add Vessel EC % display in PAW - eventually merge into another line?
      *  
      *  added additional debug.log code
      *  
-     *  added to FixedUpdate() - don't know if better, but seems to be better / more resiliant code method
+     *  added private const string GroupName = "ODFC";
+     *  changed groupName = "ODFC" --> groupName = GroupName
+     
+     *  to be used to format the PAW consumption/production rate
+     *  private const string FuelRateFormat = "0.######";
+     
+     *  changed 
+            thresHoldMax = 1 to 0.85f
+
+     *  added to FixedUpdate() - REMOVE WHEN RELEASING
         try
         {
             base.OnFixedUpdate();
@@ -18,6 +28,7 @@
         catch (Exception e) { DebugLog(m: e); }
      *  
      *  added basic backgroundProcessing code structure and supporting docs
+     *  
 */
 
 #endregion
@@ -59,10 +70,16 @@ NEW:
     * 
 
 NEXT BIG THING (Project):
-    * Background Processing support
-    * 
+    * Background Processing 
 
-* implement double slider like in B9Partswitch
+* implement double slider like in B9Partswitchsupport
+    * UI_MinMaxRange(
+    * KSPAxisField(
+    * minThreshold is when ODFC will attempt to start (50%)
+    * maxThreshold is when ODFC will rate limit production (85%)
+    * minProduction is the minimum EC/s ODFC will produce (0.01%) (idle)
+    * maxProduction is the maximim EC/s ODFC will produce (100%)
+    * 
 
 * DONE: implement PAW status in group header
 * DONE: add page to game difficulty settings
@@ -112,8 +129,11 @@ namespace ODFC
     /// <seealso cref="PartModule" />
     public class ODFC : PartModule
     {
-        #region Enums Vars
-        public enum states : byte { error, off, nominal, fuelDeprived, noDemand, stalled }; // deploy, retract,        
+#region Enums Vars
+        /// <summary>
+        /// States: enum list of fuel cell operational states
+        /// </summary>
+        public enum states : Int32 { error, off, nominal, fuelDeprived, noDemand, stalled }; // deploy, retract,        
         /// <summary>
         /// The states string: ERROR!, Off, Nominal, Fuel Deprived, No Demand, Stalled
         /// </summary>
@@ -126,10 +146,22 @@ namespace ODFC
         private static readonly string[] STATES_COLOUR = { "<color=orange>", "<color=black>", "<#ADFF2F>", "<color=yellow>", "<#6495ED>", "<color=red>" };
         //                                                                                      (Green)                          (Blue)
         private const string FuelTransferFormat = "0.##"; //FuelTransferFormat?
+
+        /// <summary>
+        /// The fuel rate format
+        /// this is formatting the fuel/byproducts rate display in the PAW
+        /// </summary>
+        private const string FuelRateFormat = "0.######";
+
+        /// <summary>
+        /// The PAW group name
+        /// </summary>
+        private const string GroupName = "KGEx.ODFC";
+
         private const float
             thresHoldSteps = 0.05f, // increment the rate by this amount (default is 5)
             thresholdMin = thresHoldSteps,
-            thresHoldMax = 1;
+            thresHoldMax = 0.85f;
 
         private Double
             lastGen = -1,
@@ -145,7 +177,7 @@ namespace ODFC
         public static List<resourceLabel> lastResource = new List<resourceLabel>();
 
         /// <summary>ElectricCharge identification number</summary>
-        public static int ElectricChargeID;
+        private static int ElectricChargeID;
 
         /// <summary>
         /// vessel's current total ElectricCharge(EC)
@@ -178,28 +210,11 @@ namespace ODFC
             guiActiveEditor = true,
             guiName = " ")]
         public string PAWStatus = "ODFC: booting up. FCOS 0.42... ";
-        
-        // for display purposes only    
-        /// <summary>
-        ///   The current ElectricCharge %
-        /// </summary>
-        // [UI_Label(scene = UI_Scene.All)]
-        [KSPField(
-            advancedTweakable = true,
-            isPersistant = false,
-            guiActive = true,
-            guiActiveEditor = true,
-            guiName = "ElectricCharge",
-            guiFormat = "F2",
-            guiUnits = "%"
-            //groupName = "ODFC"
-          )]
-        public double CurrentVesselChargeState;
 
         [KSPField(isPersistant = true,
             guiActive = true,
             guiActiveEditor = true,
-            groupName = "ODFC",
+            groupName = GroupName,
             groupDisplayName = "On Demand Fuel Cells Control",
 
             groupStartCollapsed = true)]
@@ -209,42 +224,58 @@ namespace ODFC
             guiActive = false,
             guiActiveEditor = false,
             guiName = "Status",
-            groupName = "ODFC")]
+            groupName = GroupName)]
         public string status = "ERROR!";
+
+        // for display purposes only    
+        /// <summary>
+        ///   The current ElectricCharge %
+        /// </summary>
+        // [UI_Label(scene = UI_Scene.All)]
+        [KSPField(
+           // advancedTweakable = true,
+            isPersistant = false,
+            guiActive = true,
+            guiActiveEditor = true,
+            guiName = "Vessel EC %",
+            guiFormat = "F2",
+            guiUnits = "%",
+            groupName = GroupName)]
+        public double CurrentVesselChargeState;
 
         [KSPField(isPersistant = false,
             guiActive = true,
             guiActiveEditor = false,
             guiName = "EC/s (cur/max)",
-            groupName = "ODFC")]
+            groupName = GroupName)]
         public string ECs_status = "ERROR!";
 
         [KSPField(isPersistant = false,
             guiActive = false,
             guiActiveEditor = true,
             guiName = "Max EC/s",
-            groupName = "ODFC")]
+            groupName = GroupName)]
         public string maxECs_status = "ERROR!";
 
         [KSPField(isPersistant = false,
             guiActive = true,
             guiActiveEditor = true,
             guiName = "Fuel Used",
-            groupName = "ODFC")]
+            groupName = GroupName)]
         public string fuel_consumption = "ERROR!";
 
         [KSPField(isPersistant = false,
             guiActive = false,
             guiActiveEditor = false,
             guiName = "Byproducts",
-            groupName = "ODFC")]
+            groupName = GroupName)]
         public string byproducts = "ERROR!";
 
         [KSPField(isPersistant = true,
             guiActive = true,
             guiActiveEditor = true,
             guiName = "Enabled:",
-            groupName = "ODFC"),
+            groupName = GroupName),
             UI_Toggle(disabledText = "No",
             enabledText = "Yes")]
         public bool fuelCellIsEnabled = true;
@@ -253,7 +284,7 @@ namespace ODFC
         [KSPEvent(guiActive = true,
             guiActiveEditor = true,
             guiName = "Next Fuel Mode",
-            groupName = "ODFC")]
+            groupName = GroupName)]
         public void nextFuelMode()
         {
             if (++fuelMode >= ODFC_config.modes.Length)
@@ -265,7 +296,7 @@ namespace ODFC
         [KSPEvent(guiActive = false,
             guiActiveEditor = false,
             guiName = "Previous Fuel Mode",
-            groupName = "ODFC")]
+            groupName = GroupName)]
         public void previousFuelMode()
         {
             if (--fuelMode < 0)
@@ -285,7 +316,7 @@ namespace ODFC
             guiActiveEditor = true,
             guiName = "Rate Limit:",
             guiFormat = "P0",
-            groupName = "ODFC"),
+            groupName = GroupName),
             UI_FloatRange(minValue = thresholdMin, maxValue = thresHoldMax, stepIncrement = thresHoldSteps)]
         public float rateLimit = 1f;
 
@@ -297,7 +328,7 @@ namespace ODFC
             guiActiveEditor = true,
             guiName = "Threshold:",
             guiFormat = "P0",
-            groupName = "ODFC"),
+            groupName = GroupName),
             UI_FloatRange(minValue = thresholdMin, maxValue = thresHoldMax, stepIncrement = thresHoldSteps)]
         public float threshold = thresholdMin;
 
@@ -413,10 +444,30 @@ namespace ODFC
                 }
 
                 // THIS IS WHERE have to add code to include consumption/production #
-                s += "\n" + fuelColorStr + PartResourceLibrary.Instance.GetDefinition(fuel.resourceID).name + ": " + fuelRateColorStr + fuel.rate + endStr;
+                s += "\n" + fuelColorStr + PartResourceLibrary.Instance.GetDefinition(fuel.resourceID).name + ": " + fuelRateColorStr + rateString(fuel.rate) + endStr;
                 // add code to verify found exists to prevent nullref
                 Log.dbg("[ODFC PAW] Fuels (string): " + s);
             }
+            s += "\n";
+        }
+
+        private string rateString(double Rate)
+        {
+           //  double rate = double.Parse(value.value);
+            string sfx = "/s";
+
+            if (Rate <= 0.004444444f)
+            {
+                Rate *= 3600;
+                sfx = "/h";
+            }
+            else if (Rate < 0.2666667f)
+            {
+                Rate *= 60;
+                sfx = "/m";
+            }
+
+            return Rate.ToString() + sfx;
         }
 
         /// <summary>Updates the FT (FuelType?).</summary>
