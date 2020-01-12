@@ -353,7 +353,7 @@ namespace ODFC
 
             // One puppy will explode for every question you ask about this code.  Please, think of the puppies.
 
-            Log.dbg("[ODFC TweakScale] Modes.Length: " + Convert.ToString(ODFC_config.modes.Length));
+            Log.dbg("Modes.Length: {0}", ODFC_config.modes.Length);
             updateFT();
 
             if (ODFC_config.modes.Length < 2)
@@ -536,16 +536,16 @@ namespace ODFC
         /// <param name="scaleFactor">The scale factor.</param>
         internal void OnRescale(TweakScale.ScalingFactor.FactorSet scaleFactor)
         {
-            Log.dbg("[ODFC TweakScale] scaleFactor: " + scaleFactor.quadratic);
+            Log.dbg("scaleFactor: {0}", scaleFactor.quadratic);
 
             /// <summary>this scales any resources on the part with ODFC:  </summary>           
             foreach (PartResource resource in this.part.Resources)
             {
 
-                Log.dbg("[ODFC TweakScale] unscaled resource: " + resource.resourceName + ": " + resource.amount + " / " + resource.maxAmount);
+                Log.dbg("unscaled resource: {0}: {1} / {2}", resource.resourceName, resource.amount, resource.maxAmount);
                 resource.maxAmount *= scaleFactor.quadratic; // .cubic;
                 resource.amount *= scaleFactor.quadratic; // cubic;
-                Log.dbg("[ODFC TweakScale] scaled resource: " + resource.resourceName + ": " + resource.amount + " / " + resource.maxAmount);
+                Log.dbg("scaled resource: {0}: {1} / {2}", resource.resourceName, resource.amount, resource.maxAmount);
             }
 
             /// <summary><para>
@@ -554,30 +554,30 @@ namespace ODFC
             ///</para></summary>
             for (byte m = 0; m <= ODFC_config.modes.Length - 1 ; m++)
             {
-                Log.dbg("[ODFC TweakScale] mode/modes: " + (m + 1) + "/" + ODFC_config.modes.Length);
+                Log.dbg("mode/modes: {0} / {1}", (m + 1), ODFC_config.modes.Length);
              // scale MaxEC
-                Log.dbg("[ODFC TweakScale] unscaled maxEC: " + ODFC_config.modes[m].maxEC);
+                Log.dbg("unscaled maxEC: {0}", ODFC_config.modes[m].maxEC);
                 ODFC_config.modes[m].maxEC *= scaleFactor.quadratic;
-                Log.dbg("[ODFC TweakScale] scaled maxEC: " + ODFC_config.modes[m].maxEC);
+                Log.dbg("scaled maxEC: {0}", ODFC_config.modes[m].maxEC);
 
             // scale fuels in ODFC_config.modes
-                Log.dbg("[ODFC TweakScale] Fuels in mode: " + (m + 1) + "/" + ODFC_config.modes[m].fuels.Length + 1);
+                Log.dbg("Fuels in mode: {0} / {1}", (m + 1), ODFC_config.modes[m].fuels.Length + 1);
                 for (int n = 0; n <= ODFC_config.modes[m].fuels.Length - 1; n++)
                 
                 {
-                    Log.dbg("[ODFC TweakScale] unscaled Fuel: " + PartResourceLibrary.Instance.GetDefinition(ODFC_config.modes[m].fuels[n].resourceID).name + " = " + ODFC_config.modes[m].fuels[n].rate);
+                    Log.dbg("unscaled Fuel: {0} = {1}", PartResourceLibrary.Instance.GetDefinition(ODFC_config.modes[m].fuels[n].resourceID).name, ODFC_config.modes[m].fuels[n].rate);
                     ODFC_config.modes[m].fuels[n].rate *= scaleFactor.quadratic;
-                    Log.dbg("[ODFC TweakScale] scaled Fuel: " + PartResourceLibrary.Instance.GetDefinition(ODFC_config.modes[m].fuels[n].resourceID).name + " = " + ODFC_config.modes[m].fuels[n].rate);
+                    Log.dbg("scaled Fuel: {0} = {1}" + PartResourceLibrary.Instance.GetDefinition(ODFC_config.modes[m].fuels[n].resourceID).name, ODFC_config.modes[m].fuels[n].rate);
                 }
 
             // scale byproducts in ODFC_config.modes
-                Log.dbg("[ODFC TweakScale] Byproducts in mode: " + (m + 1) + "/" + ODFC_config.modes[m].byproducts.Length + 1);
+                Log.dbg("Byproducts in mode: {0} / {1}", (m + 1), ODFC_config.modes[m].byproducts.Length + 1);
                 for (int n = 0; n <= ODFC_config.modes[m].byproducts.Length - 1; n++)
                 
                 {
-                    Log.dbg("[ODFC TweakScale] unscaled byproduct: " + PartResourceLibrary.Instance.GetDefinition(ODFC_config.modes[m].byproducts[n].resourceID).name + " = " + ODFC_config.modes[m].byproducts[n].rate); 
+                    Log.dbg("unscaled byproduct: {0} = {1}", PartResourceLibrary.Instance.GetDefinition(ODFC_config.modes[m].byproducts[n].resourceID).name, ODFC_config.modes[m].byproducts[n].rate); 
                     ODFC_config.modes[m].byproducts[n].rate *= scaleFactor.quadratic;
-                    Log.dbg("[ODFC TweakScale] scaled byproduct: " + PartResourceLibrary.Instance.GetDefinition(ODFC_config.modes[m].byproducts[n].resourceID).name + " = " + ODFC_config.modes[m].byproducts[n].rate);
+                    Log.dbg("scaled byproduct: {0} / {1}", PartResourceLibrary.Instance.GetDefinition(ODFC_config.modes[m].byproducts[n].resourceID).name, ODFC_config.modes[m].byproducts[n].rate);
                 }
             }
             this.updateEditor(); // updateFT();
