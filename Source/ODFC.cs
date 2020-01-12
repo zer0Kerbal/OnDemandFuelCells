@@ -1,4 +1,15 @@
-﻿#region Current Changes:
+﻿// **
+// * Based on the ODFC mod by Orum for Kerbal Space Program.
+// * 
+// * 
+// * 
+// * 
+// * 
+// * 
+// * 
+// */
+
+#region Current Changes:
 /* 
      * resourceLa -> resourceLabel (string)
      * HighLogic.CurrentGame.Parameters.CustomParams<ODFC_Options>().globalScalingFacotr (kommit)
@@ -12,7 +23,13 @@
      *  
      *  added private const string GroupName = "ODFC";
      *  changed groupName = "ODFC" --> groupName = GroupName
+       
+     *   No need to guard the code under "#if DEBUG", as the ConditionalAtribute automatically omits the code when DEBUG is not active - and without breaking the callers! :)
      
+     * better logging code use string placeholders {}, 0
+      
+     * Fixed the Solution file (the DEBUG modes were short-circuited to Release 
+
      *  to be used to format the PAW consumption/production rate
      *  private const string FuelRateFormat = "0.######";
      
@@ -28,6 +45,9 @@
         catch (Exception e) { DebugLog(m: e); }
      *  
      *  added basic backgroundProcessing code structure and supporting docs
+     *  
+     *  hide fuel mode in PAW
+     *  
      *  
 */
 
@@ -66,7 +86,7 @@ NEW:
 +   * PAW isn't showing consumption / production fuel_consumption and byproducts
         * add formatting to be private const string FuelTransferFormat = "0.######"; //FuelTransferFormat?
     * fix showing 'next' button when there is only one mode of operation
-    * 
+    * add ANSI vessel EC % graphical display to PAW (just for fun)
     * 
 
 NEXT BIG THING (Project):
@@ -115,7 +135,7 @@ bool ventExcess = True(byproducts, vent excess over maximum Amount)
  */
 #endregion
 
-#define DEBUG
+//#define DEBUG
 
 using System;
 using System.Collections.Generic;
@@ -212,8 +232,8 @@ namespace ODFC
         public string PAWStatus = "ODFC: booting up. FCOS 0.42... ";
 
         [KSPField(isPersistant = true,
-            guiActive = true,
-            guiActiveEditor = true,
+            guiActive = false,
+            guiActiveEditor = false,
             groupName = GroupName,
             groupDisplayName = "On Demand Fuel Cells Control",
 
@@ -246,7 +266,7 @@ namespace ODFC
         [KSPField(isPersistant = false,
             guiActive = true,
             guiActiveEditor = false,
-            guiName = "EC/s (cur/max)",
+            guiName = "EC/s Production (cur/max)",
             groupName = GroupName)]
         public string ECs_status = "ERROR!";
 
@@ -260,14 +280,14 @@ namespace ODFC
         [KSPField(isPersistant = false,
             guiActive = true,
             guiActiveEditor = true,
-            guiName = "Fuel Used",
+            guiName = "Fuels:",
             groupName = GroupName)]
         public string fuel_consumption = "ERROR!";
 
         [KSPField(isPersistant = false,
             guiActive = false,
             guiActiveEditor = false,
-            guiName = "Byproducts",
+            guiName = "\nByproducts:",
             groupName = GroupName)]
         public string byproducts = "ERROR!";
 
@@ -448,7 +468,7 @@ namespace ODFC
                 // add code to verify found exists to prevent nullref
                 Log.dbg("[ODFC PAW] Fuels (string): " + s);
             }
-            s += "\n";
+            //s += "\n";
         }
 
         private string rateString(double Rate)
@@ -809,21 +829,30 @@ namespace ODFC
         {
             Log.dbg("[ODFC TweakScale] scaleFactor: " + scaleFactor.quadratic);
 
-            /// <summary>this scales any resources on the part with ODFC:  </summary>           
+            /// <summary>this scales any resources on the part with ODFC:  </summary>    
+            Log.dbg("[ODFC TweakScale] part {0}", this.part);
+            Log.dbg("[ODFC TweakScale] part.Resources {0}", this.part.Resources);
             foreach (PartResource resource in this.part.Resources)
             {
 
-                Log.dbg("[ODFC TweakScale] unscaled resource: " + resource.resourceName + ": " + resource.amount + " / " + resource.maxAmount);
+                Log.dbg("[ODFC TweakScale] scaleFactor: {0}", scaleFactor);
+                Log.dbg("[ODFC TweakScale] scaleFactor.quadratic {0}", scaleFactor.quadratic);
+                //Log.dbg("[ODFC TweakScale] unscaled resource: " + resource.resourceName + ": " + resource.amount + " / " + resource.maxAmount);
+                Log.dbg("[ODFC TweakScale] unscaled resource: {0} : {1} / {2}", resource.resourceName, resource.amount, resource.maxAmount);
                 resource.maxAmount *= scaleFactor.quadratic; // .cubic;
                 resource.amount *= scaleFactor.quadratic; // cubic;
-                Log.dbg("[ODFC TweakScale] scaled resource: " + resource.resourceName + ": " + resource.amount + " / " + resource.maxAmount);
+                // Log.dbg("[ODFC TweakScale] scaled resource: " + resource.resourceName + ": " + resource.amount + " / " + resource.maxAmount);
+                Log.dbg("[ODFC TweakScale] scaled resource: {0} : {1} / {2}", resource.resourceName, resource.amount, resource.maxAmount);
             }
 
             /// <summary><para>
             /// this scales the actual fuel cell, fuels, byproducts, and maxEC
             /// shouldn't scale rateLimit and threshold because are percentages
             ///</para></summary>
-            for (byte m = 0; m <= ODFC_config.modes.Length - 1; m++)
+            Log.dbg("[ODFC TweakScale] ODFC_config {0}", ODFC_config);
+            Log.dbg("[ODFC TweakScale] ODFC_config.modes {0}", ODFC_config, ODFC_config.modes); 
+            // for (byte m = 0; m <= ODFC_config.modes.Length - 1; m++)
+            for (int m = 0; m <= ODFC_config.modes.Length - 1; m++)
             {
                 Log.dbg("[ODFC TweakScale] mode/modes: " + (m + 1) + "/" + ODFC_config.modes.Length);
                 // scale MaxEC
