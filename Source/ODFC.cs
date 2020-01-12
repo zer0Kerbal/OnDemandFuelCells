@@ -330,6 +330,13 @@ namespace ODFC
         #endregion
 
         #region Public Functions
+        /// <summary>Called when part is added to the craft.</summary>
+        public override void OnAwake()
+        {
+            Log.dbg("OnAwake for {0}", this.name);
+        }
+
+
         /// <summary>Called when [load].</summary>
         /// <param name="configNode">The configuration node.</param>
         public override void OnLoad(ConfigNode configNode)
@@ -337,19 +344,17 @@ namespace ODFC
             if (string.IsNullOrEmpty(scn))
             {
                 this.configNode = configNode;           // Needed for GetInfo()
-                scn = configNode.ToString();    // Needed for marshalling
+                scn = configNode.ToString();            // Needed for marshalling
             }
         }
         /// <summary>Called when [start].</summary>
         /// <param name="state">The state.</param>
         public override void OnStart(StartState state)
         {
+            Log.dbg("OnStart {0}", state);
 
             if (ElectricChargeID == default(int))
                 ElectricChargeID = PartResourceLibrary.Instance.GetDefinition("ElectricCharge").id;
-
-            configNode = ConfigNode.Parse(scn).GetNode("MODULE");
-            ODFC_config = new Config(configNode, part);
 
             // One puppy will explode for every question you ask about this code.  Please, think of the puppies.
 
