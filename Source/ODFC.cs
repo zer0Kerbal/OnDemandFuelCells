@@ -219,7 +219,7 @@ namespace ODFC
 
         // added PAW grouping, set to autocollapse - introduced in KSP 1.7.1
         // would really like the PAW to remember if the group was open
-        #region Fields Events Actions
+#region Fields Events Actions
 
         // This is on TweakScale
         //[KSPField(isPersistant = true, guiActive = false, guiActiveEditor = true, guiName = "scaleFactor")]
@@ -232,8 +232,8 @@ namespace ODFC
         public string PAWStatus = "ODFC: booting up. FCOS 0.42... ";
 
         [KSPField(isPersistant = true,
-            guiActive = false,
-            guiActiveEditor = false,
+            guiActive = true,
+            guiActiveEditor = true,
             groupName = GroupName,
             groupDisplayName = "On Demand Fuel Cells Control",
 
@@ -425,7 +425,7 @@ namespace ODFC
         { threshold = Math.Min(threshold + thresHoldSteps, thresHoldMax); }
         #endregion
 
-        #region Private Functions
+#region Private Functions
         /// <summary>Updates the FS (Fuel String?).</summary>
         /// <param name="s">The string to be used to update the fuels list.</param>
         /// <param name="fuels">The fuels list.</param>
@@ -576,15 +576,24 @@ namespace ODFC
         }
         #endregion
 
-        #region Public Functions
+#region Public Functions
+        /// <summary>Called when part is added to the craft.</summary>
+        public override void OnAwake()
+        {
+            Log.dbg("OnAwake for {0}", this.name);
+
+        //    configNode = ConfigNode.Parse(scn).GetNode("MODULE");
+        //    ODFC_config = new Config(configNode, part);
+        }
+        
         /// <summary>Called when part is loaded [load].</summary>
-        /// <param name="configNode">The configuration node.</param>
+         /// <param name="configNode">The configuration node.</param>
         public override void OnLoad(ConfigNode configNode)
         {
             if (string.IsNullOrEmpty(scn))
             {
                 this.configNode = configNode;           // Needed for GetInfo()
-                scn = configNode.ToString();    // Needed for marshalling
+                scn = configNode.ToString();            // Needed for marshalling
             }
         }
 
@@ -594,6 +603,7 @@ namespace ODFC
         /// <param name="state">The state.</param>
         public override void OnStart(StartState state)
         {
+            Log.dbg("OnStart {0}", state);
 
             // obtain the ElectricCharge (EC) resourceID
             if (ElectricChargeID == default(int))
@@ -608,14 +618,14 @@ namespace ODFC
             _electricCharge = part.Resources?.Get(name: EC);
             if (_electricCharge == null) DebugLog(m: "Error: failed to obtain EC resource"); 
 */
-            configNode = ConfigNode.Parse(scn).GetNode("MODULE");
-            ODFC_config = new Config(configNode, part);
+            //configNode = ConfigNode.Parse(scn).GetNode("MODULE");
+            //ODFC_config = new Config(configNode, part);
 
             // One puppy will explode for every question you ask about this code.  Please, think of the puppies.
 
 
 
-            Log.dbg("[ODFC TweakScale] Modes.Length: " + Convert.ToString(ODFC_config.modes.Length));
+            Log.dbg("Modes.Length: {0}", ODFC_config.modes.Length);
             updateFT();
 
             if (ODFC_config.modes.Length < 2)
@@ -789,7 +799,7 @@ namespace ODFC
             }
         }
         #endregion
-        #region Update PAW code
+#region Update PAW code
 
         /// <summary>
         /// Updates the PAW label.
@@ -809,7 +819,7 @@ namespace ODFC
 
         }
         #endregion
-        #region TweakScale Support
+#region TweakScale Support
         /// <summary>Updates the PAW with scaleFactor and advises KSP that the ship has changed</summary>
         private void UpdateEditor()
         {
@@ -827,63 +837,58 @@ namespace ODFC
         /// <param name="scaleFactor">The scale factor.</param>
         internal void OnRescale(TweakScale.ScalingFactor.FactorSet scaleFactor)
         {
-            Log.dbg("[ODFC TweakScale] scaleFactor: " + scaleFactor.quadratic);
+            Log.dbg("scaleFactor: {0}", scaleFactor);
 
             /// <summary>this scales any resources on the part with ODFC:  </summary>    
-            Log.dbg("[ODFC TweakScale] part {0}", this.part);
-            Log.dbg("[ODFC TweakScale] part.Resources {0}", this.part.Resources);
+            Log.dbg(" part {0}", this.part);
+            Log.dbg(" part.Resources {0}", this.part.Resources);
             foreach (PartResource resource in this.part.Resources)
             {
-
-                Log.dbg("[ODFC TweakScale] scaleFactor: {0}", scaleFactor);
-                Log.dbg("[ODFC TweakScale] scaleFactor.quadratic {0}", scaleFactor.quadratic);
-                //Log.dbg("[ODFC TweakScale] unscaled resource: " + resource.resourceName + ": " + resource.amount + " / " + resource.maxAmount);
-                Log.dbg("[ODFC TweakScale] unscaled resource: {0} : {1} / {2}", resource.resourceName, resource.amount, resource.maxAmount);
+                Log.dbg("scaleFactor: {0}, {1}", scaleFactor, scaleFactor.quadratic);
+                Log.dbg("unscaled resource: {0}: {1} / {2}", resource.resourceName, resource.amount, resource.maxAmount);
                 resource.maxAmount *= scaleFactor.quadratic; // .cubic;
                 resource.amount *= scaleFactor.quadratic; // cubic;
                 // Log.dbg("[ODFC TweakScale] scaled resource: " + resource.resourceName + ": " + resource.amount + " / " + resource.maxAmount);
-                Log.dbg("[ODFC TweakScale] scaled resource: {0} : {1} / {2}", resource.resourceName, resource.amount, resource.maxAmount);
+                Log.dbg("scaled resource: {0}: {1} / {2}", resource.resourceName, resource.amount, resource.maxAmount);
             }
 
             /// <summary><para>
             /// this scales the actual fuel cell, fuels, byproducts, and maxEC
             /// shouldn't scale rateLimit and threshold because are percentages
             ///</para></summary>
-            Log.dbg("[ODFC TweakScale] ODFC_config {0}", ODFC_config);
-            Log.dbg("[ODFC TweakScale] ODFC_config.modes {0}", ODFC_config, ODFC_config.modes); 
-            // for (byte m = 0; m <= ODFC_config.modes.Length - 1; m++)
+            Log.dbg("ODFC_config {0}", ODFC_config.modes.Length - 1);
+            Log.dbg(" ODFC_config.modes {0} / {2}", ODFC_config.modes.Length - 1, ODFC_config.modes); 
             for (int m = 0; m <= ODFC_config.modes.Length - 1; m++)
             {
-                Log.dbg("[ODFC TweakScale] mode/modes: " + (m + 1) + "/" + ODFC_config.modes.Length);
+                Log.dbg("mode/modes: {0} / {1}", (m + 1), ODFC_config.modes.Length);
                 // scale MaxEC
-                Log.dbg("[ODFC TweakScale] unscaled maxEC: " + ODFC_config.modes[m].maxEC);
+                Log.dbg("unscaled maxEC: {0}", ODFC_config.modes[m].maxEC);
                 ODFC_config.modes[m].maxEC *= scaleFactor.quadratic;
-                Log.dbg("[ODFC TweakScale] scaled maxEC: " + ODFC_config.modes[m].maxEC);
+                Log.dbg("scaled maxEC: {0}", ODFC_config.modes[m].maxEC);
 
                 // scale fuels in ODFC_config.modes
-                Log.dbg("[ODFC TweakScale] Fuels in mode: " + (m + 1) + "/" + ODFC_config.modes[m].fuels.Length + 1);
+                Log.dbg("Fuels in mode: {0} / {1}", (m + 1), ODFC_config.modes[m].fuels.Length + 1);
                 for (int n = 0; n <= ODFC_config.modes[m].fuels.Length - 1; n++)
 
                 {
-                    Log.dbg("[ODFC TweakScale] unscaled Fuel: " + PartResourceLibrary.Instance.GetDefinition(ODFC_config.modes[m].fuels[n].resourceID).name + " = " + ODFC_config.modes[m].fuels[n].rate);
+                    Log.dbg("unscaled Fuel: {0} = {1}", PartResourceLibrary.Instance.GetDefinition(ODFC_config.modes[m].fuels[n].resourceID).name, ODFC_config.modes[m].fuels[n].rate);
                     ODFC_config.modes[m].fuels[n].rate *= scaleFactor.quadratic;
-                    Log.dbg("[ODFC TweakScale] scaled Fuel: " + PartResourceLibrary.Instance.GetDefinition(ODFC_config.modes[m].fuels[n].resourceID).name + " = " + ODFC_config.modes[m].fuels[n].rate);
+                    Log.dbg("scaled Fuel: {0} = {1}" + PartResourceLibrary.Instance.GetDefinition(ODFC_config.modes[m].fuels[n].resourceID).name, ODFC_config.modes[m].fuels[n].rate);
                 }
 
                 // scale byproducts in ODFC_config.modes
-                Log.dbg("[ODFC TweakScale] Byproducts in mode: " + (m + 1) + "/" + ODFC_config.modes[m].byproducts.Length + 1);
+                Log.dbg("Byproducts in mode: {0} / {1}", (m + 1), ODFC_config.modes[m].byproducts.Length + 1);
                 for (int n = 0; n <= ODFC_config.modes[m].byproducts.Length - 1; n++)
-
                 {
-                    Log.dbg("[ODFC TweakScale] unscaled byproduct: " + PartResourceLibrary.Instance.GetDefinition(ODFC_config.modes[m].byproducts[n].resourceID).name + " = " + ODFC_config.modes[m].byproducts[n].rate);
+                    Log.dbg("unscaled byproduct: {0} = {1}", PartResourceLibrary.Instance.GetDefinition(ODFC_config.modes[m].byproducts[n].resourceID).name, ODFC_config.modes[m].byproducts[n].rate);
                     ODFC_config.modes[m].byproducts[n].rate *= scaleFactor.quadratic;
-                    Log.dbg("[ODFC TweakScale] scaled byproduct: " + PartResourceLibrary.Instance.GetDefinition(ODFC_config.modes[m].byproducts[n].resourceID).name + " = " + ODFC_config.modes[m].byproducts[n].rate);
+                    Log.dbg("scaled byproduct: {0} / {1}", PartResourceLibrary.Instance.GetDefinition(ODFC_config.modes[m].byproducts[n].resourceID).name, ODFC_config.modes[m].byproducts[n].rate);
                 }
             }
             this.UpdateEditor(); // updateFT();
         }
         #endregion
-        #region Background Processing Code
+#region Background Processing Code
         /// <summary>
         /// Background Processing FixedBackgroundUpdate (A)
         /// </summary>
