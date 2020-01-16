@@ -68,7 +68,7 @@ namespace ODFC
         /// <summary>The configuration node</summary>
         public ConfigNode configNode;
         /// <summary>List: The last resource</summary>
-        public static List<resourceLa> lastResource = new List<resourceLa>();
+        public static List<ResourceLabel> lastResource = new List<ResourceLabel>();
         /// <summary>ElectricCharge identification number</summary>
         public static int ElectricChargeID;
         /// <summary>The SCN</summary>
@@ -255,7 +255,7 @@ namespace ODFC
                     s += " + ";
                 // add code to verify found exists to prevent nullref
                 plus = true;
-                resourceLa abr = lastResource.Find(x => x.resourceID == fuel.resourceID);
+                ResourceLabel abr = lastResource.Find(x => x.resourceID == fuel.resourceID);
 
                 s += PartResourceLibrary.Instance.GetDefinition(fuel.resourceID).name;
             }
