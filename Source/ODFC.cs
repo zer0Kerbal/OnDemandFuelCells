@@ -336,7 +336,6 @@ namespace ODFC
             Log.dbg("OnAwake for {0}", this.name);
         }
 
-
         /// <summary>Called when [load].</summary>
         /// <param name="configNode">The configuration node.</param>
         public override void OnLoad(ConfigNode configNode)
@@ -347,6 +346,7 @@ namespace ODFC
                 scn = configNode.ToString();            // Needed for marshalling
             }
         }
+
         /// <summary>Called when [start].</summary>
         /// <param name="state">The state.</param>
         public override void OnStart(StartState state)
@@ -356,42 +356,7 @@ namespace ODFC
             if (ElectricChargeID == default(int))
                 ElectricChargeID = PartResourceLibrary.Instance.GetDefinition("ElectricCharge").id;
 
-            // One puppy will explode for every question you ask about this code.  Please, think of the puppies.
-
-            Log.dbg("Modes.Length: {0}", ODFC_config.modes.Length);
-            updateFT();
-
-            if (ODFC_config.modes.Length < 2)
-            {   // Disable unneccessary UI elements if we only have a single mode
-                Events["nextFuel"].guiActive = false;
-                Events["nextFuel"].guiActiveEditor = false;
-                Fields["fuel_consumption"].guiActive = true; // false;
-                Fields["fuel_consumption"].guiActiveEditor = true; // false;
-                Actions["previousFuelModeAction"].active = false;
-               // Actions["nextFuelModeAction"].active = false;
-            }
-            else
-            {                       // If we have at least 2 modes
-                if (ODFC_config.modes.Length > 2)
-                {       // If we have at least 3 modes
-                    Events["previousFuelMode"].guiActive = true;
-                    Events["previousFuelMode"].guiActiveEditor = true;
-                }
-                else
-                {                           // If we have exactly 2 modes
-                    Actions["previousFuelModeAction"].active = false;
-                }
-
-                foreach (mode m in ODFC_config.modes)
-                {   // Show byproducts tweakable if at least one mode has at least one byproduct
-                    if (m.byproducts.Length > 0)
-                    {
-                        Fields["byproducts"].guiActive = true;
-                        Fields["byproducts"].guiActiveEditor = true;
-                        break;
-                    }
-                }
-            }
+            updateConfig();
 
             if (state != StartState.Editor)
                 part.force_activate();
@@ -416,6 +381,47 @@ namespace ODFC
             }
 
             return info;
+        }
+
+        private void updateConfig()
+        {
+            Log.dbg("Updating config");
+
+            ODFC_config = new Config(ConfigNode.Parse(scn).GetNode("MODULE"), part);
+            Log.dbg("Modes.Length: {0}", ODFC_config.modes.Length);
+            updateFT();
+
+            if (ODFC_config.modes.Length < 2)
+            {   // Disable unneccessary UI elements if we only have a single mode
+                Events["nextFuel"].guiActive = false;
+                Events["nextFuel"].guiActiveEditor = false;
+                Fields["fuel_consumption"].guiActive = true; // false;
+                Fields["fuel_consumption"].guiActiveEditor = true; // false;
+                Actions["previousFuelModeAction"].active = false;
+                // Actions["nextFuelModeAction"].active = false;
+            }
+            else
+            {   // If we have at least 2 modes
+                if (ODFC_config.modes.Length > 2)
+                {   // If we have at least 3 modes
+                    Events["previousFuelMode"].guiActive = true;
+                    Events["previousFuelMode"].guiActiveEditor = true;
+                }
+                else
+                {   // If we have exactly 2 modes
+                    Actions["previousFuelModeAction"].active = false;
+                }
+
+                foreach (mode m in ODFC_config.modes)
+                {   // Show byproducts tweakable if at least one mode has at least one byproduct
+                    if (m.byproducts.Length > 0)
+                    {
+                        Fields["byproducts"].guiActive = true;
+                        Fields["byproducts"].guiActiveEditor = true;
+                        break;
+                    }
+                }
+            }
         }
 
         /// <summary>Called when [fixed update].</summary>
