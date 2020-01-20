@@ -4,12 +4,12 @@ using System;
 
 namespace ODFC
 {
-    public class resourceLabel
+    public class ResourceLabel
     { //resource la? originally rla
         public int resourceID;
         private string resourceAbbreviation;
 
-        private resourceLabel(int resourceID, string resourceAbbreviation)
+        private ResourceLabel(int resourceID, string resourceAbbreviation)
         {
             this.resourceID = resourceID;
             this.resourceAbbreviation = resourceAbbreviation;
