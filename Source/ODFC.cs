@@ -374,7 +374,7 @@ namespace ODFC
                 ConfigNode[] mds = configNode.GetNodes("MODE");
                 info += "Modes: " + mds.Length.ToString();
 
-                for (byte n = 0; n < mds.Length; n++)
+                for (int n = 0; n < mds.Length; n++)
                     info += "\n\n<color=#99FF00FF>Mode: " + n.ToString() + "</color> - Max EC: " + mds[n].GetValue("MaxEC") +
                         "/s\n<color=#FFFF00FF>Fuels:</color>" + GetResourceRates(mds[n].GetNode("FUELS")) +
                         "\n<color=#FFFF00FF>Byproducts:</color>" + GetResourceRates(mds[n].GetNode("BYPRODUCTS"));
@@ -563,7 +563,7 @@ namespace ODFC
             /// this scales the actual fuel cell, fuels, byproducts, and maxEC
             /// shouldn't scale rateLimit and threshold because are percentages
             ///</para></summary>
-            for (byte m = 0; m <= ODFC_config.modes.Length - 1 ; m++)
+            for (int m = 0; m <= ODFC_config.modes.Length - 1 ; m++)
             {
                 Log.dbg("mode/modes: {0} / {1}", (m + 1), ODFC_config.modes.Length);
              // scale MaxEC
