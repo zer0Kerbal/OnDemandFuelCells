@@ -138,7 +138,6 @@ bool ventExcess = True(byproducts, vent excess over maximum Amount)
 #endregion
 
 // #define DEBUG
-
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -155,17 +154,17 @@ namespace ODFC
         /// <summary>
         /// States: enum list of fuel cell operational states
         /// </summary>
-        public enum states : byte { error, off, nominal, fuelDeprived, noDemand, stalled }; // deploy, retract,        
+        public enum states : byte { error, off, nominal, fuelDeprived, noDemand, stalled }; // deploy, retract,
         /// <summary>
         /// The states string: ERROR!, Off, Nominal, Fuel Deprived, No Demand, Stalled
         /// </summary>
         // Thank you to (Lisias) for this upgrade
-        private static readonly string[] STATES_STR = { "ERROR!", "Off", "Nominal", "Fuel Deprived", "No Demand", "Stalled" };
+        private static readonly string[] STATES_STR     = {"ERROR!",         "Off",           "Nominal",    "Fuel Deprived",  "No Demand", "Stalled"};
         /// <summary>
         /// The states color: orange, black, green, blue, red
         /// </summary>
         // Thank you to (Lisias) for this upgrade
-        private static readonly string[] STATES_COLOUR = { "<color=orange>", "<color=black>", "<#ADFF2F>", "<color=yellow>", "<#6495ED>", "<color=red>" };
+        private static readonly string[] STATES_COLOUR  = {"<color=orange>", "<color=black>", "<#ADFF2F>",  "<color=yellow>", "<#6495ED>", "<color=red>"};
         //                                                                                      (Green)                          (Blue)
 
         /// <summary>
@@ -187,7 +186,7 @@ namespace ODFC
         private const float
             thresHoldSteps = 0.05f, // increment the rate by this amount (default is 5)
             thresholdMin = thresHoldSteps,
-            thresHoldMax = 1f; // 0.85f;
+            thresHoldMax = 1; // 0.85f;
 
         private Double
             lastGen = -1,
@@ -222,7 +221,7 @@ namespace ODFC
         public string scn;
 
         /// <summary>The ns</summary>
-        // private bool ns = true;
+        public bool ns = true;
 
         /// <summary>The odfc configuration</summary>
         public Config ODFC_config;
@@ -248,14 +247,14 @@ namespace ODFC
             guiActive = true,
             guiActiveEditor = true,
             guiName = " ")]
-        public string PAWStatus = "ODFC: booting up. FCOS 0.42... ";
+        public string PAWStatus = "ODFC: booting up. FCOS 0.42.17... ";
 
         [KSPField(isPersistant = true,
             guiActive = true,
             guiActiveEditor = true,
             groupName = GroupName,
             groupDisplayName = "On Demand Fuel Cells Control",
-            groupStartCollapsed = true)]
+            groupStartCollapsed = false)]
         public int fuelMode = 0;
 
         [KSPField(isPersistant = false,
@@ -298,14 +297,14 @@ namespace ODFC
         [KSPField(isPersistant = false,
             guiActive = true,
             guiActiveEditor = true,
-            guiName = "Fuels:",
+            guiName = "Fuels Used:",
             groupName = GroupName)]
         public string fuel_consumption = "ERROR!";
 
         [KSPField(isPersistant = false,
             guiActive = false,
             guiActiveEditor = false,
-            guiName = "Byproducts:", //"\nByproducts:",
+            guiName = "Byproducts:",
             groupName = GroupName)]
         public string byproducts = "ERROR!";
 
@@ -358,9 +357,7 @@ namespace ODFC
             UI_FloatRange(minValue = thresholdMin, maxValue = thresHoldMax, stepIncrement = thresHoldSteps)]
         public float rateLimit = 1f;
 
-        /// <summary>
-        /// The current threshold (%) which needs to be equal or below before production begins.
-        /// </summary>
+        /// <summary>The current threshold (%) which needs to be equal or below before production begins.</summary>
         [KSPField(isPersistant = true,
             guiActive = true,
             guiActiveEditor = true,
@@ -368,7 +365,7 @@ namespace ODFC
             guiFormat = "P0",
             groupName = GroupName),
             UI_FloatRange(minValue = thresholdMin, maxValue = thresHoldMax, stepIncrement = thresHoldSteps)]
-        public float threshold = 0.85f; // thresholdMin;
+        public float threshold = thresholdMin;
 
         /// <summary>
         /// Toggles the fuel cell on/off.
@@ -447,7 +444,7 @@ namespace ODFC
         /// <summary>Updates the Fuels String.</summary>
         /// <param name="s">The string to be used to update the fuels list.</param>
         /// <param name="fuels">The fuels list.</param>
-        public static void UpdateFuelsString(out string s, Fuel[] fuels)
+        private void UpdateFuelsString(out string s, Fuel[] fuels)
         {
 
             string fuelColorStr = "";
@@ -498,7 +495,7 @@ namespace ODFC
         /// </summary>
         /// <param name="Rate">The rate.</param>
         /// <returns></returns>
-        public static string RateString(double Rate)
+        private static string RateString(double Rate)
         {
             //  double rate = double.Parse(value.value);
             string sfx = "/s";
@@ -520,7 +517,7 @@ namespace ODFC
         }
 
         /// <summary>Updates the FT (FuelType?).</summary>
-        public void UpdateFT()
+        private void UpdateFT()
         { //updateFT?
             UpdateFuelsString(out fuel_consumption, ODFC_config.modes[fuelMode].fuels);
             UpdateFuelsString(out byproducts, ODFC_config.modes[fuelMode].byproducts);
@@ -532,7 +529,7 @@ namespace ODFC
         /// <param name="newstate">The newstate.</param>
         /// <param name="gen">The gen.</param>
         /// <param name="max">The maximum.</param>
-        public void UpdateState(states newstate, Double gen, Double max)
+        private void UpdateState(states newstate, Double gen, Double max)
         {
             if (gen != lastGen || max != lastMax)
             {
@@ -563,7 +560,7 @@ namespace ODFC
         /// </summary>
         /// <param name="node">The node.</param>
         /// <returns></returns>
-        public string GetResourceRates(ConfigNode node)
+        private string GetResourceRates(ConfigNode node)
         {
             if (node == null || node.values.Count < 1)
                 return "\n - None";
@@ -605,8 +602,7 @@ namespace ODFC
                 part.RequestResource(fuel.resourceID, fuel.rate * adjr);
                 // part.RequestResource(fuel.resourceID, fuel.rate * adjr * HighLogic.CurrentGame.Parameters.CustomParams<ODFC_Options>().globalScalingFactor);
         }
-        #endregion
-
+#endregion
 #region Public Functions
         /// <summary>Called when part is added to the craft.</summary>
         public override void OnAwake()
@@ -650,11 +646,11 @@ namespace ODFC
                 part.force_activate();
         }
 
-        /// <summary>Formats the information for the part information in the editors.</summary>
+        /// <summary>Formats the information for the part module information in the editors.</summary>
         /// <returns>info</returns>
         public override string GetInfo()
         {
-            // this is what is show in the editor
+            // this is what is shown in the editor
             // As annoying as it is, pre-parsing the config MUST be done here, because this is called during part loading.
             // The config is only fully parsed after everything is fully loaded (which is why it's in OnStart())
             //if (info == string.Empty)
@@ -663,12 +659,11 @@ namespace ODFC
                 ConfigNode[] mds = configNode.GetNodes("MODE");
                 info += "Modes: " + mds.Length.ToString();
 
-                for (byte n = 0; n < mds.Length; n++)
+                for (int n = 0; n < mds.Length; n++)
                     info += "\n\n<color=#99FF00>Mode: " + n.ToString() + "</color> - Max EC: " + mds[n].GetValue("MaxEC") +
                         "/s\n<color=#FFFF00>Fuels:</color>" + GetResourceRates(mds[n].GetNode("FUELS")) +
                         "\n<color=#FFFF00>Byproducts:</color>" + GetResourceRates(mds[n].GetNode("BYPRODUCTS"));
             }
-
             return info;
         }
 
@@ -679,7 +674,6 @@ namespace ODFC
             ODFC_config = new Config(ConfigNode.Parse(scn).GetNode("MODULE"), part);
             Log.dbg("Modes.Length: {0}", ODFC_config.modes.Length);
             UpdateFT();
-            UpdatePAWLabel();
 
             if (ODFC_config.modes.Length < 2)
             {   // Disable unnecessary UI elements if we only have a single mode
@@ -691,14 +685,14 @@ namespace ODFC
                 // Actions["nextFuelModeAction"].active = false;
             }
             else
-            {                       // If we have at least 2 modes
+            {   // If we have at least 2 modes
                 if (ODFC_config.modes.Length > 2)
-                {       // If we have at least 3 modes
+                {   // If we have at least 3 modes
                     Events["previousFuelMode"].guiActive = true;
                     Events["previousFuelMode"].guiActiveEditor = true;
                 }
                 else
-                {                           // If we have exactly 2 modes
+                {   // If we have exactly 2 modes
                     Actions["previousFuelModeAction"].active = false;
                 }
 
@@ -712,103 +706,103 @@ namespace ODFC
                     }
                 }
             }
-		  }
+		}
 
         /// <summary>Called when [fixed update].</summary>
-			public override void OnFixedUpdate()
+		public override void OnFixedUpdate()
+		{
+			states ns = fuelCellIsEnabled ? states.nominal : states.off;
+
+			if (_electricCharge == null ) //|| _resourceConverter == null)
 			{
-				if (_electricCharge == null ) //|| _resourceConverter == null)
-				{
-					Log.dbg("Something is null");
-					return; // already checked for this in OnStart()
-				}
-				CurrentVesselChargeState = _electricCharge.amount / _electricCharge.maxAmount * 100; // compute current EC, in percent
-				//Log.dbg("Current Charge = {CurrentVesselChargeState:F2}" + _electricCharge.amount + " / " + _electricCharge.maxAmount * 100);
-				// spams the log
-
-				states ns = fuelCellIsEnabled ? states.nominal : states.off;
-
-				if (ns != states.nominal)
-				{
-					UpdateState(ns, 0, 0);
-					return;
-				}
-
-				Double amount = 0, maxAmount = 0;
-				part.GetConnectedResourceTotals(ElectricChargeID, out amount, out maxAmount);
-
-				foreach (PartResource resource in this.part.Resources)
-				{
-					maxAmount += resource.maxAmount;
-					amount += resource.amount;
-				}
-
-				Double
-					cfTime = TimeWarp.fixedDeltaTime,
-					ECNeed = (Double)(maxAmount * threshold - amount),
-					fuelModeMaxECRateLimit = ODFC_config.modes[fuelMode].maxEC * rateLimit;
-
-				// add stall code
-				if (HighLogic.CurrentGame.Parameters.CustomParams<ODFC_Options>().needsECtoStart && amount == 0f)
-				{
-					UpdateState(states.stalled, 0, fuelModeMaxECRateLimit);
-					return;
-				}
-
-				// Determine activity based on supply/demand
-				cfTime = Math.Min(cfTime, ECNeed / fuelModeMaxECRateLimit);
-				if (cfTime <= 0)
-				{
-					UpdateState(states.noDemand, 0, fuelModeMaxECRateLimit);
-					return;
-				}
-
-				// Determine activity based on available fuel
-				foreach (Fuel fuel in ODFC_config.modes[fuelMode].fuels)
-				{
-					amount = 0;
-					part.GetConnectedResourceTotals(fuel.resourceID, out amount, out maxAmount);
-
-					foreach (PartResource r in this.part.Resources) 
-						amount += r.amount;
-
-					cfTime = Math.Min(cfTime, amount / (fuel.rate * rateLimit));
-				}
-
-                // Determine activity based on available space to put byproduct
-                foreach (Fuel byproduct in ODFC_config.modes[fuelMode].byproducts)
-                {
-                // future code
-                }
-
-				if (cfTime == 0)
-				{
-					UpdateState(states.fuelDeprived, 0, fuelModeMaxECRateLimit);
-					// this looks for another fuel mode that isn't deprived if autoSwitch == true
-					if (HighLogic.CurrentGame.Parameters.CustomParams<ODFC_Options>().autoSwitch) nextFuelMode();
-					return;
-				 }
-
-				// Calculate usage based on rate limiting and duty cycle
-				Double adjr = rateLimit * cfTime;
-				Double ECAmount = fuelModeMaxECRateLimit * cfTime;
-
-				// Don't forget the most important part (add ElectricCharge (EC))
-				part.RequestResource(ElectricChargeID, -ECAmount);
-
-				// Commit changes to fuel used
-				Kommit(ODFC_config.modes[fuelMode].fuels, adjr);
-
-				// Handle byproducts
-				Kommit(ODFC_config.modes[fuelMode].byproducts, adjr);
-
-				UpdateState(states.nominal, ECAmount / TimeWarp.fixedDeltaTime, fuelModeMaxECRateLimit);
+				Log.dbg("Something is null");
+				return; // already checked for this in OnStart()
 			}
+			CurrentVesselChargeState = _electricCharge.amount / _electricCharge.maxAmount * 100; // compute current EC, in percent
+			//Log.dbg("Current Charge = {CurrentVesselChargeState:F2}" + _electricCharge.amount + " / " + _electricCharge.maxAmount * 100);
+			// spams the log
+
+			if (ns != states.nominal)
+            {
+				UpdateState(ns, 0, 0);
+				return;
+			}
+
+			Double amount = 0, maxAmount = 0;
+			part.GetConnectedResourceTotals(ElectricChargeID, out amount, out maxAmount);
+
+			foreach (PartResource resource in this.part.Resources)
+            {
+				maxAmount += resource.maxAmount;
+				amount += resource.amount;
+			}
+
+			Double
+				cfTime = TimeWarp.fixedDeltaTime,
+				ECNeed = (Double)(maxAmount * threshold - amount),
+				fuelModeMaxECRateLimit = ODFC_config.modes[fuelMode].maxEC * rateLimit;
+
+			// add stall code
+			if (HighLogic.CurrentGame.Parameters.CustomParams<ODFC_Options>().needsECtoStart && amount == 0f) {
+				UpdateState(states.stalled, 0, fuelModeMaxECRateLimit);
+				return;
+			}
+
+			// Determine activity based on supply/demand
+			cfTime = Math.Min(cfTime, ECNeed / fuelModeMaxECRateLimit);
+			if (cfTime <= 0) {
+				UpdateState(states.noDemand, 0, fuelModeMaxECRateLimit);
+				return;
+			}
+
+			// Determine activity based on available fuel
+			foreach (Fuel fuel in ODFC_config.modes[fuelMode].fuels) {
+				amount = 0;
+				part.GetConnectedResourceTotals(fuel.resourceID, out amount, out maxAmount);
+
+				foreach (PartResource r in this.part.Resources) 
+					amount += r.amount;
+
+				cfTime = Math.Min(cfTime, amount / (fuel.rate * rateLimit));
+			}
+
+            // Determine activity based on available space to put byproduct
+            /*
+					foreach (Fuel byproduct in ODFC_config.modes[fuelMode].byproducts)
+            {
+            // future code
+            }
+					*/
+
+			if (cfTime == 0)
+			{
+				UpdateState(states.fuelDeprived, 0, fuelModeMaxECRateLimit);
+				// this looks for another fuel mode that isn't deprived if autoSwitch == true
+				if (HighLogic.CurrentGame.Parameters.CustomParams<ODFC_Options>().autoSwitch) nextFuelMode();
+				return;
+				}
+
+			// Calculate usage based on rate limiting and duty cycle
+			Double adjr = rateLimit * cfTime;
+			Double ECAmount = fuelModeMaxECRateLimit * cfTime;
+
+			// Don't forget the most important part (add ElectricCharge (EC))
+			part.RequestResource(ElectricChargeID, -ECAmount);
+
+			// Commit changes to fuel used
+			Kommit(ODFC_config.modes[fuelMode].fuels, adjr);
+
+			// Handle byproducts
+			Kommit(ODFC_config.modes[fuelMode].byproducts, adjr);
+
+			UpdateState(states.nominal, ECAmount / TimeWarp.fixedDeltaTime, fuelModeMaxECRateLimit);
+		}
 
         /// <summary>Updates this instance.</summary>
         public void Update()
         {
-            if (HighLogic.LoadedSceneIsEditor) {
+            if (HighLogic.LoadedSceneIsEditor)
+            {
                 Double newMax = ODFC_config.modes[fuelMode].maxEC * rateLimit;
 
                 if (lastMax != newMax) {
@@ -819,6 +813,15 @@ namespace ODFC
                 states newState = fuelCellIsEnabled ? states.nominal : states.off;
                 UpdateState(newState, newState == states.nominal ? 1 : 0, 1);
             }
+        }
+
+        /// <summary>Updates the PAW with scaleFactor and advises KSP that the ship has changed</summary>
+        private void UpdateEditor()
+        {
+
+            UpdateFT();
+            // following needed to advise KSP that the ship has been modified and it needs to update itself. (Lisias)
+            GameEvents.onEditorShipModified.Fire(EditorLogic.fetch.ship);
         }
 #endregion
 #region Update PAW code
@@ -834,22 +837,16 @@ namespace ODFC
             if (HighLogic.CurrentGame.Parameters.CustomParams<ODFC_Options>().coloredPAW)
             { colorStr = STATES_COLOUR[(int)state]; }
 
-//            if (HighLogic.LoadedSceneIsFlight) PAWStatus = begStr + colorStr + "Fuel Cell: " + statusStr + " - " + ECs_status + " EC/s" + endStr;
-            // if (HighLogic.LoadedSceneIsFlight) PAWStatus = ("{0}{1}Fuel Cell: {2} - {3} EC/s{4}", begStr, colorStr, statusStr, ECs_status, endStr);
+            if (HighLogic.LoadedSceneIsFlight) PAWStatus = begStr + colorStr + "Fuel Cell: " + statusStr + " - " + ECs_status + " EC/s" + endStr;
             if (HighLogic.LoadedSceneIsEditor) PAWStatus = begStr + colorStr + "Fuel Cell: " + fuel_consumption + " - " + maxECs_status + " EC/s:" + endStr;
-            if (HighLogic.LoadedSceneIsEditor) PAWStatus = begStr + colorStr + "Fuel Cell: " + statusStr + " - " + maxECs_status + " EC/s:" + endStr;
+
+				// convert to modern syntax
+				// if (HighLogic.LoadedSceneIsFlight) PAWStatus = String.Format("{0}{1}Fuel Cell: {2} - {3} EC/s{4}", begStr, colorStr, statusStr, ECs_status, endStr);
+            //if (HighLogic.LoadedSceneIsEditor) PAWStatus = String.Format("{0}{1}Fuel Cell: {2} - {3} EC/s{4}", begStr, colorStr, statusStr, ECs_status, endStr);
         }
+
 #endregion
 #region TweakScale Support
-        /// <summary>Updates the PAW with scaleFactor and advises KSP that the ship has changed</summary>
-        private void UpdateEditor()
-        {
-
-            UpdateFT();
-            // following needed to advise KSP that the ship has been modified and it needs to update itself. (Lisias)
-            GameEvents.onEditorShipModified.Fire(EditorLogic.fetch.ship);
-        }
-
         /// <summary>
         ///   <para>
         ///  Called when [rescale].
