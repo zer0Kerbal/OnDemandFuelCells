@@ -23,6 +23,8 @@
      *  
      *  added private const string GroupName = "ODFC";
      *  changed groupName = "ODFC" --> groupName = GroupName
+     *  change string status --> statusStr
+     *  comment out private bool ns = true
        
      *   No need to guard the code under "#if DEBUG", as the ConditionalAtribute automatically omits the code when DEBUG is not active - and without breaking the callers! :)
      
@@ -101,7 +103,7 @@ NEXT BIG THING (Project):
     * maxProduction is the maximim EC/s ODFC will produce (100%)
     * 
 
-* DONE: implement PAW status in group header
+* DONE: implement PAW statusStr in group header
 * DONE: add page to game difficulty settings
 * DONE: add stall variable and code
 * DONE: implement 'stalled' mode - with a setting in the difficulty settings menu: this will 'stall' the fuel cell if the vessel (at least reachable) reaches below a certain level of EC (like <= 0),
@@ -135,7 +137,7 @@ bool ventExcess = True(byproducts, vent excess over maximum Amount)
  */
 #endregion
 
-#define DEBUG
+// #define DEBUG
 
 using System;
 using System.Collections.Generic;
@@ -153,7 +155,7 @@ namespace ODFC
         /// <summary>
         /// States: enum list of fuel cell operational states
         /// </summary>
-        public enum states : Int32 { error, off, nominal, fuelDeprived, noDemand, stalled }; // deploy, retract,        
+        public enum states : byte { error, off, nominal, fuelDeprived, noDemand, stalled }; // deploy, retract,        
         /// <summary>
         /// The states string: ERROR!, Off, Nominal, Fuel Deprived, No Demand, Stalled
         /// </summary>
@@ -165,13 +167,17 @@ namespace ODFC
         // Thank you to (Lisias) for this upgrade
         private static readonly string[] STATES_COLOUR = { "<color=orange>", "<color=black>", "<#ADFF2F>", "<color=yellow>", "<#6495ED>", "<color=red>" };
         //                                                                                      (Green)                          (Blue)
-        private const string FuelTransferFormat = "0.##"; //FuelTransferFormat?
+
+        /// <summary>
+        /// The fuel transfer format
+        /// </summary>
+        private const string FuelTransferFormat = "0.##";
 
         /// <summary>
         /// The fuel rate format
-        /// this is formatting the fuel/byproducts rate display in the PAW
+        /// this formats the fuel/byproducts rate display in the PAW
         /// </summary>
-        private const string FuelRateFormat = "0.######";
+        private const string FuelRateFormat = "0.########";
 
         /// <summary>
         /// The PAW group name
@@ -181,13 +187,21 @@ namespace ODFC
         private const float
             thresHoldSteps = 0.05f, // increment the rate by this amount (default is 5)
             thresholdMin = thresHoldSteps,
-            thresHoldMax = 0.85f;
+            thresHoldMax = 1f; // 0.85f;
 
         private Double
             lastGen = -1,
             lastMax = -1,
             lastTF = -1;
+
+        /// <summary>
+        /// The last fuel mode
+        /// </summary>
         private int lastFuelMode = -1;
+
+        /// <summary>
+        /// Editor module information
+        /// </summary>
         private string info = string.Empty;
 
         /// <summary>The configuration node</summary>
@@ -197,33 +211,38 @@ namespace ODFC
         public static List<ResourceLabel> lastResource = new List<ResourceLabel>();
 
         /// <summary>ElectricCharge identification number</summary>
-        private static int ElectricChargeID;
+        public static int ElectricChargeID;
 
         /// <summary>
         /// vessel's current total ElectricCharge(EC)
         /// </summary>
-        private PartResource _electricCharge;
+        public PartResource _electricCharge;
 
         /// <summary>The SCN</summary>
         public string scn;
 
         /// <summary>The ns</summary>
-        public bool ns = true;
+        // private bool ns = true;
 
         /// <summary>The odfc configuration</summary>
         public Config ODFC_config;
 
         /// <summary>The state of the Fuel Cell (nominal, off et al)</summary>
         public states state = states.error;
-        #endregion
+#endregion
 
         // added PAW grouping, set to autocollapse - introduced in KSP 1.7.1
         // would really like the PAW to remember if the group was open
 #region Fields Events Actions
 
-        // This is on TweakScale
-        //[KSPField(isPersistant = true, guiActive = false, guiActiveEditor = true, guiName = "scaleFactor")]
-        //public double scaleFactor = 0f; // allows for scaling of ODFC elements
+        /*
+        /// <summary>scaleFactor is optional scaling set in part.config module declaration</summary>
+        [KSPField(isPersistant = true, 
+            guiActive = false,
+            guiActiveEditor = true,
+            guiName = "scaleFactor")]
+        private double scaleFactor = 1f; // allows for scaling of ODFC elements
+        */
 
         [KSPField(isPersistant = false,
             guiActive = true,
@@ -236,7 +255,6 @@ namespace ODFC
             guiActiveEditor = true,
             groupName = GroupName,
             groupDisplayName = "On Demand Fuel Cells Control",
-
             groupStartCollapsed = true)]
         public int fuelMode = 0;
 
@@ -245,7 +263,7 @@ namespace ODFC
             guiActiveEditor = false,
             guiName = "Status",
             groupName = GroupName)]
-        public string status = "ERROR!";
+        public string statusStr = "ERROR!";
 
         // for display purposes only    
         /// <summary>
@@ -287,7 +305,7 @@ namespace ODFC
         [KSPField(isPersistant = false,
             guiActive = false,
             guiActiveEditor = false,
-            guiName = "\nByproducts:",
+            guiName = "Byproducts:", //"\nByproducts:",
             groupName = GroupName)]
         public string byproducts = "ERROR!";
 
@@ -350,7 +368,7 @@ namespace ODFC
             guiFormat = "P0",
             groupName = GroupName),
             UI_FloatRange(minValue = thresholdMin, maxValue = thresHoldMax, stepIncrement = thresHoldSteps)]
-        public float threshold = thresholdMin;
+        public float threshold = 0.85f; // thresholdMin;
 
         /// <summary>
         /// Toggles the fuel cell on/off.
@@ -426,10 +444,10 @@ namespace ODFC
         #endregion
 
 #region Private Functions
-        /// <summary>Updates the FS (Fuel String?).</summary>
+        /// <summary>Updates the Fuels String.</summary>
         /// <param name="s">The string to be used to update the fuels list.</param>
         /// <param name="fuels">The fuels list.</param>
-        private void updateFS(out string s, Fuel[] fuels)
+        public static void UpdateFuelsString(out string s, Fuel[] fuels)
         {
 
             string fuelColorStr = "";
@@ -452,28 +470,37 @@ namespace ODFC
             }
 
             s = "";
-            bool plus = false;
+           // bool plus = false;
 
             foreach (Fuel fuel in fuels)
             {
                 ResourceLabel abr = lastResource.Find(x => x.resourceID == fuel.resourceID);
+                /*
                 if (plus)
                 {
                     s += " "; // /s
                     plus = true;
                 }
+                */
 
                 // THIS IS WHERE have to add code to include consumption/production #
-                s += "\n" + fuelColorStr + PartResourceLibrary.Instance.GetDefinition(fuel.resourceID).name + ": " + fuelRateColorStr + rateString(fuel.rate) + endStr;
-                // add code to verify found exists to prevent nullref
+                s += "\n" + fuelColorStr + PartResourceLibrary.Instance.GetDefinition(fuel.resourceID).name + ": " + fuelRateColorStr + RateString(fuel.rate) + endStr;
+                // add code to verify found exists to prevent nullref 
                 Log.dbg("[ODFC PAW] Fuels (string): " + s);
             }
             //s += "\n";
         }
 
-        private string rateString(double Rate)
+        /// <summary>
+        /// Formats fuel rate into a string
+        /// first converts into /s /m /h
+        /// and then into string
+        /// </summary>
+        /// <param name="Rate">The rate.</param>
+        /// <returns></returns>
+        public static string RateString(double Rate)
         {
-           //  double rate = double.Parse(value.value);
+            //  double rate = double.Parse(value.value);
             string sfx = "/s";
 
             if (Rate <= 0.004444444f)
@@ -487,14 +514,16 @@ namespace ODFC
                 sfx = "/m";
             }
 
+            // limit decimal places to 10 and add sfx
+            //return String.Format(FuelRateFormat, Rate, sfx);
             return Rate.ToString() + sfx;
         }
 
         /// <summary>Updates the FT (FuelType?).</summary>
-        private void updateFT()
+        public void UpdateFT()
         { //updateFT?
-            updateFS(out fuel_consumption, ODFC_config.modes[fuelMode].fuels);
-            updateFS(out byproducts, ODFC_config.modes[fuelMode].byproducts);
+            UpdateFuelsString(out fuel_consumption, ODFC_config.modes[fuelMode].fuels);
+            UpdateFuelsString(out byproducts, ODFC_config.modes[fuelMode].byproducts);
         }
 
         /// <summary>
@@ -503,20 +532,21 @@ namespace ODFC
         /// <param name="newstate">The newstate.</param>
         /// <param name="gen">The gen.</param>
         /// <param name="max">The maximum.</param>
-        private void UpdateState(states newstate, Double gen, Double max)
+        public void UpdateState(states newstate, Double gen, Double max)
         {
             if (gen != lastGen || max != lastMax)
             {
                 lastGen = gen;
                 lastMax = max;
 
+                //ECs_status = double.ToString(FuelTransferFormat, gen) + " / " + double.ToString(FuelTransferFormat, max);
                 ECs_status = gen.ToString(FuelTransferFormat) + " / " + max.ToString(FuelTransferFormat);
             }
 
             if (state != newstate)
             {
                 state = newstate;
-                status = STATES_STR[(int)state];
+                statusStr = STATES_STR[(int)state];
             }
 
             Double tf = gen / max * rateLimit;
@@ -533,7 +563,7 @@ namespace ODFC
         /// </summary>
         /// <param name="node">The node.</param>
         /// <returns></returns>
-        private string GetResourceRates(ConfigNode node)
+        public string GetResourceRates(ConfigNode node)
         {
             if (node == null || node.values.Count < 1)
                 return "\n - None";
@@ -556,6 +586,7 @@ namespace ODFC
                     sfx = "/m";
                 }
 
+                // resourceRates = String.Format("\n - {0} : {1}{2,15:0.###########}", value.name, rate.ToString(), sfx);
                 resourceRates += "\n - " + value.name + ": " + rate.ToString() + sfx;
             }
 
@@ -568,7 +599,7 @@ namespace ODFC
         /// </summary>
         /// <param name="fuels">Which fuels are adjusted.</param>
         /// <param name="adjr">The adjustement.</param>
-        private void kommit(Fuel[] fuels, Double adjr)
+        private void Kommit(Fuel[] fuels, Double adjr)
         {
             foreach (Fuel fuel in fuels)
                 part.RequestResource(fuel.resourceID, fuel.rate * adjr);
@@ -613,7 +644,7 @@ namespace ODFC
 
 // One puppy will explode for every question you ask about this code.  Please, think of the puppies.
 
-				updateConfig();
+				UpdateConfig();
 
             if (state != StartState.Editor)
                 part.force_activate();
@@ -626,7 +657,8 @@ namespace ODFC
             // this is what is show in the editor
             // As annoying as it is, pre-parsing the config MUST be done here, because this is called during part loading.
             // The config is only fully parsed after everything is fully loaded (which is why it's in OnStart())
-            if (info == string.Empty)
+            //if (info == string.Empty)
+            if (string.IsNullOrEmpty(info))
             {
                 ConfigNode[] mds = configNode.GetNodes("MODE");
                 info += "Modes: " + mds.Length.ToString();
@@ -640,13 +672,14 @@ namespace ODFC
             return info;
         }
 
-        private void updateConfig()
+        private void UpdateConfig()
         {
             Log.dbg("Updating config");
 
             ODFC_config = new Config(ConfigNode.Parse(scn).GetNode("MODULE"), part);
             Log.dbg("Modes.Length: {0}", ODFC_config.modes.Length);
-            updateFT();
+            UpdateFT();
+            UpdatePAWLabel();
 
             if (ODFC_config.modes.Length < 2)
             {   // Disable unnecessary UI elements if we only have a single mode
@@ -764,10 +797,10 @@ namespace ODFC
 				part.RequestResource(ElectricChargeID, -ECAmount);
 
 				// Commit changes to fuel used
-				kommit(ODFC_config.modes[fuelMode].fuels, adjr);
+				Kommit(ODFC_config.modes[fuelMode].fuels, adjr);
 
 				// Handle byproducts
-				kommit(ODFC_config.modes[fuelMode].byproducts, adjr);
+				Kommit(ODFC_config.modes[fuelMode].byproducts, adjr);
 
 				UpdateState(states.nominal, ECAmount / TimeWarp.fixedDeltaTime, fuelModeMaxECRateLimit);
 			}
@@ -801,10 +834,10 @@ namespace ODFC
             if (HighLogic.CurrentGame.Parameters.CustomParams<ODFC_Options>().coloredPAW)
             { colorStr = STATES_COLOUR[(int)state]; }
 
-//            if (HighLogic.LoadedSceneIsFlight) PAWStatus = begStr + colorStr + "Fuel Cell: " + status + " - " + ECs_status + " EC/s" + endStr;
-            // if (HighLogic.LoadedSceneIsFlight) PAWStatus = ("{0}{1}Fuel Cell: {2} - {3} EC/s{4}", begStr, colorStr, status, ECs_status, endStr);
+//            if (HighLogic.LoadedSceneIsFlight) PAWStatus = begStr + colorStr + "Fuel Cell: " + statusStr + " - " + ECs_status + " EC/s" + endStr;
+            // if (HighLogic.LoadedSceneIsFlight) PAWStatus = ("{0}{1}Fuel Cell: {2} - {3} EC/s{4}", begStr, colorStr, statusStr, ECs_status, endStr);
             if (HighLogic.LoadedSceneIsEditor) PAWStatus = begStr + colorStr + "Fuel Cell: " + fuel_consumption + " - " + maxECs_status + " EC/s:" + endStr;
-            if (HighLogic.LoadedSceneIsEditor) PAWStatus = begStr + colorStr + "Fuel Cell: " + status + " - " + maxECs_status + " EC/s:" + endStr;
+            if (HighLogic.LoadedSceneIsEditor) PAWStatus = begStr + colorStr + "Fuel Cell: " + statusStr + " - " + maxECs_status + " EC/s:" + endStr;
         }
 #endregion
 #region TweakScale Support
@@ -812,7 +845,7 @@ namespace ODFC
         private void UpdateEditor()
         {
 
-            updateFT();
+            UpdateFT();
             // following needed to advise KSP that the ship has been modified and it needs to update itself. (Lisias)
             GameEvents.onEditorShipModified.Fire(EditorLogic.fetch.ship);
         }
