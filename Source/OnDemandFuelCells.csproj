@@ -59,6 +59,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BackgroundProcessing.cs" />
     <Compile Include="Log.cs" />
     <Compile Include="ODFC.cs" />
     <Compile Include="Config.cs" />
