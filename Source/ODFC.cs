@@ -524,7 +524,6 @@ namespace ODFC
         /// <summary>Updates the PAW with scaleFactor and advises KSP that the ship has changed</summary>
         private void updateEditor()
         {
-
             updateFT();
             // following needed to advise KSP that the ship has been modified and it needs to update itself. (Lisias)
             GameEvents.onEditorShipModified.Fire(EditorLogic.fetch.ship);
