@@ -37,7 +37,7 @@ bool ventExcess = True(byproducts, vent excess over maximum Amount)
 
 using System;
 using System.Collections.Generic;
-using UnityEngine;
+//using UnityEngine;
 
 namespace ODFC
 {
@@ -47,7 +47,7 @@ namespace ODFC
     /// <seealso cref="PartModule" />
     public class ODFC : PartModule
     {
-        #region Enums Vars
+#region Enums Vars
         public enum states : byte { error, off, nominal, fuelDeprived, noDemand, stalled }; // deploy, retract,
         private static readonly string[] STATES_STR = { "ERROR!", "Off", "Nominal", "Fuel Deprived", "No Demand", "Stalled" };
         private static readonly string[] STATES_COLOUR = { "<color=orange>", "<color=black>", "<#ADFF2F>", "<color=yellow>", "<#6495ED>", "<color=red>" };
@@ -57,6 +57,8 @@ namespace ODFC
             thresHoldSteps = 0.05f, // increment the rate by this amount (default is 5)
             thresholdMin = thresHoldSteps,
             thresHoldMax = 1;
+
+        public Double fuelModeMaxECRateLimit = 0f;
 
         private Double
             lastGen = -1,
@@ -446,8 +448,9 @@ namespace ODFC
 
             Double
                 cfTime = TimeWarp.fixedDeltaTime,
-                ECNeed = (Double)(maxAmount * threshold - amount),
-                fuelModeMaxECRateLimit = ODFC_config.modes[fuelMode].maxEC * rateLimit;
+                ECNeed = (Double)(maxAmount * threshold - amount);
+
+            fuelModeMaxECRateLimit = ODFC_config.modes[fuelMode].maxEC * rateLimit;
 
             // add stall code
             if (HighLogic.CurrentGame.Parameters.CustomParams<ODFC_Options>().needsECtoStart && amount == 0f)
@@ -488,7 +491,7 @@ namespace ODFC
 
             // Calculate usage based on rate limiting and duty cycle
             Double adjr = rateLimit * cfTime;
-            Double ECAmount = fuelModeMaxECRateLimit * cfTime;
+            double ECAmount = fuelModeMaxECRateLimit * cfTime;
 
             // Don't forget the most important part (add ElectricCharge (EC))
             part.RequestResource(ElectricChargeID, -ECAmount);

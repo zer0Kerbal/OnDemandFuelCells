@@ -1,7 +1,7 @@
-<!-- Readme.md v1.2.0.1
+<!-- Readme.md v1.2.0.0
 On Demand Fuel Cells Refueled
 created: 17 Jul 18
-updated: 01 Dec 19 -->
+updated: 29 Nov 19 -->
 
 <!-- Download on SpaceDock here or Github here.
 Also available on CKAN. -->
@@ -112,7 +112,7 @@ Another set that modifies the same set of parts instead of copying them.
 ##### All bundled mods are distributed under their own licenses
 ##### All art assets (textures, models, animations) are distributed under an All Rights Reserved License.
 
-###### v1.2.0.1 original: 11 Aug 2018 zed'K | updated: 01 Dec 2019 zed'K & Lisias & 4x4cheesecake & LinuxGuruGamer
+###### v1.1.2.1 original: 11 Aug 2018 zed'K | updated: 21 Sep 2019 zed'K & 4x4cheesecake & LinuxGuruGamer
 <!--
 CC BY-NC-SA-4.0
 zer0Kerbal-->
