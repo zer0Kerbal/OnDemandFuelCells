@@ -50,8 +50,8 @@ namespace ODFC
             thresHoldSteps = 0.05f, // increment the rate by this amount (default is 5)
             thresholdMin = thresHoldSteps,
             thresHoldMax = 1;
-  
 
+        public Double fuelModeMaxECRateLimit = 0f;
         private Double
             lastGen = -1,
             lastMax = -1,
@@ -408,8 +408,9 @@ namespace ODFC
 
             Double
                 cfTime = TimeWarp.fixedDeltaTime,
-                ECNeed = (Double)(maxAmount * threshold - amount),
-                fuelModeMaxECRateLimit = ODFC_config.modes[fuelMode].maxEC * rateLimit;
+                ECNeed = (Double)(maxAmount * threshold - amount);
+
+            fuelModeMaxECRateLimit = ODFC_config.modes[fuelMode].maxEC * rateLimit;
 
             // add stall code
             if (HighLogic.CurrentGame.Parameters.CustomParams<ODFC_Options>().needsECtoStart && amount == 0f)
