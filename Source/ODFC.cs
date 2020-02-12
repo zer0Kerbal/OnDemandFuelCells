@@ -37,7 +37,7 @@ bool ventExcess = True(byproducts, vent excess over maximum Amount)
 
 using System;
 using System.Collections.Generic;
-//using UnityEngine;
+using UnityEngine;
 
 namespace ODFC
 {
@@ -58,6 +58,7 @@ namespace ODFC
             thresholdMin = thresHoldSteps,
             thresHoldMax = 1;
 
+// AMPYear / JPRepo / Background?
         public Double fuelModeMaxECRateLimit = 0f;
 
         private Double
@@ -448,7 +449,9 @@ namespace ODFC
 
             Double
                 cfTime = TimeWarp.fixedDeltaTime,
-                ECNeed = (Double)(maxAmount * threshold - amount);
+                
+// Lisias - ; -> ,
+                ECNeed = (Double)(maxAmount * threshold - amount),
 
             fuelModeMaxECRateLimit = ODFC_config.modes[fuelMode].maxEC * rateLimit;
 
@@ -491,7 +494,7 @@ namespace ODFC
 
             // Calculate usage based on rate limiting and duty cycle
             Double adjr = rateLimit * cfTime;
-            double ECAmount = fuelModeMaxECRateLimit * cfTime;
+            Double ECAmount = fuelModeMaxECRateLimit * cfTime;
 
             // Don't forget the most important part (add ElectricCharge (EC))
             part.RequestResource(ElectricChargeID, -ECAmount);
@@ -523,11 +526,9 @@ namespace ODFC
 
             }
         }
-
         /// <summary>Updates the PAW with scaleFactor and advises KSP that the ship has changed</summary>
         private void updateEditor()
         {
-
             updateFT();
             // following needed to advise KSP that the ship has been modified and it needs to update itself. (Lisias)
             GameEvents.onEditorShipModified.Fire(EditorLogic.fetch.ship);

@@ -1,6 +1,6 @@
-﻿using System;
+﻿//using System;
 using UnityEngine;
-using System.Collections.Generic;
+//using System.Collections.Generic;
 using System.Collections;
 using System.Reflection;
 
@@ -52,6 +52,15 @@ namespace ODFC
             newGameOnly = false,
             unlockedDuringMission = true)]
         public bool coloredPAW = true;
+
+        /// <summary>
+        /// The colored paw
+        /// </summary>
+        [GameParameters.CustomParameterUI("InGameMail? (not implemented yet) (YES/no)",
+            toolTip = "allow On Demand Fuel Cells to send you in game mail (not implemented yet). Default is YES.",
+            newGameOnly = false,
+            unlockedDuringMission = true)]
+        public bool InGameMail = true;
 
         /// <summary>
         /// Sets the globalScalingFactor in GameParameters

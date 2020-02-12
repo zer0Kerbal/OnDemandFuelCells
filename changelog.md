@@ -13,6 +13,24 @@
  - [D][BUG 1.1.2.0a] Properly scales ODFC module (maxEC, Fuels, Byproducts) and resources in a part with ODFC installed. Requires TweakScale to be installed.
  - [D][BUG 1.2.0.0a] fuel consumption and byproduct production should be seen on PAW - it is not
 
+  ### 1.2.0.17 dev build
+  - slight tweaks to autobuild process
+  - slight code tweaks - working TweakScale issue.
+
+ ### 1.2.0.16 dev build
+ - made public Double fuelModeMaxECRateLimit = 0f; into global variable to be used by AmpYear et al.
+
+ ### 1.2.0.15 dev build
+ - split off backgroundProcessing code into separate file
+
+ ### 1.2.0.14 dev build
+
+ ### 1.2.0.13 dev build
+
+ ### 1.2.0.12 dev build
+
+ ### 1.2.0.11 dev build
+
  ### 1.2.0.10 dev build
   - PAW updated
     - fixed formatting issues breaking the PAW

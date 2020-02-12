@@ -31,7 +31,7 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
-    <DebugType>nonde</DebugType>
+    <DebugType>none</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
@@ -48,30 +48,25 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="$(DevDir)\KSP_x64_Data\Managed\Assembly-CSharp*.dll">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="$(DevDir)\KSP_x64_Data\Managed\UnityEngine*.dll">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Scale_Redist">
-      <HintPath>$(DevDir)\KSP_x64_Data\Managed\Scale_Redist.dll</HintPath>
-    </Reference>
+    <Reference Include="$(DevDir)\KSP_x64_Data\Managed\Assembly-CSharp*.dll" />
+    <Reference Include="$(DevDir)\KSP_x64_Data\Managed\UnityEngine*.dll" />
+    <Reference Include="$(DevDir)\KSP_x64_Data\Managed\Scale_Redist.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BackgroundProcessing.cs" />
-    <Compile Include="Log.cs" />
     <Compile Include="ODFC.cs" />
     <Compile Include="Config.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="InstallChecker.cs" />
+    <Compile Include="BackgroundProcessing.cs" />
+    <Compile Include="Log.cs" />
     <Compile Include="Settings.cs" />
+    <Compile Include="InstallChecker.cs" />
     <Compile Include="TweakScaleSupport.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Version.cs">
       <DependentUpon>Version.tt</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="Utilities.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Properties\Version.tt">
@@ -85,17 +80,17 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Analyzer Include="packages\Microsoft.CodeAnalysis.VersionCheckAnalyzer.2.9.8\analyzers\dotnet\cs\Microsoft.CodeAnalysis.VersionCheckAnalyzer.resources.dll" />
-    <Analyzer Include="packages\Microsoft.CodeAnalysis.VersionCheckAnalyzer.2.9.8\analyzers\dotnet\Microsoft.CodeAnalysis.VersionCheckAnalyzer.dll" />
-    <Analyzer Include="packages\Microsoft.CodeQuality.Analyzers.2.9.8\analyzers\dotnet\cs\Humanizer.dll" />
-    <Analyzer Include="packages\Microsoft.CodeQuality.Analyzers.2.9.8\analyzers\dotnet\cs\Microsoft.CodeQuality.Analyzers.dll" />
-    <Analyzer Include="packages\Microsoft.CodeQuality.Analyzers.2.9.8\analyzers\dotnet\cs\Microsoft.CodeQuality.CSharp.Analyzers.dll" />
-    <Analyzer Include="packages\Microsoft.NetCore.Analyzers.2.9.8\analyzers\dotnet\cs\Microsoft.NetCore.Analyzers.dll" />
-    <Analyzer Include="packages\Microsoft.NetCore.Analyzers.2.9.8\analyzers\dotnet\cs\Microsoft.NetCore.CSharp.Analyzers.dll" />
-    <Analyzer Include="packages\Microsoft.NetFramework.Analyzers.2.9.8\analyzers\dotnet\cs\Microsoft.NetFramework.Analyzers.dll" />
-    <Analyzer Include="packages\Microsoft.NetFramework.Analyzers.2.9.8\analyzers\dotnet\cs\Microsoft.NetFramework.CSharp.Analyzers.dll" />
-  </ItemGroup>
+  <!-- <ItemGroup> -->
+  <!-- <Analyzer Include="packages\Microsoft.CodeAnalysis.VersionCheckAnalyzer.2.9.8\analyzers\dotnet\cs\Microsoft.CodeAnalysis.VersionCheckAnalyzer.resources.dll" /> -->
+  <!-- <Analyzer Include="packages\Microsoft.CodeAnalysis.VersionCheckAnalyzer.2.9.8\analyzers\dotnet\Microsoft.CodeAnalysis.VersionCheckAnalyzer.dll" /> -->
+  <!-- <Analyzer Include="packages\Microsoft.CodeQuality.Analyzers.2.9.8\analyzers\dotnet\cs\Humanizer.dll" /> -->
+  <!-- <Analyzer Include="packages\Microsoft.CodeQuality.Analyzers.2.9.8\analyzers\dotnet\cs\Microsoft.CodeQuality.Analyzers.dll" /> -->
+  <!-- <Analyzer Include="packages\Microsoft.CodeQuality.Analyzers.2.9.8\analyzers\dotnet\cs\Microsoft.CodeQuality.CSharp.Analyzers.dll" /> -->
+  <!-- <Analyzer Include="packages\Microsoft.NetCore.Analyzers.2.9.8\analyzers\dotnet\cs\Microsoft.NetCore.Analyzers.dll" /> -->
+  <!-- <Analyzer Include="packages\Microsoft.NetCore.Analyzers.2.9.8\analyzers\dotnet\cs\Microsoft.NetCore.CSharp.Analyzers.dll" /> -->
+  <!-- <Analyzer Include="packages\Microsoft.NetFramework.Analyzers.2.9.8\analyzers\dotnet\cs\Microsoft.NetFramework.Analyzers.dll" /> -->
+  <!-- <Analyzer Include="packages\Microsoft.NetFramework.Analyzers.2.9.8\analyzers\dotnet\cs\Microsoft.NetFramework.CSharp.Analyzers.dll" /> -->
+  <!-- </ItemGroup> -->
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>start /D $(ProjectDir)..\  /WAIT deploy.bat  $(TargetDir) $(TargetFileName)
@@ -105,7 +100,7 @@ if $(ConfigurationName) == Release start /D $(ProjectDir)..\   /WAIT buildReleas
     <!-- <PreBuildEvent>set textTemplatingPath="$(DevEnvDir)texttransform.exe"
 %25textTemplatingPath%25 "$(ProjectDir)AssemblyVersion.tt"</PreBuildEvent> -->
   </PropertyGroup>
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>
