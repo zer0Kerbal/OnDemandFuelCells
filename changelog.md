@@ -15,7 +15,7 @@
 
   ### 1.2.0.17 dev build
   - slight tweaks to autobuild process
-  - slight code tweaks - working TweakScale issue.
+  - slight code tweaks - working on TweakScale issue.
 
  ### 1.2.0.16 dev build
  - made public Double fuelModeMaxECRateLimit = 0f; into global variable to be used by AmpYear et al.
