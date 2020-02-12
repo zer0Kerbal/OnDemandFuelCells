@@ -76,6 +76,20 @@ namespace ODFC
             asPercentage = false)]
         public float globalScalingFactor = 1.0f;
 
+        /// <summary>
+        /// Sets the globalScalingFactor in GameParameters
+        /// </summary>
+        [GameParameters.CustomFloatParameterUI("responseTime ",
+            toolTip = "Sets responseTime = 1 - 100 (lower equals faster).",
+            newGameOnly = false,
+            unlockedDuringMission = true,
+            minValue = 0,
+            maxValue = 100,
+            stepCount = 1,
+            //displayFormat = "F2",
+            asPercentage = false)]
+        public int responseTime = 25;
+
         // If you want to have some of the game settings default to enabled,  change 
         // the "if false" to "if true" and set the values as you like
 

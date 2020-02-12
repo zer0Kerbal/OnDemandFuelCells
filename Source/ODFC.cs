@@ -58,7 +58,11 @@ namespace ODFC
             thresholdMin = thresHoldSteps,
             thresHoldMax = 1;
 
-// AMPYear / JPRepo / Background?
+        /// <summary>current counter for responseTime</summary>
+        private int timeOut = 1;
+
+        // AMPYear / JPRepo / Background?  
+        /// <summary>allows AMPYear and others to see current EC/s production</summary>
         public Double fuelModeMaxECRateLimit = 0f;
 
         private Double
@@ -329,6 +333,7 @@ namespace ODFC
         {
             foreach (Fuel fuel in fuels)
                 part.RequestResource(fuel.resourceID, fuel.rate * adjr);
+                //Log.dbg("kommit(part.RequestResource(fuel.resourceID, fuel.rate * adjr): {1} | {2}({3}) * {4}", PartResourceLibrary.Instance.GetDefinition(fuel.resourceID).name, fuel.resourceID, fuel.rate, adjr);
         }
         #endregion
 
@@ -449,11 +454,15 @@ namespace ODFC
 
             Double
                 cfTime = TimeWarp.fixedDeltaTime,
-                
-// Lisias - ; -> ,
-                ECNeed = (Double)(maxAmount * threshold - amount),
 
+ // Lisias - ; -> ,
+                ECNeed = (Double)(maxAmount * threshold - amount);
+
+            //Log.dbg("fuelModeMaxECRateLimit: {1} ", fuelModeMaxECRateLimit);
+            ScreenMessages.PostScreenMessage("fuelModeMaxECRateLimit: " + fuelModeMaxECRateLimit.ToString(), 2, ScreenMessageStyle.UPPER_LEFT, true);
             fuelModeMaxECRateLimit = ODFC_config.modes[fuelMode].maxEC * rateLimit;
+            ScreenMessages.PostScreenMessage("fuelModeMaxECRateLimit: " + fuelModeMaxECRateLimit.ToString(), 2, ScreenMessageStyle.UPPER_LEFT, true);
+            //Log.dbg("fuelModeMaxECRateLimit (maxEC * rateLimit: {1} ", fuelModeMaxECRateLimit);
 
             // add stall code
             if (HighLogic.CurrentGame.Parameters.CustomParams<ODFC_Options>().needsECtoStart && amount == 0f)
@@ -484,17 +493,26 @@ namespace ODFC
 
             if (cfTime == 0)
             {
-
                 UpdateState(states.fuelDeprived, 0, fuelModeMaxECRateLimit);
 
                 // this looks for another fuel mode that isn't deprived if autoSwitch == true
                 if (HighLogic.CurrentGame.Parameters.CustomParams<ODFC_Options>().autoSwitch) nextFuelMode();
                 return;
             }
+            /*if (HighLogic.CurrentGame.Parameters.CustomParams<ODFC_Options>().responseTime >= timeOut)
+                  {
+
+                    timeOut = 0;
+                }
+                else timeOut++;*/
 
             // Calculate usage based on rate limiting and duty cycle
             Double adjr = rateLimit * cfTime;
+            //Log.dbg("adjr = rateLimit * cfTime: {1} ", adjr);
+
             Double ECAmount = fuelModeMaxECRateLimit * cfTime;
+
+            //Log.dbg("ECAmount = fuelModeMaxECRateLimit * cfTime: {1} ", ECAmount);
 
             // Don't forget the most important part (add ElectricCharge (EC))
             part.RequestResource(ElectricChargeID, -ECAmount);
@@ -586,9 +604,9 @@ namespace ODFC
                 for (int n = 0; n <= ODFC_config.modes[m].fuels.Length - 1; n++)
 
                 {
-                    Log.dbg("unscaled Fuel: {0} = {1}", PartResourceLibrary.Instance.GetDefinition(ODFC_config.modes[m].fuels[n].resourceID).name, ODFC_config.modes[m].fuels[n].rate);
+                    //Log.dbg("unscaled Fuel: {0} = {1}", PartResourceLibrary.Instance.GetDefinition(ODFC_config.modes[m + 1].fuels[n + 1].resourceID).name, ODFC_config.modes[m + 1].fuels[n + 1].rate);
                     ODFC_config.modes[m].fuels[n].rate *= scaleFactor.quadratic;
-                    Log.dbg("scaled Fuel: {0} = {1}" + PartResourceLibrary.Instance.GetDefinition(ODFC_config.modes[m].fuels[n].resourceID).name, ODFC_config.modes[m].fuels[n].rate);
+                    //Log.dbg("scaled Fuel: {0} = {1}" + PartResourceLibrary.Instance.GetDefinition(ODFC_config.modes[m + 1].fuels[n + 1].resourceID).name, ODFC_config.modes[m + 1].fuels[n + 1].rate);
                 }
 
                 // scale byproducts in ODFC_config.modes
@@ -596,9 +614,9 @@ namespace ODFC
                 for (int n = 0; n <= ODFC_config.modes[m].byproducts.Length - 1; n++)
 
                 {
-                    Log.dbg("unscaled byproduct: {0} = {1}", PartResourceLibrary.Instance.GetDefinition(ODFC_config.modes[m].byproducts[n].resourceID).name, ODFC_config.modes[m].byproducts[n].rate);
+                    //Log.dbg("unscaled byproduct: {0} = {1}", PartResourceLibrary.Instance.GetDefinition(ODFC_config.modes[m].byproducts[n + 1].resourceID).name, ODFC_config.modes[m + 1].byproducts[n + 1].rate);
                     ODFC_config.modes[m].byproducts[n].rate *= scaleFactor.quadratic;
-                    Log.dbg("scaled byproduct: {0} / {1}", PartResourceLibrary.Instance.GetDefinition(ODFC_config.modes[m].byproducts[n].resourceID).name, ODFC_config.modes[m].byproducts[n].rate);
+                    //Log.dbg("scaled byproduct: {0} / {1}", PartResourceLibrary.Instance.GetDefinition(ODFC_config.modes[m].byproducts[n + 1].resourceID).name, ODFC_config.modes[m + 1].byproducts[n + 1].rate);
                 }
             }
             this.updateEditor(); // updateFT();
