@@ -13,6 +13,15 @@
  - [D][BUG 1.1.2.0a] Properly scales ODFC module (maxEC, Fuels, Byproducts) and resources in a part with ODFC installed. Requires TweakScale to be installed.
  - [D][BUG 1.2.0.0a] fuel consumption and byproduct production should be seen on PAW - it is not
 
+  ### 1.2.0.18 dev build
+- added < internal double _fuelModeMaxECRateLimit = 0f; >
+- added < public double OnDemandFuelCellsEC { get { return this._fuelModeMaxECRateLimit; }; } >
+- corrected many <Double> -> <double> in code
+- changed < double int timeOut = 1; > to internal  
+- changed updateFT() -> updateFuelTexts
+- changed updateFS() -> updateFuelString
+- changed scn -> ConfigNodeString
+
   ### 1.2.0.17 dev build
   - slight tweaks to autobuild process
   - slight code tweaks - working on TweakScale issue.

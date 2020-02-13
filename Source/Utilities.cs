@@ -39,7 +39,7 @@ namespace ODFC
         {
             if (0 != @params.Length) msg = string.Format(msg, @params);
             ScreenMessages.PostScreenMessage(msg, 10f, ScreenMessageStyle.UPPER_CENTER, true);
-            if (HighLogic.CurrentGame.Parameters.CustomParams<ODFC_Options>().InGameMail) UnityEngine.Debug.Log("[ODFC] " + msg);
+            //if (HighLogic.CurrentGame.Parameters.CustomParams<ODFC_Options>().InGameMail) UnityEngine.Debug.Log("[ODFC] " + msg);
         }
 
         public static string GetDllVersion<T>(T t)

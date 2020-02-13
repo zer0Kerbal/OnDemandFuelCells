@@ -20,6 +20,7 @@ namespace ODFC
         {
             if (0 != @params.Length) msg = string.Format(msg, @params);
             ScreenMessages.PostScreenMessage(msg, 1, ScreenMessageStyle.UPPER_CENTER, true);
+            //Logg.Info(msg);
             UnityEngine.Debug.Log("[ODFC TweakScale] " + msg);
         }
     }

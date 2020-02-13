@@ -54,13 +54,15 @@ namespace ODFC
         public bool coloredPAW = true;
 
         /// <summary>
-        /// The colored paw
+        /// This setting turns ON/off ODFC sending mail via in game mail system
         /// </summary>
         [GameParameters.CustomParameterUI("InGameMail? (not implemented yet) (YES/no)",
             toolTip = "allow On Demand Fuel Cells to send you in game mail (not implemented yet). Default is YES.",
             newGameOnly = false,
             unlockedDuringMission = true)]
-        public bool InGameMail = true;
+        public bool _InGameMail = true;
+
+        public bool InGameMail { get { return this._InGameMail; } }
 
         /// <summary>
         /// Sets the globalScalingFactor in GameParameters
