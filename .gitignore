@@ -162,3 +162,4 @@ crashlytics-build.properties
 /[Aa]ssets/[Ss]treamingAssets/aa/*
 *.7z
 *.rar
+".trash" 
