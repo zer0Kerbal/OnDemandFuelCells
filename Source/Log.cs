@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace ODFC
 {
-    class Log
+    internal static class Log
     {
         /// <summary>
         /// sends the specific message to ingame mail and screen if Debug is defined

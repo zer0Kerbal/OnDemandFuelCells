@@ -1,7 +1,13 @@
-﻿<# /* This file is licensed under the Do What the F* You Want to Public License ( http://www.wtfpl.net )
+﻿<#
+/*
+   * Version.tt
+   * 1.1.0.0
+*/
+
+/* This file is licensed under the Do What the F* You Want to Public License ( http://www.wtfpl.net )
     * by LisiasT. http://ksp.lisias.net
     *
-    * You are allowed to copy, modify and use this file unrestrictly. :)
+    * You are allowed to copy, modify and use this file unrestrictedly. :)
     */
 #>
 
@@ -10,6 +16,9 @@
 <#@ output extension=".cs" #>
 <#@ import namespace="System.IO" #>
 <#
+	//
+	// Update the following with mod name as listed on the .version file
+	//
     string PROJECT_NAME = "OnDemandFuelCells";
     int major = 0;
     int minor = 0;
@@ -74,6 +83,11 @@
 #>
 
 // Automatically generated code. Any changes will be lost!
+ using System.Reflection;
+
+ //[assembly: AssemblyFileVersion("<#= major #>.<#= minor #>.<#= patch #>.<#= build #>")]
+ [assembly: AssemblyVersion("<#= major #>.<#= minor #>.<#= patch #>.<#= build #>")]
+
 namespace <#= PROJECT_NAME #>
 {
     public static class Version
@@ -84,9 +98,9 @@ namespace <#= PROJECT_NAME #>
         public const int build = <#= build #>;
         public const string Number = "<#= major #>.<#= minor #>.<#= patch #>.<#= build #>";
 #if DEBUG
-        public const string Text = Number + " BETA DEBUG";
+        public const string Text = Number + " DEBUG";
 #else
-        public const string Text = Number + " BETA";
+        public const string Text = Number + "";
 #endif
     }
 }

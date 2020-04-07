@@ -1,17 +1,18 @@
 ﻿using System.Reflection;
 using System.Runtime.InteropServices;
+using System.Runtime.CompilerServices;
 
 // using System.Runtime.CompilerServices;
 
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("On Demand Fuel Cells Refueled")]
+[assembly: AssemblyTitle("On Demand Fuel Cells (Refueled)")]
 [assembly: AssemblyDescription("On Demand Fuel Cells expands the capabilities of Kerbal Space Program (KSP) fuel cells")]
 [assembly: AssemblyConfiguration("Release")]
 [assembly: AssemblyCompany("KGEx and Okram Industries")]
 [assembly: AssemblyProduct("ODFC")]
-[assembly: AssemblyCopyright("CC BY-NC-SA-4.0 and GPLv3")]
+[assembly: AssemblyCopyright("GPLv3")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -33,6 +34,6 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-
-[assembly: AssemblyFileVersion(OnDemandFuelCells.Version.Number)]
+[assembly: AssemblyInformationalVersionAttribute(OnDemandFuelCells.Version.Text)]
+// [assembly: AssemblyFileVersion(OnDemandFuelCells.Version.Text)]
 // [assembly: AssemblyFileVersion("1.2.0.2")]

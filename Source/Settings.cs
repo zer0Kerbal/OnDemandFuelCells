@@ -1,13 +1,14 @@
-﻿//using System;
+﻿using System;
 using UnityEngine;
-//using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Collections;
 using System.Reflection;
+using KSP.Localization;
 
 // This will add a tab to the Stock Settings in the Difficulty settings called "On Demand Fuel Cells"
 // To use, reference the setting using the following:
 //
-//  HighLogic.CurrentGame.Parameters.CustomParams<ODFC_Options>().needsECtoStart
+//  HighLogic.CurrentGame.Parameters.CustomParams<Options>().needsECtoStart
 //
 // As it is set up, the option is disabled, so in order to enable it, the player would have
 // to deliberately go in and change it
@@ -17,11 +18,11 @@ namespace ODFC
     // http://forum.kerbalspaceprogram.com/index.php?/topic/147576-modders-notes-for-ksp-12/#comment-2754813
     // search for "Mod integration into Stock Settings
 
-    public class ODFC_Options : GameParameters.CustomParameterNode
+    public class Options : GameParameters.CustomParameterNode
     {
         public override string Title { get { return "Default Settings"; } }
         public override GameParameters.GameMode GameMode { get { return GameParameters.GameMode.ANY; } }
-        public override string Section { get { return "ODFCr"; } }
+        public override string Section { get { return "On Demand Fuel Cells"; } }
         public override string DisplaySection { get { return "On Demand Fuel Cells"; } }
         public override int SectionOrder { get { return 1; } }
 
@@ -34,6 +35,15 @@ namespace ODFC
             unlockedDuringMission = true
             )]
         public bool needsECtoStart = false;
+        /// <summary>
+        /// The needs EC to start in GameParameters
+        /// </summary>
+        [GameParameters.CustomParameterUI("Consumes EC",
+            toolTip = "if set to yes, the fuel cells will consume electric charge to operate.",
+            newGameOnly = false,
+            unlockedDuringMission = true
+            )]
+        public bool consumesEC = false;
 
         /// <summary>
         /// The automatic switch in GameParameters
