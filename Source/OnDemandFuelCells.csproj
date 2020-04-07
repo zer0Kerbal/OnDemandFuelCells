@@ -40,10 +40,27 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="$(DevDir)\KSP_x64_Data\Managed\Assembly-CSharp.dll" />
-    <Reference Include="$(DevDir)\KSP_x64_Data\Managed\UnityEngine*.dll" />
-    <Reference Include="$(DevDir)\KSP_x64_Data\Managed\Assembly-CSharp-firstpass.dll" />
-    <Reference Include="$(DevDir)\KSP_x64_Data\Managed\UnityEngine.UI*.dll" />
+    <Reference Include="$(DevDir)\KSP_x64_Data\Managed\Assembly-CSharp*.dll">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="$(DevDir)\KSP_x64_Data\Managed\UnityEngine*.dll">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="\$(DevDir)\GameData\Scale_Redist.dll" >
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="$(DevDir)\KSP_x64_Data\Managed\Assembly-CSharp.dll" >
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="$(DevDir)\KSP_x64_Data\Managed\UnityEngine*.dll" >
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="$(DevDir)\KSP_x64_Data\Managed\Assembly-CSharp-firstpass.dll" >
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="$(DevDir)\KSP_x64_Data\Managed\UnityEngine.UI*.dll" >
+      <Private>False</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyVersion.cs">
@@ -68,8 +85,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>start /D $(ProjectDir)..\  /WAIT deploy.bat  $(TargetDir) $(TargetFileName)
-if $(ConfigurationName) == Release start /D $(ProjectDir)..\   /WAIT buildRelease.bat $(TargetDir) $(TargetFileName)</PostBuildEvent>
+    <PostBuildEvent></PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
     <PreBuildEvent>set textTemplatingPath="$(DevEnvDir)texttransform.exe"

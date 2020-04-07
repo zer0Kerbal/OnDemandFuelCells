@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using KSP.Localization;
@@ -442,6 +442,8 @@ namespace ODFC
             if (HighLogic.LoadedSceneIsEditor) PAWStatus = begStr + colorStr + "Fuel Cell: " + fuel_consumption + " - " + maxECs_status + " EC/s:" + endStr;
         }
 
+        /// <summary>Updates the PAW with scaleFactor and advises KSP that the ship has changed</summary>
+
         /// <summary>
         ///   <para>
         ///  Called when [rescale].
@@ -497,7 +499,7 @@ namespace ODFC
         }
 
 #endregion Public Functions
-        #region on events
+#region on events
         /// <summary>Called when part is added to the craft.</summary>
         public override void OnAwake()
         {
@@ -640,7 +642,6 @@ namespace ODFC
             }
             base.OnUpdate();
         }
-
 #endregion on Events
         #region GetInfo
 
