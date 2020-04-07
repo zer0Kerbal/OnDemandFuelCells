@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using KSP.Localization;
+using UnityEngine.UI;
 
 namespace ODFC
 {
@@ -37,6 +38,7 @@ namespace ODFC
 
         /// <summary>[internal]The fuel mode current ElectricCharge (EC) production. seealso OnDemandFuelCellsEC</summary>
         internal double _fuelModeMaxECRateLimit = 0f;
+        public Double fuelModeMaxECRateLimit = 0f;
 
         /// <summary>
         /// Gets the On Demand Fuelcells(ODFC) Electric Charge (EC) Production.
@@ -553,7 +555,8 @@ namespace ODFC
             }
 
             double cfTime = TimeWarp.fixedDeltaTime,
-                    ECNeed = (Double)(maxAmount * threshold - amount),
+                    ECNeed = (Double)(maxAmount * threshold - amount);
+                    
                     _fuelModeMaxECRateLimit = ODFC_config.modes[fuelMode].maxEC * rateLimit;
 
             // add stall code
