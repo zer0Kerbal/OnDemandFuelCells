@@ -13,6 +13,33 @@
  - [D][BUG 1.1.2.0a] Properly scales ODFC module (maxEC, Fuels, Byproducts) and resources in a part with ODFC installed. Requires TweakScale to be installed.
  - [D][BUG 1.2.0.0a] fuel consumption and byproduct production should be seen on PAW - it is not
 
+  ### 1.2.0.18 dev build
+- added < internal double _fuelModeMaxECRateLimit = 0f; >
+- added < public double OnDemandFuelCellsEC { get { return this._fuelModeMaxECRateLimit; }; } >
+- corrected many <Double> -> <double> in code
+- changed < double int timeOut = 1; > to internal  
+- changed updateFT() -> updateFuelTexts
+- changed updateFS() -> updateFuelString
+- changed scn -> ConfigNodeString
+
+  ### 1.2.0.17 dev build
+  - slight tweaks to autobuild process
+  - slight code tweaks - working on TweakScale issue.
+
+ ### 1.2.0.16 dev build
+ - made public Double fuelModeMaxECRateLimit = 0f; into global variable to be used by AmpYear et al.
+
+ ### 1.2.0.15 dev build
+ - split off backgroundProcessing code into separate file
+
+ ### 1.2.0.14 dev build
+
+ ### 1.2.0.13 dev build
+
+ ### 1.2.0.12 dev build
+
+ ### 1.2.0.11 dev build
+
  ### 1.2.0.10 dev build
   - PAW updated
     - fixed formatting issues breaking the PAW
@@ -76,9 +103,11 @@
  * Copy/Modify patches add 0.01 megaJoules if InterstellarFuelSwitch installed
 
 #### 1.2.0.0 - To Go Boldly
- - <mark>Recompiled for KSP 1.8.x</mark>
+ - <mark>Recompiled for update to Kerbal Space Program (KSP) 1.8.1</mark>
  - Using .NET Franework 4.8
  - Using Unity 2019.2.2f1
+ - update .csproj: <code>Reference Include="$(DevDir)\KSP_x64_Data\Managed\UnityEngine*.dll" /</code>
+ - now can enter numbers instead of using slider by using the # on PAW
  - Continued working on [BUG 1.1.2.0a] TweakScale
 
 #### 1.1.2.1 - Set SCE to AUX
@@ -184,7 +213,7 @@
 {
    VERSION
    {
-    version = v.0.0.1.2
+	    version = v.0.0.1.2
 		change = released:  
 		change = [REVERTED] updated .version to 1.7.3.1  
 		change = recompiled against KSP 1.7.3  
@@ -195,7 +224,7 @@
 		change = [NEW][BUG 0.0.1.2a] log spam - Val was singing offkey in the OnStart method
 		change = [NEW][BUG 0.0.1.2b] Must have some EC to function, if EC == 0 does not charge
 		change = [NEW][BUG 0.0.1.2c] Does not decrement fuel (all or any)
-  }
+	}
 // >-- ORIGINAL --<
 	VERSION
 	{

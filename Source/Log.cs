@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace ODFC
 {
-    class Log
+    internal static class Log
     {
         /// <summary>
         /// sends the specific message to ingame mail and screen if Debug is defined
@@ -20,7 +20,8 @@ namespace ODFC
         {
             if (0 != @params.Length) msg = string.Format(msg, @params);
             ScreenMessages.PostScreenMessage(msg, 1, ScreenMessageStyle.UPPER_CENTER, true);
-            UnityEngine.Debug.Log("[ODFC TweakScale] " + msg);
+            //Logg.Info(msg);
+            //? UnityEngine.Debug.Log("[ODFC TweakScale] " + msg);
         }
     }
     internal static class Logg

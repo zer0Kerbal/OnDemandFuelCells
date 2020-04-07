@@ -1,0 +1,53 @@
+﻿/*
+TODO: 
+	void 	AddSkinThermalFlux (double kilowatts)
+	void 	AddThermalFlux (double kilowatts)
+
+*/
+#region ROADMAP TODO:
+
+ /* TODO: fix
+     * x fixed
+     * 
+     * TODO: fix
+     * * test
+     * ! important
+     *
+    * TODO: fix showing 'next' button when there is only one mode of operation
+    * TODO fix
+    *
+    * TODO: implement double slider like in B9Partswitch
+    * TODO: add to part module pulled from MODULE config nodes(use FSHORT code to read in)
+    * TODO: PAW isn't showing consumption / production fuel_consumption and byproducts
+    */
+/* x DONE: implement PAW status in group header
+    [ ] add kerbal.trait.effeciencies - fuelEfficency(pilot) heat/powerProduction (engineer)
+
+
+DONE: add page to game difficulty settings
+DONE: add stall variable and code
+DONE: implement 'stalled' mode - with a setting in the difficulty settings menu: this will 'stall' the fuel cell if the vessel (at least reachable) reaches below a certain level of EC (like <= 0),
+DONE: will not reset until the vessel has at least 0.5 EC
+DONE: implement and add autoSwitch fuel deprived auto mode switcher
+*/
+
+/*TODO:* MODULE variables
+// double threshold = 0.05f, //thresHoldSteps
+            rateLimit = 1;
+
+byte defaultMode = 1;
+
+bool autoSwitch = false,
+              enabled = true,
+               UseSpecialistBonus = false;
+
+eventually want to add the following for each fuel/ byproducts:
+     per FUEL / BYPRODUCT:
+         double  reserveAmount = 0.0f, //(fuels)
+                 maximumAmount = 1.00f; // (byproducts)
+
+bool ventExcess = True(byproducts, vent excess over maximum Amount)
+        // flowMode = All;
+     */
+
+#endregion ROADMAP TODO:

@@ -1,0 +1,8 @@
+{
+  "schemaVersion": 1,
+  "label": "On Demand Fuel Cells (Refueled)",
+  "labelColor": "darkgreen",
+  "message": "1.2.1.0",
+  "color": "orange",
+  "style": "plastic"  
+}

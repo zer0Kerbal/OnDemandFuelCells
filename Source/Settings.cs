@@ -3,11 +3,12 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Collections;
 using System.Reflection;
+using KSP.Localization;
 
 // This will add a tab to the Stock Settings in the Difficulty settings called "On Demand Fuel Cells"
 // To use, reference the setting using the following:
 //
-//  HighLogic.CurrentGame.Parameters.CustomParams<ODFC_Options>().needsECtoStart
+//  HighLogic.CurrentGame.Parameters.CustomParams<Options>().needsECtoStart
 //
 // As it is set up, the option is disabled, so in order to enable it, the player would have
 // to deliberately go in and change it
@@ -17,11 +18,11 @@ namespace ODFC
     // http://forum.kerbalspaceprogram.com/index.php?/topic/147576-modders-notes-for-ksp-12/#comment-2754813
     // search for "Mod integration into Stock Settings
 
-    public class ODFC_Options : GameParameters.CustomParameterNode
+    public class Options : GameParameters.CustomParameterNode
     {
         public override string Title { get { return "Default Settings"; } }
         public override GameParameters.GameMode GameMode { get { return GameParameters.GameMode.ANY; } }
-        public override string Section { get { return "ODFCr"; } }
+        public override string Section { get { return "On Demand Fuel Cells"; } }
         public override string DisplaySection { get { return "On Demand Fuel Cells"; } }
         public override int SectionOrder { get { return 1; } }
 
@@ -34,6 +35,15 @@ namespace ODFC
             unlockedDuringMission = true
             )]
         public bool needsECtoStart = false;
+        /// <summary>
+        /// The needs EC to start in GameParameters
+        /// </summary>
+        [GameParameters.CustomParameterUI("Consumes EC",
+            toolTip = "if set to yes, the fuel cells will consume electric charge to operate.",
+            newGameOnly = false,
+            unlockedDuringMission = true
+            )]
+        public bool consumesEC = false;
 
         /// <summary>
         /// The automatic switch in GameParameters
@@ -54,6 +64,17 @@ namespace ODFC
         public bool coloredPAW = true;
 
         /// <summary>
+        /// This setting turns ON/off ODFC sending mail via in game mail system
+        /// </summary>
+        [GameParameters.CustomParameterUI("InGameMail? (not implemented yet) (YES/no)",
+            toolTip = "allow On Demand Fuel Cells to send you in game mail (not implemented yet). Default is YES.",
+            newGameOnly = false,
+            unlockedDuringMission = true)]
+        public bool _InGameMail = true;
+
+        public bool InGameMail { get { return this._InGameMail; } }
+
+        /// <summary>
         /// Sets the globalScalingFactor in GameParameters
         /// </summary>
         [GameParameters.CustomFloatParameterUI("Global Scaling Factor",
@@ -66,6 +87,20 @@ namespace ODFC
             displayFormat = "F2",
             asPercentage = false)]
         public float globalScalingFactor = 1.0f;
+
+        /// <summary>
+        /// Sets the globalScalingFactor in GameParameters
+        /// </summary>
+        [GameParameters.CustomFloatParameterUI("responseTime ",
+            toolTip = "Sets responseTime = 1 - 100 (lower equals faster).",
+            newGameOnly = false,
+            unlockedDuringMission = true,
+            minValue = 0,
+            maxValue = 100,
+            stepCount = 1,
+            //displayFormat = "F2",
+            asPercentage = false)]
+        public int responseTime = 25;
 
         // If you want to have some of the game settings default to enabled,  change 
         // the "if false" to "if true" and set the values as you like

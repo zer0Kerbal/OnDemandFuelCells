@@ -4,8 +4,8 @@ enable-nolib-creation: no
 ignore: # Files and directories beginning with a dot (such as .git) are automatically ignored, as is the pgkmeta file itself.
     - Docs
     - Source
-    - buildRelease.bat
-    - deploy.bat
+    - .buildRelease.bat
+    - .deploy.bat
 
 required-dependencies:
     - 221710-dear-cupcake
@@ -14,6 +14,6 @@ optional-dependencies:
     - 343962-on-demand-fuel-cells-refueled-odfcr-modify-patches
     - 343961-on-demand-fuel-cells-refueled-odfcr-copy-patches
 
-manual-changelog: changelog.md
+manual-changelog: Changelog.cfg
 
-license-output: license.md
+license-output: GPLv3.txt
