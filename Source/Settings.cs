@@ -13,7 +13,7 @@ using KSP.Localization;
 // As it is set up, the option is disabled, so in order to enable it, the player would have
 // to deliberately go in and change it
 //
-namespace ODFC
+namespace OnDemandFuelCells
 {
     // http://forum.kerbalspaceprogram.com/index.php?/topic/147576-modders-notes-for-ksp-12/#comment-2754813
     // search for "Mod integration into Stock Settings
@@ -35,6 +35,7 @@ namespace ODFC
             unlockedDuringMission = true
             )]
         public bool needsECtoStart = false;
+
         /// <summary>
         /// The needs EC to start in GameParameters
         /// </summary>
@@ -91,16 +92,19 @@ namespace ODFC
         /// <summary>
         /// Sets the globalScalingFactor in GameParameters
         /// </summary>
-        [GameParameters.CustomFloatParameterUI("responseTime ",
-            toolTip = "Sets responseTime = 1 - 100 (lower equals faster).",
-            newGameOnly = false,
-            unlockedDuringMission = true,
-            minValue = 0,
-            maxValue = 100,
-            stepCount = 1,
+        [GameParameters.CustomFloatParameterUI("responseTime ", toolTip = "Sets responseTime = 1 - 1000 (lower equals faster).",
+            newGameOnly = false, unlockedDuringMission = true,
+            minValue = 0, maxValue = 1000, stepCount = 10,
             //displayFormat = "F2",
             asPercentage = false)]
-        public int responseTime = 25;
+        public int responseTime = 100;
+
+        /// <summary>
+        /// Sets the globalScalingFactor in GameParameters
+        /// </summary>
+        [GameParameters.CustomFloatParameterUI("PAW Power Graph ", toolTip = "if yes, shows a graphics (and if allowed) color coded power graph in the PAW.",
+            newGameOnly = false, unlockedDuringMission = true)]
+        public bool powerGraph = true;
 
         // If you want to have some of the game settings default to enabled,  change 
         // the "if false" to "if true" and set the values as you like

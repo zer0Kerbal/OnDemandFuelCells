@@ -61,13 +61,13 @@ Another set that modifies the same set of parts instead of copying them.
 
  #### Dependencies
  - ![Kerbal Space Program](https://kerbalspaceprogram.com) v1.8.1, ***may*** work on earlier versions
- - ![Module Manager](http://forum.kerbalspaceprogram.com/index.php?/topic/50533-105-*)
- - ![ODFC Modify Patches](https://spacedock.info/mod/2220/On%20Demand%20Fuel%20Cells%20-%20Modify%20Patches) and/or - ![ODFC Copy Patches](https://spacedock.info/mod/2221/On%20Demand%20Fuel%20Cells%20-%20Copy%20Patches)  
+ - ![Module Manager](http://forum.kerbalspaceprogram.com/index.php?/topic/50533-*)
+ - ![ODFC Modify Patches](https://spacedock.info/mod/2220) and/or - ![ODFC Copy Patches](https://spacedock.info/mod/2221)  
 
  #### Supports
- - ![AllYAll](http://forum.kerbalspaceprogram.com/index.php?/topic/155858-ksp-122-all) - supports by removing
- - ![Community Resource Pack](https://forum.kerbalspaceprogram.com/index.php?/topic/166314-131-*)
- - ![BackgroundProcessing](http://forum.kerbalspaceprogram.com/index.php?/topic/88777-102-*) *(exclusive to BackgroundResources) (see known issues list)*
+ - ![AllYAll](http://forum.kerbalspaceprogram.com/index.php?/topic/155858-*) - supports by removing
+ - ![Community Resource Pack](https://forum.kerbalspaceprogram.com/index.php?/topic/166314-*)
+ - ![BackgroundProcessing](http://forum.kerbalspaceprogram.com/index.php?/topic/88777-*) *(exclusive to BackgroundResources) (see known issues list)*
  - ![Background Resources](https://github.com/KSP-RO/TacLifeSupport/wiki) *(exclusive to BackgroundProcessing) (see known issues list)*
  - ![Kerbal Change Log](https://forum.kerbalspaceprogram.com/index.php?/topic/179207-*)
 
@@ -77,8 +77,8 @@ Another set that modifies the same set of parts instead of copying them.
  - ![Mining Expansion](http://forum.kerbalspaceprogram.com/index.php?/topic/130325-105-*)
  - ![Univeral Storage II](https://forum.kerbalspaceprogram.com/index.php?/topic/177385-*)
  - ![Universl Storage](https://forum.kerbalspaceprogram.com/index.php?/topic/68043-*)
- - ![RLA Reborn](https://forum.kerbalspaceprogram.com/index.php?/topic/175512-14-*)
- - ![Solid Fuel Cells](https://forum.kerbalspaceprogram.com/index.php?/topic/187776-%E2%89%A510-solid-fuel-cell)
+ - ![RLA Reborn](https://forum.kerbalspaceprogram.com/index.php?/topic/175512-*)
+ - ![Solid Fuel Cells](https://forum.kerbalspaceprogram.com/index.php?/topic/187776-*)
  - ![Jatwaa Demolitions Co (coming soon)]()
  - ![KGEx (coming soon)]()
 
@@ -95,8 +95,8 @@ Another set that modifies the same set of parts instead of copying them.
  ## links to original:  
  On Demand Fuel Cells (ODFC) by `Orum'  
  Licensed under CC BY-NC-SA-4.0  
-  * ![KSP Forums](https://forum.kerbalspaceprogram.com/index.php?/topic/138431-112-*)
-  * ![Spacedock](https://spacedock.info/mod/618/ODFC%20-%20On%20Demand%20Fuel%20Cells)
+  * ![KSP Forums](https://forum.kerbalspaceprogram.com/index.php?/topic/138431-*)
+  * ![Spacedock](https://spacedock.info/mod/618)
   * ![Dropbox](https://www.dropbox.com/s/0rpp4138jumvaxq/ODFC_v1.1.zip?dl=0)
  <hr>
  ## License

@@ -54,12 +54,12 @@
     <Reference Include="$(DevDir181)\KSP_x64_Data\Managed\UnityEngine.UI.dll">
       <private>false</private>
     </Reference>
-    <Reference Include="C:\Games\Dev1.8\KSP_x64_Data\Managed\Scale_Redist.dll">
+    <Reference Include="$(DevDir181)\GameData\999_Scale_Redist.dll">
       <private>true</private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ODFC.cs" />
+    <Compile Include="OnDemandFuelCells.cs" />
     <Compile Include="Config.cs" />
     <Compile Include="Log.cs" />
     <Compile Include="Properties\AssemblyFileVersion.cs">
@@ -86,7 +86,13 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Version.cs</LastGenOutput>
     </Content>
+    <None Include=".editorconfig" />
+    <None Include="scrapes\Changelog.cfg" />
+    <None Include="scrapes\en-us.cfg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="scrapes\Notes.txt" />
+    <None Include="scrapes\OnDemandFuelCells.version" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
