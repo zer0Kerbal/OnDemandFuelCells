@@ -94,7 +94,7 @@ namespace OnDemandFuelCells
         /// </summary>
         [GameParameters.CustomFloatParameterUI("responseTime ", toolTip = "Sets responseTime = 1 - 1000 (lower equals faster).",
             newGameOnly = false, unlockedDuringMission = true,
-            minValue = 0, maxValue = 1000, stepCount = 10,
+            minValue = 1, maxValue = 10000, stepCount = 10,
             //displayFormat = "F2",
             asPercentage = false)]
         public int responseTime = 100;
