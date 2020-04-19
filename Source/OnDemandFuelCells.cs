@@ -89,7 +89,6 @@ namespace OnDemandFuelCells
        [KSPField(  isPersistant = true,   guiActive = false,  guiActiveEditor = false)]
        public float scalingFactor = 0f; // allows for scaling of ODFC elements
 
-        //[UI_Label(scene = UI_Scene.None)]
 
         [UI_Label(scene = UI_Scene.Flight)]
         [KSPField(  isPersistant = false, guiActive = false, guiActiveEditor = false,
@@ -102,11 +101,13 @@ namespace OnDemandFuelCells
 
         [KSPField(  isPersistant = false,  guiActive = true,  guiActiveEditor = true, groupName = GroupName,
                     groupDisplayName = "On Demand Fuel Cells v" + Version.Text, groupStartCollapsed = true,
-                    guiName = " ")]
+                    guiName = ""),
+            UI_Label(scene = UI_Scene.Flight)]
         public string status = Localizer.Format("#ODFC_PAW_err");
         
+        [KSPField(  isPersistant = true,  guiActive = false, guiActiveEditor = false),
+            UI_Label(scene = UI_Scene.None)]
         /// <summary>The fuel mode</summary>
-        [KSPField(  isPersistant = true,  guiActive = false, guiActiveEditor = false)]
         public int fuelMode = 0;
 
         /// <summary>The current ElectricCharge %</summary>
@@ -134,8 +135,10 @@ namespace OnDemandFuelCells
 
         [KSPField(  isPersistant = true,  guiActive = true,  guiActiveEditor = true, groupName = GroupName,
                     guiName = "Enabled:"),
-            UI_Toggle(disabledText = "No",
-                  enabledText = "Yes")]
+            UI_Toggle(  invertButton = true,
+                        requireFullControl = false,
+                        disabledText = "No",
+                        enabledText = "Yes")]
         public bool fuelCellIsEnabled = true;
 
 #endregion KSPFields
@@ -330,7 +333,7 @@ namespace OnDemandFuelCells
                 part.RequestResource(fuel.resourceID, fuel.rate * adjr);
         }
 
-        private void updateConfig(StartState state) // private
+        private void updateConfig(StartState state)
         {
             ODFC_config = new Config(ConfigNode.Parse(ConfigNodeString).GetNode("MODULE"), part);
             switch (ODFC_config.modes.Length)
@@ -395,13 +398,10 @@ namespace OnDemandFuelCells
         internal void updateEditor() // private
         /// <summary><para>Updates the PAW with scaleFactor and advises KSP that the ship has changed</para></summary>
         {
-                Log.Info("updateEditor");
             updateFuelTexts();
 
-                Log.Info("PRE: GameEvents.onEditorShipModified.Fire(EditorLogic.fetch.ship)");
             //? following needed to advise KSP that the ship has been modified and it needs to update itself. (Lisias)
             if (HighLogic.LoadedSceneIsEditor) GameEvents.onEditorShipModified.Fire(EditorLogic.fetch.ship);
-                Log.Info("POST: GameEvents.onEditorShipModified.Fire(EditorLogic.fetch.ship)");
         }
 
         internal void updatePAWLabel() // private
@@ -419,11 +419,36 @@ namespace OnDemandFuelCells
                 endStr = "</color></b></size>";
             }
 
-            if (HighLogic.LoadedSceneIsFlight)
-                PAWStatus = begStr + colorStr + "Fuel Cell: " + status + " - " + ECs_status + " EC/s" + endStr;
-            else if (HighLogic.LoadedSceneIsEditor)
-                PAWStatus = begStr + colorStr + "Fuel Cell: " + _fuelModeMaxECRateLimit + "/" + ODFC_config.modes[fuelMode].maxEC + " EC/s:" + endStr;
+            switch (HighLogic.LoadedScene)
+            {
+                case GameScenes.LOADING:
+                    break;
+                case GameScenes.LOADINGBUFFER:
+                    break;
+                case GameScenes.MAINMENU:
+                    break;
+                case GameScenes.SETTINGS:
+                    break;
+                case GameScenes.CREDITS:
+                    break;
+                case GameScenes.SPACECENTER:
+                    break;
+                case GameScenes.EDITOR:
+                    PAWStatus = begStr + colorStr + "Fuel Cell: " + maxECs_status + "/" + ODFC_config.modes[fuelMode].maxEC + " EC/s:" + endStr;
                 //PAWStatus = begStr + colorStr + "Fuel Cell: " + _fuelModeMaxECRateLimit + "/" + maxECs_status + " EC/s:" + endStr;
+                    break;
+                case GameScenes.FLIGHT:
+                    PAWStatus = begStr + colorStr + "Fuel Cell: " + status + " - " + ECs_status + " EC/s" + endStr;
+                    break;
+                case GameScenes.TRACKSTATION:
+                    break;
+                case GameScenes.PSYSTEM:
+                    break;
+                case GameScenes.MISSIONBUILDER:
+                    break;
+                default:
+                    break;
+            }
         }
 #endregion Public Functions
 #region OnReScale
@@ -434,33 +459,33 @@ namespace OnDemandFuelCells
         /// <param name="scaleFactor">The scale factor.</param>
         internal void OnRescale(TweakScale.ScalingFactor.FactorSet scaleFactor)
         {
-            Log.Info(String.Format("scaleFactor: {0}:{1}", scaleFactor.ToString(), scaleFactor.quadratic));
+           // Log.Info(String.Format("scaleFactor: {0}:{1}", scaleFactor.ToString(), scaleFactor.quadratic));
 
             /// <summary>this scales any resources on the part with ODFC:  </summary>
             foreach (PartResource resource in this.part.Resources)
             {
-                    Log.Info(String.Format("unscaled resource: {0}: {1} / {2}", resource.resourceName, resource.amount, resource.maxAmount));
+             //       Log.Info(String.Format("unscaled resource: {0}: {1} / {2}", resource.resourceName, resource.amount, resource.maxAmount));
                 resource.maxAmount *= scaleFactor.quadratic; // .cubic;
                 resource.amount *= scaleFactor.quadratic; // cubic;
-                    Log.Info(String.Format("scaled resource: {0}: {1} / {2}", resource.resourceName, resource.amount, resource.maxAmount));
+               //     Log.Info(String.Format("scaled resource: {0}: {1} / {2}", resource.resourceName, resource.amount, resource.maxAmount));
             }
 
             /// <summary><para> this scales the actual fuel cell, fuels, byproducts, and maxEC
             /// shouldn't scale rateLimit and threshold because are percentages </para></summary>
             for (int m = 0; m <= ODFC_config.modes.Length - 1; m++)
             {
-                    Log.Info(String.Format("mode/modes: {0} / {1}", (m + 1), ODFC_config.modes.Length));
-                    Log.Info(String.Format("unscaled maxEC: {0}", ODFC_config.modes[m].maxEC));
+                 //   Log.Info(String.Format("mode/modes: {0} / {1}", (m + 1), ODFC_config.modes.Length));
+                 //   Log.Info(String.Format("unscaled maxEC: {0}", ODFC_config.modes[m].maxEC));
                 //? scale MaxEC
                 ODFC_config.modes[m].maxEC *= scaleFactor.quadratic;
-                    Log.Info(String.Format("scaled maxEC: {0}", ODFC_config.modes[m].maxEC));
+                 //   Log.Info(String.Format("scaled maxEC: {0}", ODFC_config.modes[m].maxEC));
 
-                    Log.Info(String.Format("Fuels in mode: {0} / {1}", (m + 1), ODFC_config.modes[m].fuels.Length + 1));
+                  //  Log.Info(String.Format("Fuels in mode: {0} / {1}", (m + 1), ODFC_config.modes[m].fuels.Length + 1));
                 //? scale fuels in ODFC_config.modes
                 for (int n = 0; n <= ODFC_config.modes[m].fuels.Length - 1; n++)
                     ODFC_config.modes[m].fuels[n].rate *= scaleFactor.quadratic;
 
-                    Log.Info(String.Format("Byproducts in mode: {0} / {1}", (m + 1), ODFC_config.modes[m].byproducts.Length + 1));
+                   // Log.Info(String.Format("Byproducts in mode: {0} / {1}", (m + 1), ODFC_config.modes[m].byproducts.Length + 1));
                 //? scale byproducts in ODFC_config.modes
                 for (int n = 0; n <= ODFC_config.modes[m].byproducts.Length - 1; n++)
                     ODFC_config.modes[m].byproducts[n].rate *= scaleFactor.quadratic;
@@ -528,12 +553,14 @@ namespace OnDemandFuelCells
                 return; // already checked for this in OnStart()
             }
             CurrentVesselChargeState = (float)(_electricCharge.amount / _electricCharge.maxAmount * 100); // compute current EC, in percent
+            //TODO: update KSP_ProgressBar
+            // ProgressBar["CurrentVesselChargeState"].
             ASCIIgraph();
 
             double amount = 0, maxAmount = 0;
             List<PartResource> resources = new List<PartResource>();
             part.GetConnectedResourceTotals(ElectricChargeID, ResourceFlowMode.ALL_VESSEL, out amount, out maxAmount);
-                Log.Info(String.Format("{0} Amount {1} maxAmount {2}", "Electric Charge", amount, maxAmount));
+                //Log.Info(String.Format("{0} Amount {1} maxAmount {2}", "Electric Charge", amount, maxAmount));
 
            // foreach (PartResource resource in this.part.Resources)
             foreach (PartResource resource in resources)

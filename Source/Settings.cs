@@ -55,6 +55,15 @@ namespace OnDemandFuelCells
             unlockedDuringMission = true)]
         public bool autoSwitch = true;
 
+/*        /// <summary>
+        /// The automatic switch in GameParameters
+        /// </summary>
+        [GameParameters.CustomParameterUI("Auto Fuel Mode Switch",
+            toolTip = "if current fuel mode becomes fuel deprived, will 'hunt' or 'search' for a fuel mode that has fuel.",
+            newGameOnly = false,
+            unlockedDuringMission = true)]
+        public static bool requireFullControl = false;*/
+
         /// <summary>
         /// The colored paw
         /// </summary>
@@ -104,7 +113,7 @@ namespace OnDemandFuelCells
         /// </summary>
         [GameParameters.CustomFloatParameterUI("PAW Power Graph ", toolTip = "if yes, shows a graphics (and if allowed) color coded power graph in the PAW.",
             newGameOnly = false, unlockedDuringMission = true)]
-        public bool powerGraph = true;
+        public bool powerGraph = false;
 
         // If you want to have some of the game settings default to enabled,  change 
         // the "if false" to "if true" and set the values as you like

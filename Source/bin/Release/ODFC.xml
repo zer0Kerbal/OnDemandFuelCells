@@ -4,12 +4,6 @@
         <name>ODFC</name>
     </assembly>
     <members>
-        <member name="T:OnDemandFuelCells.ODFC">
-            <summary>
-            On Demand Fuel Cells (ODFC) part module
-            </summary>
-            <seealso cref="T:PartModule" />
-        </member>
         <member name="F:OnDemandFuelCells.ODFC.timeOut">
             <summary>current counter for responseTime</summary>
         </member>
@@ -50,9 +44,6 @@
         <member name="F:OnDemandFuelCells.ODFC.state">
             <summary>The state of the Fuel Cell (nominal, off et al)</summary>
         </member>
-        <member name="F:OnDemandFuelCells.ODFC.fuelMode">
-            <summary>The fuel mode</summary>
-        </member>
         <member name="F:OnDemandFuelCells.ODFC.scalingFactor">
             <summary>Not Implemented Yet. The internal part.cfg scalingFactor.</summary>
         </member>
@@ -65,43 +56,10 @@
         <member name="F:OnDemandFuelCells.ODFC.threshold">
             <summary>The current threshold (%) which needs to be equal or below before production begins.</summary>
         </member>
-        <member name="M:OnDemandFuelCells.ODFC.updateFuelString(System.String@,OnDemandFuelCells.Fuel[])">
-            <summary><para> Updates the fuel string.</para></summary>
-            <param name="s">The s.</param>
-            <param name="fuels">The fuels.</param>
-        </member>
-        <member name="M:OnDemandFuelCells.ODFC.updateFuelTexts">
-            <summary>Updates the fuel texts.</summary>
-        </member>
-        <member name="M:OnDemandFuelCells.ODFC.updateEditor">
-            <summary><para>Updates the PAW with scaleFactor and advises KSP that the ship has changed</para></summary>
-        </member>
-        <!-- Badly formed XML comment ignored for member "M:OnDemandFuelCells.ODFC.updatePAWLabel" -->
         <member name="M:OnDemandFuelCells.ODFC.OnRescale(TweakScale.ScalingFactor.FactorSet)">
             <summary>Updates the PAW with scaleFactor and advises KSP that the ship has changed</summary>
             <summary> <para> Called when [rescale].</para> </summary>
             <param name="scaleFactor">The scale factor.</param>
-        </member>
-        <member name="M:OnDemandFuelCells.ODFC.OnAwake">
-            <summary>Called when part is added to the craft.</summary>
-        </member>
-        <member name="M:OnDemandFuelCells.ODFC.OnLoad(ConfigNode)">
-            <summary>Called when [load].</summary>
-            <param name="configNode">The configuration node.</param>
-        </member>
-        <member name="M:OnDemandFuelCells.ODFC.OnStart(PartModule.StartState)">
-            <summary>Called when [start].</summary>
-            <param name="state">The state.</param>
-        </member>
-        <member name="M:OnDemandFuelCells.ODFC.OnFixedUpdate">
-            <summary>Called when [fixed update].</summary>
-        </member>
-        <member name="M:OnDemandFuelCells.ODFC.OnUpdate">
-            <summary>Updates this instance.</summary>
-        </member>
-        <member name="M:OnDemandFuelCells.ODFC.GetInfo">
-            <summary>Formats the information for the part information in the editors.</summary>
-            <returns>Editor Part Detail Information</returns>
         </member>
         <member name="T:OnDemandFuelCells.Fuel">
             <summary></summary>
