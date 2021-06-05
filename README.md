@@ -13,7 +13,7 @@ Also available on CKAN. -->
 ![Software License GPLv3](https://img.shields.io/badge/SoftwareLicense-GPLv3-red) 
 ![NonSoftware License CC 4.0 BY-NC-SA](https://img.shields.io/badge/NonSoftwareLicense-CC--4.0--BY--SA-lightgrey)
 
-#### zer0Kerbal adopts for curation with permission, a continuation of *On Demand Fuel Cells (ODFC)* by `**Orum**', now continued by the cooperative efforts of 4x4cheesecake, LinuxGuruGamer, and zer0Kerbal.
+#### zer0Kerbal adopts for curation, a continuation of *On Demand Fuel Cells (ODFC)* by `**Orum**', now continued by the cooperative efforts of 4x4cheesecake, LinuxGuruGamer, and zer0Kerbal.
 
 ![ODFC PAW](https://i.postimg.cc/7Pj7gQQD/image.png)
 
