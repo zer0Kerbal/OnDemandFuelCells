@@ -54,71 +54,68 @@ Another set that modifies the same set of parts instead of copying them.
 
 <hr>
 
- #### Requires:
- - ****Parts designed to use, or patches to modify existing parts**** *This mod (addon) does nothing by itself.*
+#### Requires:
+- ****Parts designed to use, or patches to modify existing parts**** *This mod (addon) does nothing by itself.*
 
- #### Dependencies
- - ![Kerbal Space Program](https://kerbalspaceprogram.com) v1.8.1, ***may*** work on earlier versions
- - ![Module Manager](http://forum.kerbalspaceprogram.com/index.php?/topic/50533-*)
- - ![ODFC Modify Patches](https://spacedock.info/mod/2220) and/or - ![ODFC Copy Patches](https://spacedock.info/mod/2221)  
+#### Dependencies
+-  [Kerbal Space Program](https://kerbalspaceprogram.com) v1.8.1, ***may*** work on earlier versions
+-  [Module Manager](http://forum.kerbalspaceprogram.com/index.php?/topic/50533-*)
+-  [ODFC Modify Patches](https://spacedock.info/mod/2220) and/or - ![ODFC Copy Patches](https://spacedock.info/mod/2221)  
 
- #### Supports
- - ![AllYAll](http://forum.kerbalspaceprogram.com/index.php?/topic/155858-*) - supports by removing
- - ![Community Resource Pack](https://forum.kerbalspaceprogram.com/index.php?/topic/166314-*)
- - ![BackgroundProcessing](http://forum.kerbalspaceprogram.com/index.php?/topic/88777-*) *(exclusive to BackgroundResources) (see known issues list)*
- - ![Background Resources](https://github.com/KSP-RO/TacLifeSupport/wiki) *(exclusive to BackgroundProcessing) (see known issues list)*
- - ![Kerbal Change Log](https://forum.kerbalspaceprogram.com/index.php?/topic/179207-*)
+#### Supports
+- [AllYAll](http://forum.kerbalspaceprogram.com/index.php?/topic/155858-*) - supports by removing
+- [Community Resource Pack](https://forum.kerbalspaceprogram.com/index.php?/topic/166314-*)
+- [BackgroundProcessing](http://forum.kerbalspaceprogram.com/index.php?/topic/88777-*) *(exclusive to BackgroundResources) (see known issues list)*
+- [Background Resources](https://github.com/KSP-RO/TacLifeSupport/wiki) *(exclusive to BackgroundProcessing) (see known issues list)*
+- [Kerbal Change Log](https://forum.kerbalspaceprogram.com/index.php?/topic/179207-*)
 
- #### Suggests *(These mods have Fuel Cells that can benefit from ODFC)*:
- - ![Hot Beverages Irradiated](https://github.com/zer0Kerbal/HotBeverageIrradiated)
- - ![Bluedog Design Bureau](http://forum.kerbalspaceprogram.com/index.php?/topic/122020-*)
- - ![Mining Expansion](http://forum.kerbalspaceprogram.com/index.php?/topic/130325-105-*)
- - ![Univeral Storage II](https://forum.kerbalspaceprogram.com/index.php?/topic/177385-*)
- - ![Universl Storage](https://forum.kerbalspaceprogram.com/index.php?/topic/68043-*)
- - ![RLA Reborn](https://forum.kerbalspaceprogram.com/index.php?/topic/175512-*)
- - ![Solid Fuel Cells](https://forum.kerbalspaceprogram.com/index.php?/topic/187776-*)
- - ![Jatwaa Demolitions Co (coming soon)]()
- - ![KGEx (coming soon)]()
+#### Suggests *(These mods have Fuel Cells that can benefit from ODFC)*:
+- [Hot Beverages Irradiated](https://github.com/zer0Kerbal/HotBeverageIrradiated)
+- [Bluedog Design Bureau](http://forum.kerbalspaceprogram.com/index.php?/topic/122020-*)
+- [Mining Expansion](http://forum.kerbalspaceprogram.com/index.php?/topic/130325-105-*)
+- [Univeral Storage II](https://forum.kerbalspaceprogram.com/index.php?/topic/177385-*)
+- [Universl Storage](https://forum.kerbalspaceprogram.com/index.php?/topic/68043-*)
+- [RLA Reborn](https://forum.kerbalspaceprogram.com/index.php?/topic/175512-*)
+- [Solid Fuel Cells](https://forum.kerbalspaceprogram.com/index.php?/topic/187776-*)
+- [Jatwaa Demolitions Co (coming soon)]()
+- [KGEx (coming soon)]()
 
- #### Does not work with parts from (because they use own generation MODULES)
- - Kethane
- - USI
- - @Angel-125's mods (Buffalo, Pathfinder, et al)
- -
+#### Does not work with parts from (because they use own generation MODULES)
+- Kethane
+- USI
+- @Angel-125's mods (Buffalo, Pathfinder, et al)
 
- #### Conflicts:
- - ![ODFC - On Demand Fuel Cells by Orum](http://forum.kerbalspaceprogram.com/index.php?/topic/138431-111-*) >-- ORIGINAL (outdated)--<
+#### Conflicts:
+- [ODFC - On Demand Fuel Cells by Orum](http://forum.kerbalspaceprogram.com/index.php?/topic/138431-111-*) >-- ORIGINAL (outdated)--<
 
  <hr>
- ## links to original:  
- On Demand Fuel Cells (ODFC) by `Orum'  
- Licensed under CC BY-NC-SA-4.0  
-  * ![KSP Forums](https://forum.kerbalspaceprogram.com/index.php?/topic/138431-*)
-  * ![Spacedock](https://spacedock.info/mod/618)
-  * ![Dropbox](https://www.dropbox.com/s/0rpp4138jumvaxq/ODFC_v1.1.zip?dl=0)
- <hr>
- ## License
+ 
+## links to original:  
+On Demand Fuel Cells (ODFC) by `Orum'  
+Licensed under CC BY-NC-SA-4.0  
+* [KSP Forums](https://forum.kerbalspaceprogram.com/index.php?/topic/138431-*)
+* [Spacedock](https://spacedock.info/mod/618)
+* [Dropbox](https://www.dropbox.com/s/0rpp4138jumvaxq/ODFC_v1.1.zip?dl=0)  
+* <hr>  
+* 
+## License
+![[CC 4.0 BY-NC-SA](https://creativecommons.org/licenses/by-nc-sa/4.0)](https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png "CC 4.0 BY-NC-SA") content licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.
 
- ![[CC 4.0 BY-NC-SA](https://creativecommons.org/licenses/by-nc-sa/4.0)](https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png "CC 4.0 BY-NC-SA") content licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.
+> You may modify for personal use. You may redistribute content with attribution to original author nli2work, plus any other attribution where required. You must redistribute under identical license, (CC BY-NC-SA 4.0)(https://creativecommons.org/licenses/by-nc-sa/4.0).
 
- > You may modify for personal use. You may redistribute content with attribution to original author nli2work, plus any other attribution where required. You must redistribute under identical license, (CC BY-NC-SA 4.0)(https://creativecommons.org/licenses/by-nc-sa/4.0).
+@Orum (the mod's original author) has given permission to release this under CC-BY-NC-SA-4.0.
 
- @Orum (the mod's original author) has given permission to release this under CC-BY-NC-SA-4.0.
-
- *Be Kind: Lithobrake, not jakebrake! Keep your Module Manager up to date*
+*Be Kind: Lithobrake, not jakebrake! Keep your Module Manager up to date*
 
 ##### All bundled mods are distributed under their own licenses
 ##### All art assets (textures, models, animations) are distributed under an All Rights Reserved License.
 
-###### v1.2.0.1 original: 11 Aug 2018 zed'K | updated: 01 Dec 2019 zed'K & Lisias & 4x4cheesecake & LinuxGuruGamer
+###### v1.2.0.1 original: 11 Aug 2018 zed'K | updated: 05 Jun 2021 zed'K & Lisias & 4x4cheesecake & LinuxGuruGamer
 <!--
-CC BY-NC-SA-4.0
+GPLv2
 zer0Kerbal-->
 
-* ![Stack/Stock fuel cells balance survey](https://github.com/zer0Kerbal/ODFCr/issues/new?assignees=zer0Kerbal&labels=stackcells&template=stock_report.md&title=BalanceSurvey)
-
-* ![Have a patch to add?](https://github.com/zer0Kerbal/ODFCr/issues/new?assignees=zer0Kerbal&labels=patches&template=feature_request.md&title=Patch)
-
-* ![Bug report?](https://github.com/zer0Kerbal/ODFCr/issues/new?assignees=zer0Kerbal&labels=bug&template=bug_report.md&title=BUG_report)
-
-* ![feature request?](https://github.com/zer0Kerbal/ODFCr/issues/new?assignees=zer0Kerbal&labels=feature&template=feature_request.md&title=feature_request)
+* [Stack/Stock fuel cells balance survey](https://github.com/zer0Kerbal/ODFCr/issues/new?assignees=zer0Kerbal&labels=stackcells&template=stock_report.md&title=BalanceSurvey)
+* [Have a patch to add?](https://github.com/zer0Kerbal/ODFCr/issues/new?assignees=zer0Kerbal&labels=patches&template=feature_request.md&title=Patch)
+* [Bug report?](https://github.com/zer0Kerbal/ODFCr/issues/new?assignees=zer0Kerbal&labels=bug&template=bug_report.md&title=BUG_report)
+* [Feature Request?](https://github.com/zer0Kerbal/ODFCr/issues/new?assignees=zer0Kerbal&labels=feature&template=feature_request.md&title=feature_request)
