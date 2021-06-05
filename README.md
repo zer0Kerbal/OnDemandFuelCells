@@ -1,21 +1,19 @@
 <!-- Readme.md v1.2.0.1
-On Demand Fuel Cells Refueled
+On Demand Fuel Cells
 created: 17 Jul 18
-updated: 01 Dec 19 -->
+updated: 05 Jun 2021 -->
 
 <!-- Download on SpaceDock here or Github here.
 Also available on CKAN. -->
 
-# On Demand Fuel Cells Refueled (ODFCr)
+# On Demand Fuel Cells (ODFC)
 ![Mod Version](https://img.shields.io/github/v/release/zer0Kerbal/ODFCr?include_prereleases) 
 ![KSP 1.7.x](https://img.shields.io/badge/KSP%20version-1.7.x-66ccff.svg?style=flat-square) 
 ![CKAN listed](https://img.shields.io/badge/CKAN-Indexed-brightgreen.svg) 
 ![Software License GPLv3](https://img.shields.io/badge/SoftwareLicense-GPLv3-red) 
 ![NonSoftware License CC 4.0 BY-NC-SA](https://img.shields.io/badge/NonSoftwareLicense-CC--4.0--BY--SA-lightgrey)
 
-#### Formerly known as On Demand Fuel Cells (ODFC)
-
-zer0Kerbal adopts for curation a continuation of *On Demand Fuel Cells (ODFC)* by `**Orum**', now continued by the cooperative efforts of 4x4cheesecake, LinuxGuruGamer, and zer0Kerbal.
+#### zer0Kerbal adopts for curation with permission, a continuation of *On Demand Fuel Cells (ODFC)* by `**Orum**', now continued by the cooperative efforts of 4x4cheesecake, LinuxGuruGamer, and zer0Kerbal.
 
 ![ODFC PAW](https://i.postimg.cc/7Pj7gQQD/image.png)
 
