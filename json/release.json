@@ -1,10 +1,18 @@
 {
-	"MODNAME": "auto",
-	"MODFOLDER": "auto",
+	"MODNAME": "On Demand Fuel Cells",
+	"AUTHOR": "zer0Kerbal, strideknight",
+	"MODFOLDER": "OnDemandFuelCells",
+	"SUBFOLDER": "",
 	"VERSIONFILE": "auto",
+	"MODTYPE": "Addon",
 	"RELEASESDIR": "Releases",
 	"CHANGELOG": "Changelog.md",
 	"DRAFT": false,
 	"PRERELEASE": false,
-	"SPACEDOCK_ID": "2265"
+	"SPACEDOCK_ID": "2324",
+	"CURSEFORGE": "OnDemandFuelCells",
+	"GITHUB": "OnDemandFuelCells",
+	"FORUM": "191525"
+	"KSPVERSION": "1.9.1",
+  	"LICENSE": "GPLv3",
 }
