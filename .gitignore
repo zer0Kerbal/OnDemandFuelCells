@@ -68,7 +68,7 @@ _deploy.bat
 _deploySub.bat
 mod.version
 regex4loc.txt
-.*
+_*
 
 # database files
 *.mdb
@@ -160,6 +160,4 @@ crashlytics-build.properties
 # Temporary auto-generated Android Assets
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
-*.7z
-*.rar
-".trash" 
+graphics/Thumbs.db
