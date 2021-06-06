@@ -1,5 +1,5 @@
 {
-	"MODNAME": "On Demand Fuel Cells",
+	"MODNAME": "On Demand Fuel Cells (ODFC)",
 	"AUTHOR": "zer0Kerbal, strideknight",
 	"MODFOLDER": "OnDemandFuelCells",
 	"SUBFOLDER": "",
@@ -7,12 +7,21 @@
 	"MODTYPE": "Addon",
 	"RELEASESDIR": "Releases",
 	"CHANGELOG": "Changelog.md",
-	"DRAFT": false,
-	"PRERELEASE": false,
-	"SPACEDOCK_ID": "2223",
-	"CURSEFORGE": "OnDemandFuelCells",
-	"GITHUB": "OnDemandFuelCells",
-	"FORUM": "187625"
+	"CKAN": {
+		"DRAFT": false,
+		"PRERELEASE": false
+	},
+	"URL": {
+		"SPACEDOCK_ID": "2223",
+		"CURSEFORGE": "OnDemandFuelCells",
+		"GITHUB": "OnDemandFuelCells",
+		"FORUM": "187625"
+	},
 	"KSPVERSION": "1.9.1",
-  	"LICENSE": "GPLv3",
+	"LICENSE": "GPLv3",
+	"CODE": {
+	 	"DNET": ".NET 4.8",
+  		"UNIT": "Unity 2019.2.2f1",
+		"LANG": "C#"
+	}
 }
