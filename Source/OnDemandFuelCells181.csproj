@@ -8,7 +8,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ODFC</RootNamespace>
     <AssemblyName>ODFC</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8.3</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
     <NuGetPackageImportStamp>
@@ -25,14 +25,14 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
-    <DebugType>none</DebugType>
+    <DebugType>embedded</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>..\GameData\OnDemandFuelCells\Plugins\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <DebugSymbols>true</DebugSymbols>
-    <DocumentationFile>bin\Release\ODFC.xml</DocumentationFile>
+    <DocumentationFile>..\docs\ODFC18.xml</DocumentationFile>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
@@ -42,19 +42,19 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="$(DevDir181)\KSP_x64_Data\Managed\Assembly-CSharp-firstpass.dll">
+    <Reference Include="$(K18)\KSP_x64_Data\Managed\Assembly-CSharp.dll">
       <private>false</private>
     </Reference>
-    <Reference Include="$(DevDir181)\KSP_x64_Data\Managed\Assembly-CSharp.dll">
+    <Reference Include="$(K18)\KSP_x64_Data\Managed\Assembly-CSharp-firstpass.dll">
       <private>false</private>
     </Reference>
-    <Reference Include="$(DevDir181)\KSP_x64_Data\Managed\UnityEngine*.dll">
+    <Reference Include="$(K18)\KSP_x64_Data\Managed\UnityEngine*.dll">
       <private>false</private>
     </Reference>
-    <Reference Include="$(DevDir181)\KSP_x64_Data\Managed\UnityEngine.UI.dll">
+    <Reference Include="$(K18)\KSP_x64_Data\Managed\UnityEngine.UI.dll">
       <private>false</private>
     </Reference>
-    <Reference Include="C:\Games\Dev1.8\KSP_x64_Data\Managed\Scale_Redist.dll">
+    <Reference Include="(K18)\GameData\Scale_Redist.dll">
       <private>true</private>
     </Reference>
   </ItemGroup>
