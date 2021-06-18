@@ -1,0 +1,176 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ODFC</name>
+    </assembly>
+    <members>
+        <member name="T:ODFC.ODFC">
+            <summary>
+            On Demand Fuel Cells (ODFC) part module
+            </summary>
+            <seealso cref="T:PartModule" />
+        </member>
+        <member name="F:ODFC.ODFC.timeOut">
+            <summary>current counter for responseTime</summary>
+        </member>
+        <member name="F:ODFC.ODFC._fuelModeMaxECRateLimit">
+            <summary>[internal]The fuel mode current ElectricCharge (EC) production. seealso OnDemandFuelCellsEC</summary>
+        </member>
+        <member name="P:ODFC.ODFC.OnDemandFuelCellsEC">
+            <summary>
+            Gets the On Demand Fuelcells(ODFC) Electric Charge (EC) Production.
+            AMPYear / JPRepo / Background?
+            allows AMPYear and others to see current EC/s production
+            </summary>
+            <value>
+            The On Demand Fuelcells(ODFC) Electric Charge (EC) Production.
+            </value>
+        </member>
+        <member name="F:ODFC.ODFC.info">
+            <summary>Module information shown in editors</summary>
+        </member>
+        <member name="F:ODFC.ODFC.configNode">
+            <summary>The configuration node</summary>
+        </member>
+        <member name="F:ODFC.ODFC.ConfigNodeString">
+            <summary>The internalized ConfigNode String</summary>
+        </member>
+        <member name="F:ODFC.ODFC.lastResource">
+            <summary>List: The last resource</summary>
+        </member>
+        <member name="F:ODFC.ODFC.ElectricChargeID">
+            <summary>ElectricCharge identification number</summary>
+        </member>
+        <member name="F:ODFC.ODFC.ns">
+            <summary>The ns</summary>
+        </member>
+        <member name="F:ODFC.ODFC.ODFC_config">
+            <summary>The ODFC configuration</summary>
+        </member>
+        <member name="F:ODFC.ODFC.state">
+            <summary>The state of the Fuel Cell (nominal, off et al)</summary>
+        </member>
+        <member name="F:ODFC.ODFC.scalingFactor">
+            <summary>Not Implemented Yet. The internal part.cfg scalingFactor.</summary>
+        </member>
+        <member name="F:ODFC.ODFC.fuelMode">
+            <summary>The fuel mode</summary>
+        </member>
+        <member name="F:ODFC.ODFC.rateLimit">
+            <summary>The rate limit
+            (max % production)</summary>
+        </member>
+        <member name="F:ODFC.ODFC.threshold">
+            <summary>The current threshold (%) which needs to be equal or below before production begins.</summary>
+        </member>
+        <member name="M:ODFC.ODFC.updateFuelString(System.String@,ODFC.Fuel[])">
+            <summary>
+            Updates the fuel string.
+            </summary>
+            <param name="s">The s.</param>
+            <param name="fuels">The fuels.</param>
+        </member>
+        <member name="M:ODFC.ODFC.updateFuelTexts">
+            <summary>Updates the fuel texts.</summary>
+        </member>
+        <member name="M:ODFC.ODFC.updateEditor">
+            <summary>Updates the PAW with scaleFactor and advises KSP that the ship has changed</summary>
+        </member>
+        <member name="M:ODFC.ODFC.updatePAWLabel">
+            <summary>Updates the PAW label.</summary>
+        </member>
+        <member name="M:ODFC.ODFC.OnRescale(TweakScale.ScalingFactor.FactorSet)">
+            <summary>Updates the PAW with scaleFactor and advises KSP that the ship has changed</summary>
+            <summary>
+              <para>
+             Called when [rescale].
+            </para>
+            </summary>
+            <param name="scaleFactor">The scale factor.</param>
+        </member>
+        <member name="M:ODFC.ODFC.OnAwake">
+            <summary>Called when part is added to the craft.</summary>
+        </member>
+        <member name="M:ODFC.ODFC.OnLoad(ConfigNode)">
+            <summary>Called when [load].</summary>
+            <param name="configNode">The configuration node.</param>
+        </member>
+        <member name="M:ODFC.ODFC.OnStart(PartModule.StartState)">
+            <summary>Called when [start].</summary>
+            <param name="state">The state.</param>
+        </member>
+        <member name="M:ODFC.ODFC.OnFixedUpdate">
+            <summary>Called when [fixed update].</summary>
+        </member>
+        <member name="M:ODFC.ODFC.OnUpdate">
+            <summary>Updates this instance.</summary>
+        </member>
+        <member name="M:ODFC.ODFC.GetInfo">
+            <summary>Formats the information for the part information in the editors.</summary>
+            <returns>info</returns>
+        </member>
+        <member name="T:ODFC.Fuel">
+            <summary></summary>
+        </member>
+        <member name="T:ODFC.mode">
+            <summary></summary>
+        </member>
+        <member name="M:ODFC.Log.dbg(System.String,System.Object[])">
+            <summary>
+            sends the specific message to ingame mail and screen if Debug is defined
+            For debugging use only.
+            </summary>
+            <param name="msg">The MSG.</param>
+            <param name="params">The parameters.</param>
+        </member>
+        <member name="F:ODFC.Options.needsECtoStart">
+            <summary>
+            The needs EC to start in GameParameters
+            </summary>
+        </member>
+        <member name="F:ODFC.Options.consumesEC">
+            <summary>
+            The needs EC to start in GameParameters
+            </summary>
+        </member>
+        <member name="F:ODFC.Options.autoSwitch">
+            <summary>
+            The automatic switch in GameParameters
+            </summary>
+        </member>
+        <member name="F:ODFC.Options.coloredPAW">
+            <summary>
+            The colored paw
+            </summary>
+        </member>
+        <member name="F:ODFC.Options._InGameMail">
+            <summary>
+            This setting turns ON/off ODFC sending mail via in game mail system
+            </summary>
+        </member>
+        <member name="F:ODFC.Options.globalScalingFactor">
+            <summary>
+            Sets the globalScalingFactor in GameParameters
+            </summary>
+        </member>
+        <member name="F:ODFC.Options.responseTime">
+            <summary>
+            Sets the globalScalingFactor in GameParameters
+            </summary>
+        </member>
+        <member name="P:ODFC.Options.HasPresets">
+            <summary>
+            Gets a value indicating whether this instance has presets.
+            </summary>
+            <value>
+              <c>true</c> if this instance has presets; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="M:ODFC.Options.SetDifficultyPreset(GameParameters.Preset)">
+            <summary>
+            Sets the difficulty preset.
+            </summary>
+            <param name="preset">The preset.</param>
+        </member>
+    </members>
+</doc>
