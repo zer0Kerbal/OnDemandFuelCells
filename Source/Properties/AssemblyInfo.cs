@@ -7,10 +7,10 @@ using System.Runtime.CompilerServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("On Demand Fuel Cells (Refueled)")]
+[assembly: AssemblyTitle("On Demand Fuel Cells")]
 [assembly: AssemblyDescription("On Demand Fuel Cells expands the capabilities of Kerbal Space Program (KSP) fuel cells")]
 [assembly: AssemblyConfiguration("Release")]
-[assembly: AssemblyCompany("KGEx and Okram Industries")]
+[assembly: AssemblyCompany("zer0Kerbal and Okram Industries")]
 [assembly: AssemblyProduct("ODFC")]
 [assembly: AssemblyCopyright("GPLv3")]
 [assembly: AssemblyTrademark("")]

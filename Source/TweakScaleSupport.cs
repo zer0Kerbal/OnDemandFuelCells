@@ -1,4 +1,4 @@
-﻿namespace ODFC
+﻿namespace OnDemandFuelCells
 {
     class IRRescale
     {

@@ -19,7 +19,7 @@ using System.Linq;
 using System.Reflection;
 using UnityEngine;
 
-namespace ODFC
+namespace OnDemandFuelCells
 {
     [KSPAddon(KSPAddon.Startup.Instantly, true)]
     internal class Startup : MonoBehaviour

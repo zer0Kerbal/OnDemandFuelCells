@@ -1,8 +1,8 @@
 {
- "schemaVersion": 1,
- "label": "On Demand Fuel Cells (ODFC)",
- "labelColor": "BADA55",
- "message": "1.3.0.0",
- "color": "darkgreen",
- "style": "plastic"
+  "schemaVersion": "1",
+  "label": "On Demand Fuel Cells (ODFC)",
+  "labelColor": "darkgreen",
+  "message": "1.3.0.0",
+  "color": "orange",
+  "style": "plastic"
 }
