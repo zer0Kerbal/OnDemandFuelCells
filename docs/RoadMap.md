@@ -1,3 +1,15 @@
+---
+permalink: /RoadMap.html
+title: Road Map
+---
+
+<!-- RoadMap - v 1.2.0.0
+On Demand Fuel Cells (ODFC)
+created: 26 Aug 19
+updated: 20 Feb 2022 -->
+
+# On Demand Fuel Cells (ODFC)
+
 implement 'stalled' mode - with a setting in the difficulty settings menu: this will 'stall' the fuel cell if the vessel (at least reachable) reaches below a certain level of EC (like <= 0),
 will not reset until the vessel has at least 0.5 EC
 
@@ -33,3 +45,5 @@ eventually want to add the following for each fuel/byproducts:
 
   bool    ventExcess = True(byproducts, vent excess over maximum Amount)
     // flowMode = All;
+
+<!-- this file CC BY-NC-ND 3.0 Unported by zer0Kerbal>
