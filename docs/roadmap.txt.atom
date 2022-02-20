@@ -1,0 +1,52 @@
+/*void huntPeck()
+{
+    currentFuelMode++
+  if (currentMode <= totalModes) // check for depleted
+  else { currentmode = 0 };
+}
+
+//MODULE variables
+    double  threshold = 0.05f, //thresHoldSteps
+            rateLimit = 1;
+
+    byte    defaultMode = 1;
+
+    bool    autoSwitch = false,
+            enabled = true,
+            UseSpecialistBonus = false;
+
+per FUEL/BYPRODUCT:
+    double  reserveAmount = 0.0f, //(fuels)
+            maximumAmount = 1.00f; // (byproducts)
+
+    bool    ventExcess = True(byproducts, vent excess over maximum Amount)
+    // flowMode = All;
+
+MODULE
+{
+    name = ModuleODFC
+    thresholdMin = 0.05
+    thresholdMax = 0.95
+    thresholdStep = 0.05
+    defaultMode = MonoPropellant
+    autoSwitch = true
+    enabled = true
+    useSpecialistBonus = true
+    MODE
+    {
+        INPUT_RESOURCE
+        {
+            reserveAmount = 0.00
+            flowmode = All
+            maxAmount = 1.00
+            minAmount = 0.01
+        }
+        OUTPUT_RESOURCE
+        {
+            ventExcess = true
+            flowmode = All
+            maxAmount = 1.00
+            minAmount = 0.01
+        }
+}
+*/
