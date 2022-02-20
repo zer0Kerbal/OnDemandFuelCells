@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 
-namespace ODFC
+namespace OnDemandFuelCells
 {
     internal static class Log
     {
@@ -20,12 +20,10 @@ namespace ODFC
         {
             if (0 != @params.Length) msg = string.Format(msg, @params);
             ScreenMessages.PostScreenMessage(msg, 1, ScreenMessageStyle.UPPER_CENTER, true);
-            //Logg.Info(msg);
-            //? UnityEngine.Debug.Log("[ODFC TweakScale] " + msg);
+            Log.Info(msg);
+            if (HighLogic.CurrentGame.Parameters.CustomParams<Options>().InGameMail) UnityEngine.Debug.Log("[ODFC v"+ Version.Text + "] " + msg);
         }
-    }
-    internal static class Logg
-    {
+
         public enum LEVEL
         {
             OFF = 0,
@@ -38,7 +36,7 @@ namespace ODFC
 
         public static LEVEL level = LEVEL.INFO;
 
-        private static readonly String PREFIX = "ODFC" + ": ";
+        private static readonly String PREFIX = "[ODFC v" + Version.Text + "]: ";
 
         public static LEVEL GetLevel()
         {
@@ -48,7 +46,7 @@ namespace ODFC
         public static void SetLevel(LEVEL level)
         {
             UnityEngine.Debug.Log("log level " + level);
-            Logg.level = level;
+            Log.level = level;
         }
 
         public static LEVEL GetLogLevel()
@@ -58,12 +56,12 @@ namespace ODFC
 
         private static bool IsLevel(LEVEL level)
         {
-            return level == Logg.level;
+            return level == Log.level;
         }
 
         public static bool IsLogable(LEVEL level)
         {
-            return level <= Logg.level;
+            return level <= Log.level;
         }
 
         public static void Trace(String msg)
@@ -123,12 +121,12 @@ namespace ODFC
                 UnityEngine.Debug.LogError(PREFIX + msg);
             }
             else
-                Logg.Info(msg);
+                Log.Info(msg);
         }
 
         public static void Exception(Exception e)
         {
-            Logg.Error("exception caught: " + e.GetType() + ": " + e.Message);
+            Log.Error("exception caught: " + e.GetType() + ": " + e.Message);
         }
     }
 }

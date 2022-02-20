@@ -2,7 +2,7 @@
 
 using System;
 
-namespace ODFC
+namespace OnDemandFuelCells
 {
     public class ResourceLabel
     { //resource la? originally rla
@@ -35,7 +35,7 @@ namespace ODFC
     public struct mode
     {
         public Fuel[] fuels, byproducts;
-        public Double maxEC;
+        public double maxEC;
 
         public mode(ConfigNode node, Part part)
         {
@@ -47,7 +47,7 @@ namespace ODFC
                 {
                     case "MaxEC":
                         {
-                            maxEC = Double.Parse(nodeValue.value);
+                            maxEC = double.Parse(nodeValue.value);
                             break;
                         }
                 }
@@ -71,7 +71,7 @@ namespace ODFC
     {
         public mode[] modes;
         //  public bool autoSwitch { get; private set; }
-        //public Double scaleHack;
+        //public double scaleHack;
 
         public Config(ConfigNode node, Part part)
         {
