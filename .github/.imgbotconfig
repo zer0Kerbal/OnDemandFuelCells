@@ -5,7 +5,11 @@
         "docs/LegalMumboJumbo/*",
         "/source/*",
         "**/Assets/**",
-        "**/@Thumbs/**"
+        "**/@Thumbs/**",
+        "**/Flags/**",
+        "**/Agencies/**",
+        "**/Plugins/**",
+        "**/Plugin-data/**"
     ],
     "aggressiveCompression": "false",
     "compressWiki": "true",
