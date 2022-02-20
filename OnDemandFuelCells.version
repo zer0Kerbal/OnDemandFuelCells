@@ -1,8 +1,8 @@
 {
 	"NAME":           "On Demand Fuel Cells (ODFC)",
-	"URL":            "https://github.com/zer0Kerbal/ODFCr/raw/master/OnDemandFuelCells.version",
-	"DOWNLOAD":       "https://github.com/zer0Kerbal/ODFCr/releases",
-	"CHANGE_LOG_URL": "https://raw.githubusercontent.com/zer0Kerbal/ODFCr/dev/changelog.md",
+	"URL":            "https://github.com/zer0Kerbal/OnDemandFuelCells/raw/master/OnDemandFuelCells.version",
+	"DOWNLOAD":       "https://github.com/zer0Kerbal/OnDemandFuelCells/releases",
+	"CHANGE_LOG_URL": "https://raw.githubusercontent.com/zer0Kerbal/OnDemandFuelCells/master/changelog.md",
    "GITHUB":
    {
        "USERNAME":          "zer0Kerbal",
@@ -12,9 +12,9 @@
 	"VERSION":
 	{
 		"MAJOR":1,
-		"MINOR":3,
+		"MINOR":2,
 		"PATCH":0,
-		"BUILD":95
+		"BUILD":0
 	},
 	"KSP_VERSION":
 	{
