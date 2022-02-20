@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -10,9 +11,6 @@
     <AssemblyName>ODFC</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -22,35 +20,40 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
-    <DebugType>none</DebugType>
+    <DebugType>embedded</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <DebugSymbols>true</DebugSymbols>
-    <DocumentationFile>bin\Release\ODFC.xml</DocumentationFile>
-    <Prefer32Bit>false</Prefer32Bit>
+    <DocumentationFile>..\docs\ODFC19.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="$(K19)\KSP_x64_Data\Managed\Assembly-CSharp*.dll">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="$(K19)\KSP_x64_Data\Managed\UnityEngine*.dll">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="$(K19)\GameData\999_Scale_Redist.dll">
+      <Private>False</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="$(DevDir19)\KSP_x64_Data\Managed\Assembly-CSharp*.dll" />
-    <Reference Include="$(DevDir19)\KSP_x64_Data\Managed\UnityEngine*.dll" />
-    <Reference Include="$(DevDir19)\KSP_x64_Data\Managed\Scale_Redist.dll" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ODFC.cs" />
     <Compile Include="Config.cs" />
     <Compile Include="BackgroundProcessing.cs" />
     <Compile Include="Log.cs" />
+    <Compile Include="Properties\AssemblyFileVersion.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="InstallChecker.cs" />
     <Compile Include="TweakScaleSupport.cs" />
@@ -60,7 +63,7 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="Utilities.cs" />
+    <!-- <Compile Include="Utilities.cs" /> -->
   </ItemGroup>
   <ItemGroup>
     <Content Include="Notes.txt" />
@@ -75,14 +78,18 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>
-      start /D $(ProjectDir)..\  /WAIT .deploy.bat  $(TargetDir) $(TargetFileName)
-      if $(ConfigurationName) == Release start /D $(ProjectDir)..\   /WAIT .buildRelease.bat $(TargetDir) $(TargetFileName)
+      start /D $(ProjectDir)..\  /WAIT _deploy.bat  $(TargetDir) $(TargetFileName)
+      if $(ConfigurationName) == Release start /D $(ProjectDir)..\   /WAIT _buildRelease.bat $(TargetDir) $(TargetFileName)
     </PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
     <PreBuildEvent>
       set textTemplatingPath="$(DevEnvDir)texttransform.exe"
-      %25textTemplatingPath%25 "$(ProjectDir)AssemblyVersion.tt"
+      %25textTemplatingPath%25 "$(ProjectDir)properties\Version.tt"
+    </PreBuildEvent>
+    <PreBuildEvent>
+      set textTemplatingPath="$(DevEnvDir)texttransform.exe"
+      %25textTemplatingPath%25 "$(ProjectDir)properties\AssemblyFileVersion.tt"
     </PreBuildEvent>
   </PropertyGroup>
   <ProjectExtensions>

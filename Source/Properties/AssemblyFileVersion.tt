@@ -29,4 +29,4 @@
 
 using System.Reflection;
 
-[assembly: AssemblyFileVersion("1.1.9.<#= revisionNumber #>")]
+[assembly: AssemblyFileVersion("1.3.0.<#= revisionNumber #>")]
