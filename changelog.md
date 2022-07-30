@@ -3,7 +3,7 @@
 | modName    | On Demand Fuel Cells (ODFC)                                       |
 | ---------- | ----------------------------------------------------------------- |
 | license    | GPL-3.0                                                           |
-| author     | strideknight and zer0Kerbal                                       |
+| author     | Orum and zer0Kerbal                                               |
 | forum      | (https://forum.kerbalspaceprogram.com/index.php?/topic/187625-*/) |
 | github     | (https://github.com/zer0Kerbal/OnDemandFuelCells)                 |
 | curseforge | (https://www.curseforge.com/kerbal/ksp-mods/OnDemandFuelCells)    |
