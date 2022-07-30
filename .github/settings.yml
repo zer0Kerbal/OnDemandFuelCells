@@ -232,6 +232,10 @@ labels:
 
 # Milestones: define milestones for Issues and Pull Requests
 milestones:
+  - title: 1.2.99.0-prerelease
+    description: progress toward 1.2.99.0-prerelease
+    state: open
+
   - title: 1.3.0.0-release
     description: progress toward 1.3.0.0-release
     state: open
