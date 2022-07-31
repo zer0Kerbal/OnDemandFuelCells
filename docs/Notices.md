@@ -22,11 +22,17 @@ based upon work by LisiasT -->
 
 ## Trademarks <i class="fa-solid fa-trademark fa-beat-fade" style="--fa-beat-fade-opacity: 0.1; --fa-beat-fade-scale: 1.25;color: black" ></i>
 
-* "MOD-NAME" is trademark of zer0Kerbal
+* "On Demand Fuel Cells" is trademark of Orum
+* "ODFC" is trademark of Orum
+* "Okram Industries" is trademark of Orum
 * Kerbal Simple Co is a trademark of zer0Kerbal
 * KerbSimCo is a trademark of zer0Kerbal
 * KerbSimpleCo is a trademark of zer0Kerbal
 * zer0Kerbal is trademark of zer0kerbal
+
+## Okram Industries
+
+* "Okram Industries" is a fictitious entity created for entertainment purposes. It is in no way meant to represent a real entity. Any similarity to a real entity is purely coincidental.
 
 ## Kerbal Simple Co (KerbSimCo) (KerbSimpleCo)
 
