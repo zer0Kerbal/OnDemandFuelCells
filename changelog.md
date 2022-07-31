@@ -10,6 +10,16 @@
 | spacedock  | (https://spacedock.info/mod/2223)                                 |
 | ckan       | OnDemandFuelCells                                                 |
 
+## 1.2.99.0-prerelease - `<EDITION>` edition
+
+* 30 Jul 2022
+* Released for Kerbal Space Program 1.12.x
+
+"KSP_VERSION_MAX"
+
+
+
+
 ## 1.3.0.0 - Gone to Plaid
 
 * correct .version file max KSP version from 1.8.1 to 1.8.9999
