@@ -16,9 +16,11 @@
 * Released for Kerbal Space Program 1.12.x
 
 "KSP_VERSION_MAX"
-
-
-
+AllYAll-Removal.cfg v1.2.0.0
+OnDemandFuelCells.cfg v1.0.0.0
+StockPods v1.9.0.0
+StockFuelCells.cfg v1.3.0.0
+#autoLOC_500899
 
 ## 1.3.0.0 - Gone to Plaid
 
