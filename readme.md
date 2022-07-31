@@ -203,7 +203,7 @@ plugin, config, flags, agency, control, convenience, sound, resources
 [MOD:chlog]: https://raw.githubusercontent.com/zer0Kerbal/OnDemandFuelCells/master/changelog.md  "Changelog"
 [MOD:contr]: https://github.com/zer0Kerbal/.github/blob/master/.github/CONTRIBUTING.md "Contributing"
 [MOD:discu]: https://github.com/zer0Kerbal/OnDemandFuelCells/discussions "Discussions"
-[MOD:forum]: https://forum.kerbalspaceprogram.com/index.php?/topic/192742-*/ "OnDemandFuelCells Forum Thread"
+[MOD:forum]: https://forum.kerbalspaceprogram.com/index.php?/topic/187625-*/ "OnDemandFuelCells Forum Thread"
 [MOD:issue]: https://github.com/zer0Kerbal/OnDemandFuelCells/issues "Issues"
 [MOD:licns]: https://github.com/zer0Kerbal/OnDemandFuelCells/blob/master/LICENSE "Github License"
 [MOD:markt]: https://zer0kerbal.github.io/OnDemandFuelCells/Marketing "Marketing Slicks"
@@ -221,7 +221,7 @@ plugin, config, flags, agency, control, convenience, sound, resources
 <!--- mod provenance -->
 [MOD:2:dnload]: https://www.curseforge.com/kerbal/ksp-mods/OnDemandFuelCells "CurseForge"
 [MOD:2:source]: https://github.com/zer0Kerbal/OnDemandFuelCells "GitHub"
-[MOD:2:thread]: https://forum.kerbalspaceprogram.com/index.php?/topic/64520-*/ "KSP Forum"
+[MOD:2:thread]: https://forum.kerbalspaceprogram.com/index.php?/topic/187625-*/ "KSP Forum"
 
 [MOD:1:dnload]: https://spacedock.info/mod/618 "SpaceDock"
 [MOD:1:source]: https://www.dropbox.com/s/0rpp4138jumvaxq/ODFC_v1.1.zip "Dropbox"
