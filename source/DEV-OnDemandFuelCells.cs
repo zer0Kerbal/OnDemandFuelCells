@@ -15,7 +15,7 @@ namespace OnDemandFuelCells
 #region Enums Vars
 
         public enum states : byte { error, off, nominal, fuelDeprived, noDemand, stalled }; // deploy, retract,
-        // private static readonly string[] STATES_STR = {  Localizer.Format("#ODFC_PAW_err"), "Off", "Nominal", "Fuel Deprived", "No Demand", "Stalled" };
+        // private static readonly string[] STATES_STR = {  Localizer.Format("#ODFC-PAW-err"), "Off", "Nominal", "Fuel Deprived", "No Demand", "Stalled" };
         private static readonly string[] STATES_STR = { "ERROR!", "Off", "Nominal", "Fuel Deprived", "No Demand", "Stalled" };
         private static readonly string[] STATES_COLOUR = { "<color=orange>", "<color=black>", "<#ADFF2F>", "<color=yellow>", "<#6495ED>", "<color=red>" };
         //                                                                                      (Green)                          (Blue)
@@ -97,13 +97,13 @@ namespace OnDemandFuelCells
 
         [KSPField(  isPersistant = false,  guiActive = true, guiActiveEditor = true,
                     guiName = " ")]
-        public string PAWStatus = Localizer.Format("#ODFC_PAW_boot");
+        public string PAWStatus = Localizer.Format("#ODFC-PAW-boot");
 
         [KSPField(  isPersistant = false,  guiActive = true,  guiActiveEditor = true, groupName = GroupName,
                     groupDisplayName = "On Demand Fuel Cells v" + Version.Text, groupStartCollapsed = true,
                     guiName = ""),
             UI_Label(scene = UI_Scene.Flight)]
-        public string status = Localizer.Format("#ODFC_PAW_err");
+        public string status = Localizer.Format("#ODFC-PAW-err");
         
         [KSPField(  isPersistant = true,  guiActive = false, guiActiveEditor = false),
             UI_Label(scene = UI_Scene.None)]
@@ -119,19 +119,19 @@ namespace OnDemandFuelCells
 
         [KSPField(  isPersistant = false,  guiActive = false, guiActiveEditor = false, groupName = GroupName,
                     guiName = "EC/s (cur/max)")]
-        public string ECs_status = Localizer.Format("#ODFC_PAW_err");
+        public string ECs_status = Localizer.Format("#ODFC-PAW-err");
 
         [KSPField(  isPersistant = false, guiActive = false, guiActiveEditor = false, groupName = GroupName,
                     guiName = "Max EC/s")]
-        public string maxECs_status = Localizer.Format("#ODFC_PAW_err");
+        public string maxECs_status = Localizer.Format("#ODFC-PAW-err");
 
         [KSPField(  isPersistant = false, guiActive = true, guiActiveEditor = true, groupName = GroupName,
                     guiName = "Fuels")]
-        public string fuel_consumption = Localizer.Format("#ODFC_PAW_err");
+        public string fuel_consumption = Localizer.Format("#ODFC-PAW-err");
 
         [KSPField(  isPersistant = false, guiActive = false, guiActiveEditor = false, groupName = GroupName,
                     guiName = "Byproducts")]
-        public string byproducts = Localizer.Format("#ODFC_PAW_err");
+        public string byproducts = Localizer.Format("#ODFC-PAW-err");
 
         [KSPField(  isPersistant = true,  guiActive = true,  guiActiveEditor = true, groupName = GroupName,
                     guiName = "Enabled:"),
@@ -675,9 +675,9 @@ namespace OnDemandFuelCells
             //? The config is only fully parsed after everything is fully loaded (which is why it's in OnStart())
             if (info == string.Empty)
             {
-                info += Localizer.Format("#ODFC_manu"); // #ODFC_manu = Okram Industries
+                info += Localizer.Format("#ODFC-manu-titl"); // #ODFC-manu-titl = Okram Industries
                 info += "\n v" + Version.Text; // ODFC Version Number text
-                info += "\n<color=#b4d455FF>" + Localizer.Format("#ODFC_desc"); // #ODFC_desc = Automated fuel cell controller which only generates electricity when really needed
+                info += "\n<color=#b4d455FF>" + Localizer.Format("#ODFC-desc"); // #ODFC-desc = Automated fuel cell controller which only generates electricity when really needed
                 info += "</color>\n\n";
 
                 ConfigNode[] mds = configNode.GetNodes("MODE");
