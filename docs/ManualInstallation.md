@@ -5,10 +5,10 @@ description: the flat-pack Kiea instructions, written in Kerbalese, unusally pre
 tags: installation,directions,page,kerbal,ksp,zer0Kerbal,zedK
 ---
 
-<!-- ManualInstallation.md v1.1.8.0
+<!-- ManualInstallation.md v1.1.8.1
 On Demand Fuel Cells (ODFC)
 created: 01 Oct 2019
-updated: 21 Jul 2022 -->
+updated: 29 Jul 2022 -->
 
 <!-- based upon work by Lisias -->
 
@@ -16,7 +16,7 @@ updated: 21 Jul 2022 -->
 
 [Home](./index.md)
 
-***BLURB***
+On Demand Fuel Cells (ODFC) is a plugin to simulate fuel cells in Kerbal Space Program (KSP), and do a better job of it than stock's use of a resource converter.  The main difference is it only generates electricity when it's really needed (batteries almost empty), and otherwise lets electricity of a craft float up and down, as it might in a solar powered vehicle when the sun is eclipsed by another celestial body.  It also allows fuel cells to generate byproducts, aimed at supporting life support mods like TACLS.
 
 ## Installation Instructions
 
@@ -73,6 +73,7 @@ To install, place the `GameData` folder inside your Kerbal Space Program folder:
       * readme.htm
     ...
     * [Module Manager][mm] or [Module Manager /L][mml]
+    * ModuleManager.ConfigCache
   * KSP.log
   ...
 ```
