@@ -1,18 +1,14 @@
-# ODFC
-
-## On Demand Fuel Cells Refueled (ODFCr)
-
-# Changelog
+# Changelog  
   
-| modName    | On Demand Fuel Cells (ODFC) (null)                               |
-| ---------- | ---------------------------------------------------------------- |
-| license    | GPLv3                                                            |
-| author     | strideknight and zer0Kerbal                                      |
-| forum      | (https://forum.kerbalspaceprogram.com/index.php?/topic/187625-*) |
-| github     | (https://github.com/zer0Kerbal/OnDemandFuelCells)                |
-| curseforge | (https://www.curseforge.com/kerbal/ksp-mods/OnDemandFuelCells)   |
-| spacedock  | (https://spacedock.info/mod/2223)                                |
-| ckan       | MOD-NAME                                                         |
+| modName    | On Demand Fuel Cells (ODFC)                                       |
+| ---------- | ----------------------------------------------------------------- |
+| license    | GPL-3.0                                                           |
+| author     | Orum and zer0Kerbal                                               |
+| forum      | (https://forum.kerbalspaceprogram.com/index.php?/topic/187625-*/) |
+| github     | (https://github.com/zer0Kerbal/OnDemandFuelCells)                 |
+| curseforge | (https://www.curseforge.com/kerbal/ksp-mods/OnDemandFuelCells)    |
+| spacedock  | (https://spacedock.info/mod/2223)                                 |
+| ckan       | OnDemandFuelCells                                                 |
 
 ## 1.3.0.0 - Gone to Plaid
 
@@ -30,6 +26,8 @@
 * #59 - add agency - pending public statement :pushpin: - contributed by zer0Kerbal
 * #60 - Dev - contributed by zer0Kerbal
 * #61 - upstream catchup - contributed by zer0Kerbal
+
+---
 
 ## Version 1.2.0.95 - for KSP 1.12.3 [06-Apr-2020]
 
@@ -137,14 +135,18 @@
 * Copy/Modify patches add 5 ReservePower if AmpYear installed
 * Copy/Modify patches add 0.01 megaJoules if InterstellarFuelSwitch installed
 
+---
+
 ## Version 1.2.0.3
 
 * KSP 1.12.3
 * 29-Nov-2019
 
-* #50 - Dev/tweak scale support 
-* 
-### Version 1.2.0.0 - To Go Boldly
+* #50 - Dev/tweak scale support
+
+---
+
+## Version 1.2.0.0 - To Go Boldly
 
 * <mark>Recompiled for update to Kerbal Space Program (KSP) 1.8.1</mark>
 * Using .NET Franework 4.8
@@ -154,7 +156,9 @@
 * Continued working on [BUG 1.1.2.0a] TweakScale
 * #46 - [NEW][BUG 1.1.2.1b] ODFC forgets its editor settings when moving to flight
 
-### Version 1.1.2.1 - Set SCE to AUX
+---
+
+## Version 1.1.2.1 - Set SCE to AUX
 
 * v
   * [BUG 1.1.2.0b] Kerbalism is not compatible with ODFC - Kerbalism developers have chosen to not integrate since they have their own version.
@@ -164,7 +168,9 @@
 * #33 - PAW grouping label
 * #44 - [BUG 1.1.2.0b] Kerbalism
 
-### Version 1.1.2.0 - Stall Alert! aka Stall Tactics
+---
+
+## Version 1.1.2.0 - Stall Alert! aka Stall Tactics
 
 * ***[NEW]*** Optional difficulty settings for moderate and hard play - stall. Don't run out of EC or the fuel cells will stop unctioning since they need electricity to function. Thank you to LinuxGuruGamer for the Setting.cs code and assistance.
 * ***[NEW]*** feature: autoSwitch (disabled for hard play). If current fuel mode is lacking fuel, will automatically look for nother that has fuel.
@@ -184,7 +190,9 @@
 * #35 - Add 'Stalled' Mode to Difficulty:Hard in settings menu
 * #41 - [BUG 0.0.1.9c] ERROR!'s out when there is only one fuel mode.
 
-### Version 0.0.1.9 (this is actually 1.1.1.9 and next release will switch to 1.1.2.0)
+---
+
+## Version 0.0.1.9 (this is actually 1.1.1.9 and next release will switch to 1.1.2.0)
 
 * 0.0.1.9 (this is actually 1.1.1.9 and next release will switch to 1.1.2.0)
 * added item grouping in PAW.
@@ -203,7 +211,9 @@
 * #25 - AllYAll integration
 * #31 - When EC=0 - can't switch mode
 
-### Version 0.0.1.8
+---
+
+## Version 0.0.1.8
 
 * ns renamed to newState
 * nmax renamed to newMax
@@ -218,7 +228,9 @@
 * #12 - [BUG 0.0.1.2b] Must have some EC to function, if EC == 0 does not charge
 * #19 - [BUG 0.0.1.4a] fuel cell doesn't switch to the &quot;Fuel Deprived&quot; state if you run out of any of the currently used resources and continues to produce EC
 
-### Version 0.0.1.7
+---
+
+## Version 0.0.1.7
 
 * [D][BUG 0.0.1.4c] other fixes seems to have fixed this.
 * [D][BUG 0.0.1.4a] someone tried to hotwire the fuel tanks with EC (**ElectricChargeID** needed to be replaced with **fuel.esourceID** )
@@ -226,7 +238,9 @@
 * #26 - V.0.0.1.7 - contributed by zer0Kerbal
 * #21 - [BUG 0.0.1.4c] [BUG] if ECneed &gt; ECsupply &amp; ECtotal = 0 will make the PAW fluctuate in size.
 
-### Version 0.0.1.6
+---
+
+## Version 0.0.1.6
 
 * commented Scale related code out
 * removed commented code from StockFuelCells.cfg to fix [BUG 0.0.1.6b]
@@ -248,7 +262,9 @@
 * #22 - [BUG 0.0.1.5] the paw label is created from the FSHORT node name in the part.cfg (or patch)
 * #24 - [BUG 0.0.1.6b] AllYAll module being added
 
-### Version 0.0.1.5
+---
+
+## Version 0.0.1.5
 
 * [D][NEW][BUG 0.0.1.5] the paw label is created from the FSHORT node name in the part.cfg (or patch)
 * corrected changlog bug numbering (missing .)
@@ -258,7 +274,9 @@
 * removed FSHORT from StockFuelCells.cfg
 * #7 - v.0.0.1.5
 
-### Version 0.0.1.4
+---
+
+## Version 0.0.1.4
 
 * 4x4cheesecake
   * variable sweep and decrypt (continued)
@@ -278,7 +296,9 @@ BUG:
   * [NEW][BUG 0.0.1.4b] the H2O+water mode causes the part to mis-function (ERROR) - probably has to do with esourceAbbreviations
   * [NEW][BUG 0.0.1.4c] [BUG] if ECneed > ECsupply & ECtotal = 0 will make the PAW fluctuate in size.
 
-### Version 0.0.1.3
+---
+
+## Version 0.0.1.3
 
 * created StockFuelCells.cfg which copies both stock fuel cells and adds ODFC
 * 4x4cheesecake variable sweep and decrypt
@@ -299,7 +319,9 @@ BUG:
 * #5 - update readme
 * #6 - v.0.0.1.4
 
-### Version 0.0.1.2
+---
+
+## Version 0.0.1.2
 
 * released:  
 * [REVERTED] updated .version to 1.7.3.1  
@@ -313,7 +335,9 @@ BUG:
 * [NEW][BUG 0.0.1.2c] Does not decrement fuel (all or any)
 * #1 - initial successful compile.
 
-### Version 1.1
+---
+
+## Version 1.1
 
 * >-- ORIGINAL --<
 * ODFC - change log
@@ -326,6 +350,10 @@ BUG:
 * Changed code to use public KSP/Unity functions where applicable
 * Very small code optimizations and organization
 
-### Version 1.0
+---
+
+## Version 1.0
 
 * Initial release (for KSP v0.90)
+
+---
