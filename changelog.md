@@ -10,34 +10,54 @@
 | spacedock  | (https://spacedock.info/mod/2223)                                 |
 | ckan       | OnDemandFuelCells                                                 |
 
-## 1.2.99.0-prerelease - `<EDITION>` edition
+## 1.2.99.0-prerelease - `<NextMode>` edition
 
-* 30 Jul 2022
+* 05 Aug 2022
 * Released for Kerbal Space Program 1.12.x
 
-"KSP_VERSION_MAX"
-AllYAll-Removal.cfg v1.2.0.0
-OnDemandFuelCells.cfg v1.0.0.0
-StockPods v1.9.0.0
-StockFuelCells.cfg v1.3.0.0
-#autoLOC_500899
+### Summary 1.2.99.0
 
-## 1.3.0.0 - Gone to Plaid
+* Recompiled for KSP 1.12.3 (NET 4.5.2 - C# 5.0)
+* internal updates and changes to prepare for further updates
+* Now includes modify patches and no longer compatible with
+  * modify patches
+  * copy patches
+  * will update those releases if enough demand
 
-* correct .version file max KSP version from 1.8.1 to 1.8.9999
-* Minor corrections to Changelog
-* ***[NEW]*** TweakScale support added. part and fuel cell now scales if TweakScale is installed. Quadratic scaling.
-* ***[NEW]*** Optional difficulty settings for moderate and hard play - Diminished Returns - the harder the game setting, the less EC/s produced for same fuel. GlobalScalingFactor.
-* ***[NEW]*** Fuel Consumption and Byproduct production rates now show in PAW instead of just the names of the fuels consumed and byproducts produced.
-* ***[NEW]*** B9 Fuel Swapping is now working with parts with ODFC installed; its either that or Bill flubbed up the B9partswtich patches.
-* changed default thresHoldMax = 1 to 0.85f
-* [D][BUG 1.1.2.0a] Properly scales ODFC module (maxEC, Fuels, Byproducts) and resources in a part with ODFC installed. Requires TweakScale to be installed.
-* [D][BUG 1.2.0.0a] fuel consumption and byproduct production should be seen on PAW - it is not
+### Code
 
-* #57 - Fix version file URL property - contributed by HebaruSan
-* #59 - add agency - pending public statement :pushpin: - contributed by zer0Kerbal
-* #60 - Dev - contributed by zer0Kerbal
-* #61 - upstream catchup - contributed by zer0Kerbal
+* Recompiled
+  * .NET 4.5.2
+  * C# 5.0
+  * KSP 1.12.3
+  * <OnDemandFuelCells.dll> 
+    * file version 1.2.99.100
+* Renamed
+  * <ODFC.dll> to <OnDemandFuelCells.dll>
+
+### Config
+
+* Update
+  * all configs to reflect dll namechange
+  * AllYAll-Removal.cfg v1.2.0.0
+  * OnDemandFuelCells.cfg v1.0.0.0
+  * <OnDemandFuelCells.version>
+    * remove "KSP_VERSION_MAX"
+
+### Compatibliity
+
+* Update
+  * all patches to reflect dll namechange
+  * StockPods v1.9.0.0
+  * StockFuelCells.cfg v1.3.0.0
+
+### Status 1.2.99.0
+
+* Issues
+  * closes #65 - OnDemandFuelCells <ODFC> 1.2.99.0-prerelease `<EDITION>`
+  * closes #66 - 1.2.99.0 Verify Legal Mumbo Jumbo
+  * closes #67 - 1.2.99.0 Update Documentation
+  * closes #68 - 1.2.99.0 Update Social Media
 
 ---
 
