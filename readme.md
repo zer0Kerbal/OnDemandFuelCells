@@ -344,38 +344,3 @@ Track progress: issues [here][MOD:issue] and projects [here](https://github.com/
 [^1]: this isn't a mod. ;P
 [^2]: ***may*** work on other versions (YMMV)
 [^3]: *Be Kind: Lithobrake, not jakebrake! Keep your Module Manager up to date!*
-
-
-
----
-
-## links to original
-
-On Demand Fuel Cells (ODFC) by `Orum'  
-Licensed under CC BY-NC-SA-4.0  
-
-* [KSP Forums](https://forum.kerbalspaceprogram.com/index.php?/topic/138431-*)
-* [Spacedock](https://spacedock.info/mod/618)
-* [Dropbox](https://www.dropbox.com/s/0rpp4138jumvaxq/ODFC_v1.1.zip?dl=0)  
-
----
-
-## License
-
-![[CC 4.0 BY-NC-SA](https://creativecommons.org/licenses/by-nc-sa/4.0)](https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png "CC 4.0 BY-NC-SA") content licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.
-
-> You may modify for personal use. You may redistribute content with attribution to original author nli2work, plus any other attribution where required. You must redistribute under identical license, (CC BY-NC-SA 4.0)(https://creativecommons.org/licenses/by-nc-sa/4.0).
-
-@Orum (the mod's original author) has given permission to release this under CC-BY-NC-SA-4.0.
-
-*Be Kind: Lithobrake, not jakebrake! Keep your Module Manager up to date*
-
-##### All bundled mods are distributed under their own licenses
-##### All art assets (textures, models, animations) are distributed under an All Rights Reserved License.
-
-###### v1.2.0.1 original: 11 Aug 2018 zed'K | updated: 05 Jun 2021 zed'K & Lisias & 4x4cheesecake & LinuxGuruGamer
-
-* [Stack/Stock fuel cells balance survey](https://github.com/zer0Kerbal/ODFCr/issues/new?assignees=zer0Kerbal&labels=stackcells&template=stock_report.md&title=BalanceSurvey)
-* [Have a patch to add?](https://github.com/zer0Kerbal/ODFCr/issues/new?assignees=zer0Kerbal&labels=patches&template=feature_request.md&title=Patch)
-* [Bug report?](https://github.com/zer0Kerbal/ODFCr/issues/new?assignees=zer0Kerbal&labels=bug&template=bug_report.md&title=BUG_report)
-* [Feature Request?](https://github.com/zer0Kerbal/ODFCr/issues/new?assignees=zer0Kerbal&labels=feature&template=feature_request.md&title=feature_request)
