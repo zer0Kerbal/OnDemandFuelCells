@@ -9,10 +9,10 @@
     <NoStandardLibraries>false</NoStandardLibraries>
     <AssemblyName>OnDemandFuelCells</AssemblyName>
     <RootNamespace>OnDemandFuelCells</RootNamespace>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <Deterministic>true</Deterministic>
-    <LangVersion>latest</LangVersion>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+      <FileAlignment>512</FileAlignment>
+      <Deterministic>true</Deterministic>
+      <LangVersion>latest</LangVersion>
     <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -38,19 +38,19 @@
     <Prefer32Bit>false</Prefer32Bit>
     <PlatformTarget>anycpu</PlatformTarget>
     <ConsolePause>false</ConsolePause>
-    <DocumentationFile>..\docs\OnDemandFuelCells.xml</DocumentationFile>
+    <DocumentationFile>..\docs\Code\OnDemandFuelCells.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="$(K112)\KSP_x64_Data\Managed\Assembly-CSharp*.dll">
+    <Reference Include="K:\112\KSP_x64_Data\Managed\Assembly-CSharp*.dll">
       <Private>False</Private>
     </Reference>
-    <Reference Include="$(K112)\KSP_x64_Data\Managed\Assembly-CSharp-firstpass.dll">
+    <Reference Include="K:\112\KSP_x64_Data\Managed\Assembly-CSharp-firstpass.dll">
       <Private>False</Private>
     </Reference>
-    <Reference Include="$(K112)\KSP_x64_Data\Managed\UnityEngine*.dll">
+    <Reference Include="K:\112\KSP_x64_Data\Managed\UnityEngine*.dll">
       <Private>False</Private>
     </Reference>
-    <Reference Include="$(K112)\KSP_x64_Data\Managed\UnityEngine.UI.dll">
+    <Reference Include="K:\112\KSP_x64_Data\Managed\UnityEngine.UI.dll">
       <Private>False</Private>
     </Reference>
     <!-- <Reference Include="$(K19)\GameData\999_Scale_Redist.dll">
@@ -64,7 +64,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ODFC.cs" />
     <Compile Include="Config.cs" />
     <Compile Include="BackgroundProcessing.cs" />
     <Compile Include="Log.cs" />
@@ -95,7 +94,7 @@
   </PropertyGroup>
   <PropertyGroup>
     <PostBuildEvent>
-set K112=$(K112)
+set K112=K:\112
 IF "%25K112%25"=="" (
 	ECHO Configuration error - K112 not specified in project.
 	ECHO Either set K100 environment variable
