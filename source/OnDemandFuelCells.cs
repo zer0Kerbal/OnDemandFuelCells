@@ -29,10 +29,8 @@ using UnityEngine.UI;
 
 namespace OnDemandFuelCells
 {
+    /// <summary>On Demand Fuel Cells (ODFC) part module</summary>
     public class ODFC : PartModule
-    /// <summary>
-    /// On Demand Fuel Cells (ODFC) part module
-    /// </summary>
     /// <seealso cref="PartModule" />
     {
 #region Enums Vars
@@ -123,7 +121,7 @@ namespace OnDemandFuelCells
         public string PAWStatus = Localizer.Format("#ODFC-PAW-boot");
 
         [KSPField(  isPersistant = false,  guiActive = true,  guiActiveEditor = true, groupName = GroupName,
-                    groupDisplayName = "On Demand Fuel Cells v" + Version.Text, groupStartCollapsed = true,
+                    groupDisplayName = "On Demand Fuel Cells v" + Version.SText, groupStartCollapsed = true,
                     guiName = ""),
             UI_Label(scene = UI_Scene.Flight)]
         public string status = Localizer.Format("#ODFC-PAW-err");
@@ -427,8 +425,8 @@ namespace OnDemandFuelCells
             if (HighLogic.LoadedSceneIsEditor) GameEvents.onEditorShipModified.Fire(EditorLogic.fetch.ship);
         }
 
+        /// <summary><para>Updates the PAW label.</para></summary>
         internal void updatePAWLabel() // private
-        /// <summary><para></para>Updates the PAW label.</para></summary>
         {
             //string colorStr = "<#ADFF2F>";
             string colorStr = String.Empty;
@@ -480,45 +478,45 @@ namespace OnDemandFuelCells
 #endregion Public Functions
 #region OnReScale
 
-        /// <summary>Updates the PAW with scaleFactor and advises KSP that the ship has changed</summary>
+//        /// <summary>Updates the PAW with scaleFactor and advises KSP that the ship has changed</summary>
 
-        /// <summary> <para> Called when [rescale].</para> </summary>
-        /// <param name="scaleFactor">The scale factor.</param>
-        internal void OnRescale(TweakScale.ScalingFactor.FactorSet scaleFactor)
-        {
-           // Log.Info(String.Format("scaleFactor: {0}:{1}", scaleFactor.ToString(), scaleFactor.quadratic));
+//        /// <summary> <para> Called when [rescale].</para> </summary>
+//        /// <param name="scaleFactor">The scale factor.</param>
+//        internal void OnRescale(TweakScale.ScalingFactor.FactorSet scaleFactor)
+//        {
+//           // Log.Info(String.Format("scaleFactor: {0}:{1}", scaleFactor.ToString(), scaleFactor.quadratic));
 
-            /// <summary>this scales any resources on the part with ODFC:  </summary>
-            foreach (PartResource resource in this.part.Resources)
-            {
-             //       Log.Info(String.Format("unscaled resource: {0}: {1} / {2}", resource.resourceName, resource.amount, resource.maxAmount));
-                resource.maxAmount *= scaleFactor.quadratic; // .cubic;
-                resource.amount *= scaleFactor.quadratic; // cubic;
-               //     Log.Info(String.Format("scaled resource: {0}: {1} / {2}", resource.resourceName, resource.amount, resource.maxAmount));
-            }
+//            /// <summary>this scales any resources on the part with ODFC:  </summary>
+//            foreach (PartResource resource in this.part.Resources)
+//            {
+//             //       Log.Info(String.Format("unscaled resource: {0}: {1} / {2}", resource.resourceName, resource.amount, resource.maxAmount));
+//                resource.maxAmount *= scaleFactor.quadratic; // .cubic;
+//                resource.amount *= scaleFactor.quadratic; // cubic;
+//               //     Log.Info(String.Format("scaled resource: {0}: {1} / {2}", resource.resourceName, resource.amount, resource.maxAmount));
+//            }
 
-            /// <summary><para> this scales the actual fuel cell, fuels, byproducts, and maxEC
-            /// shouldn't scale rateLimit and threshold because are percentages </para></summary>
-            for (int m = 0; m <= ODFC_config.modes.Length - 1; m++)
-            {
-                 //   Log.Info(String.Format("mode/modes: {0} / {1}", (m + 1), ODFC_config.modes.Length));
-                 //   Log.Info(String.Format("unscaled maxEC: {0}", ODFC_config.modes[m].maxEC));
-                //? scale MaxEC
-                ODFC_config.modes[m].maxEC *= scaleFactor.quadratic;
-                 //   Log.Info(String.Format("scaled maxEC: {0}", ODFC_config.modes[m].maxEC));
+//            /// <summary><para> this scales the actual fuel cell, fuels, byproducts, and maxEC
+//            /// shouldn't scale rateLimit and threshold because are percentages </para></summary>
+//            for (int m = 0; m <= ODFC_config.modes.Length - 1; m++)
+//            {
+//                 //   Log.Info(String.Format("mode/modes: {0} / {1}", (m + 1), ODFC_config.modes.Length));
+//                 //   Log.Info(String.Format("unscaled maxEC: {0}", ODFC_config.modes[m].maxEC));
+//                //? scale MaxEC
+//                ODFC_config.modes[m].maxEC *= scaleFactor.quadratic;
+//                 //   Log.Info(String.Format("scaled maxEC: {0}", ODFC_config.modes[m].maxEC));
 
-                  //  Log.Info(String.Format("Fuels in mode: {0} / {1}", (m + 1), ODFC_config.modes[m].fuels.Length + 1));
-                //? scale fuels in ODFC_config.modes
-                for (int n = 0; n <= ODFC_config.modes[m].fuels.Length - 1; n++)
-                    ODFC_config.modes[m].fuels[n].rate *= scaleFactor.quadratic;
+//                  //  Log.Info(String.Format("Fuels in mode: {0} / {1}", (m + 1), ODFC_config.modes[m].fuels.Length + 1));
+//                //? scale fuels in ODFC_config.modes
+//                for (int n = 0; n <= ODFC_config.modes[m].fuels.Length - 1; n++)
+//                    ODFC_config.modes[m].fuels[n].rate *= scaleFactor.quadratic;
 
-                   // Log.Info(String.Format("Byproducts in mode: {0} / {1}", (m + 1), ODFC_config.modes[m].byproducts.Length + 1));
-                //? scale byproducts in ODFC_config.modes
-                for (int n = 0; n <= ODFC_config.modes[m].byproducts.Length - 1; n++)
-                    ODFC_config.modes[m].byproducts[n].rate *= scaleFactor.quadratic;
-            }
-            updateEditor(); // updateFuelTexts(); // removed.this
-        }
+//                   // Log.Info(String.Format("Byproducts in mode: {0} / {1}", (m + 1), ODFC_config.modes[m].byproducts.Length + 1));
+//                //? scale byproducts in ODFC_config.modes
+//                for (int n = 0; n <= ODFC_config.modes[m].byproducts.Length - 1; n++)
+//                    ODFC_config.modes[m].byproducts[n].rate *= scaleFactor.quadratic;
+//            }
+//            updateEditor(); // updateFuelTexts(); // removed.this
+//        }
 
 #endregion OnRescale
 #region on events
@@ -699,7 +697,7 @@ namespace OnDemandFuelCells
             if (info == string.Empty)
             {
                 info += Localizer.Format("#ODFC-manu-titl"); // #ODFC-manu-titl = Okram Industries
-                info += "\n v" + Version.Text; // ODFC Version Number text
+                info += "\n v" + Version.SText; // ODFC Version Number text
                 info += "\n<color=#b4d455FF>" + Localizer.Format("#ODFC-desc"); // #ODFC-desc = Automated fuel cell controller which only generates electricity when really needed
                 info += "</color>\n\n";
 

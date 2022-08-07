@@ -1,16 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="17.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{9ABC4BBB-E240-4B94-897D-8959580E87B9}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ODFC</RootNamespace>
-    <AssemblyName>ODFC</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
+    <NoStandardLibraries>false</NoStandardLibraries>
+    <AssemblyName>OnDemandFuelCells</AssemblyName>
+    <RootNamespace>OnDemandFuelCells</RootNamespace>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+      <FileAlignment>512</FileAlignment>
       <Deterministic>true</Deterministic>
       <LangVersion>latest</LangVersion>
     <TargetFrameworkProfile />
@@ -19,109 +19,93 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
+    <OutputPath>..\GameData\OnDemandFuelCells\Plugins\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
     <Prefer32Bit>false</Prefer32Bit>
-    <OutputPath>bin\Debug\</OutputPath>
     <PlatformTarget>anycpu</PlatformTarget>
-    <OutputPath>..\GameData\OnDemandFuelCells\Plugins\</OutputPath>
-    <!-- <DocumentationFile>..\docs\OnDemandFuelCells.xml</DocumentationFile> -->
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
     <DebugType>embedded</DebugType>
     <Optimize>true</Optimize>
+    <OutputPath>..\GameData\OnDemandFuelCells\Plugins\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
+    <DebugSymbols>true</DebugSymbols>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <!-- <DebugSymbols>true</DebugSymbols> -->
     <Prefer32Bit>false</Prefer32Bit>
     <PlatformTarget>anycpu</PlatformTarget>
-    <OutputPath>..\GameData\OnDemandFuelCells\Plugins\</OutputPath>
-    <DocumentationFile>..\docs\OnDemandFuelCells.xml</DocumentationFile>
-  </PropertyGroup>
-  <PropertyGroup>
-    <SignAssembly>false</SignAssembly>
-    <TransformOnBuild>true</TransformOnBuild>
-    <OverwriteReadOnlyOutputFiles>true</OverwriteReadOnlyOutputFiles>
-    <TransformOutOfDateOnly>false</TransformOutOfDateOnly>
-    <RootNamespace>MoarKerbals</RootNamespace>
+    <ConsolePause>false</ConsolePause>
+    <DocumentationFile>..\docs\Code\OnDemandFuelCells.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="K:\112\KSP_x64_Data\Managed\Assembly-CSharp*.dll">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="K:\112\KSP_x64_Data\Managed\Assembly-CSharp-firstpass.dll">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="K:\112\KSP_x64_Data\Managed\UnityEngine*.dll">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="K:\112\KSP_x64_Data\Managed\UnityEngine.UI.dll">
+      <Private>False</Private>
+    </Reference>
+    <!-- <Reference Include="$(K19)\GameData\999_Scale_Redist.dll">
+      <Private>False</Private>
+    </Reference> -->
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="$(K112)\KSP_x64_Data\Managed\Assembly-CSharp*.dll">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="$(K112)\KSP_x64_Data\Managed\UnityEngine*.dll">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="\$(K112)\GameData\Scale_Redist.dll" >
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="$(K112)\KSP_x64_Data\Managed\Assembly-CSharp-firstpass.dll" >
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="$(K112)\KSP_x64_Data\Managed\UnityEngine.UI*.dll" >
-      <Private>False</Private>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ODFC.cs" />
     <Compile Include="Config.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="InstallChecker.cs" />
+    <Compile Include="BackgroundProcessing.cs" />
+    <Compile Include="Log.cs" />
+    <Compile Include="OnDemandFuelCells.cs" />
     <Compile Include="Settings.cs" />
-    <Compile Include="Version.cs">
+    <!-- <Compile Include="TweakScaleSupport.cs" /> -->
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Version.cs">
+      <DependentUpon>Version.tt</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Version.tt</DependentUpon>
     </Compile>
   </ItemGroup>
-  <!-- <ItemGroup>
+  <ItemGroup>
     <Content Include="Properties\Version.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Version.cs</LastGenOutput>
-    </Content> -->
-  </ItemGroup>
-  <!-- <ItemGroup>
-    <Content Include="AssemblyVersion.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>AssemblyVersion.cs</LastGenOutput>
     </Content>
-  </ItemGroup> -->
+  </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
-    <Import Project="$(MSBuildToolsPath)\Microsoft.CSHARP.Targets" />
-    <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v16.0\TextTemplating\Microsoft.TextTemplating.targets" />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSHARP.Targets" />
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v17.0\TextTemplating\Microsoft.TextTemplating.targets" />
   <PropertyGroup>
-    <PreBuildEvent>
-      "$(DevEnvDir)\TextTransform.exe" "$(ProjectDir)Properties\Version.tt"
+    <PreBuildEvent>"$(DevEnvDir)\TextTransform.exe" "$(ProjectDir)Properties\Version.tt" 
     </PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
     <PostBuildEvent>
-set K112=$(K112)
+set K112=K:\112
 IF "%25K112%25"=="" (
 	ECHO Configuration error - K112 not specified in project.
-	ECHO Either set K112 environment variable
+	ECHO Either set K100 environment variable
 	PAUSE
-	GOTO DONE
+	rem GOTO DONE
 )
-
-start /D $(ProjectDir)..\ /WAIT _deploy.bat  $(TargetDir) $(TargetFileName) $(TargetName)
-if $(ConfigurationName) == Release (	
-  start /D $(ProjectDir)..\ /WAIT _buildRelease.bat $(TargetDir) $(TargetFileName) $(TargetName)
-
+start /D $(ProjectDir)..\  /WAIT _deploy.bat
+if $(ConfigurationName) == Release start /D $(ProjectDir)..\   /WAIT _buildRelease.bat
 del $(TargetDir)\*.tmp
-)
-    </PostBuildEvent>
-  </PropertyGroup>
+:DONE
+  </PostBuildEvent>
   </PropertyGroup>
   <ProjectExtensions>
     <MonoDevelop>
