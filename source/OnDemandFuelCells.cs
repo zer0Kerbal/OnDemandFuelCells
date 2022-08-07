@@ -121,7 +121,7 @@ namespace OnDemandFuelCells
         public string PAWStatus = Localizer.Format("#ODFC-PAW-boot");
 
         [KSPField(  isPersistant = false,  guiActive = true,  guiActiveEditor = true, groupName = GroupName,
-                    groupDisplayName = "On Demand Fuel Cells v" + Version.Text, groupStartCollapsed = true,
+                    groupDisplayName = "On Demand Fuel Cells v" + Version.SText, groupStartCollapsed = true,
                     guiName = ""),
             UI_Label(scene = UI_Scene.Flight)]
         public string status = Localizer.Format("#ODFC-PAW-err");
@@ -697,7 +697,7 @@ namespace OnDemandFuelCells
             if (info == string.Empty)
             {
                 info += Localizer.Format("#ODFC-manu-titl"); // #ODFC-manu-titl = Okram Industries
-                info += "\n v" + Version.Text; // ODFC Version Number text
+                info += "\n v" + Version.SText; // ODFC Version Number text
                 info += "\n<color=#b4d455FF>" + Localizer.Format("#ODFC-desc"); // #ODFC-desc = Automated fuel cell controller which only generates electricity when really needed
                 info += "</color>\n\n";
 
