@@ -36,13 +36,5 @@ using System.Runtime.CompilerServices;
 [assembly: AssemblyCopyright("GPL-3.0 2014, 2017, 2022 by Orum and zer0Kerbal")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
-
-// Setting ComVisible to false makes the types in this assembly not visible
-// to COM components.  If you need to access a type in this assembly from
-// COM, set the ComVisible attribute to true on that type.
 [assembly: ComVisible(false)]
-
-// The following GUID is for the ID of the typelib if this project is exposed to COM
 [assembly: Guid("2fefd366-35f6-4219-a448-7de4054204f7")]
-
-//[assembly: AssemblyInformationalVersionAttribute(OnDemandFuelCells.Version.Text)]
