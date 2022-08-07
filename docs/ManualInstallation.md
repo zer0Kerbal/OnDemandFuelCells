@@ -67,7 +67,7 @@ To install, place the `GameData` folder inside your Kerbal Space Program folder:
       * #.#.#.#.htm
       * Attributions.htm
       * changelog.md
-      * GPL-3.0.txt
+      * GPL-2.0.txt
         ManualInstallation.htm
       * OnDemandFuelCells.version
       * readme.htm
