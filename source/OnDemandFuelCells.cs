@@ -29,10 +29,8 @@ using UnityEngine.UI;
 
 namespace OnDemandFuelCells
 {
+    /// <summary>On Demand Fuel Cells (ODFC) part module</summary>
     public class ODFC : PartModule
-    /// <summary>
-    /// On Demand Fuel Cells (ODFC) part module
-    /// </summary>
     /// <seealso cref="PartModule" />
     {
 #region Enums Vars
@@ -427,8 +425,8 @@ namespace OnDemandFuelCells
             if (HighLogic.LoadedSceneIsEditor) GameEvents.onEditorShipModified.Fire(EditorLogic.fetch.ship);
         }
 
+        /// <summary><para>Updates the PAW label.</para></summary>
         internal void updatePAWLabel() // private
-        /// <summary><para></para>Updates the PAW label.</para></summary>
         {
             //string colorStr = "<#ADFF2F>";
             string colorStr = String.Empty;
