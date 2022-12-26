@@ -1,14 +1,15 @@
-<!-- readme.md v1.6.9.2
+<!-- readme.md v1.6.9.9
 On Demand Fuel Cells (ODFC)
 created: 17 Jul 2017
-updated: 05 Jul 2022 -->
+updated: 04 Oct 2022 -->
 
 <!--this file: CC BY-ND 4.0 by zer0Kerbal-->
 
 [![On Demand Fuel Cells (ODFC)][MOD:shd:latest]][MOD:forum] [![KSP version][KSP:shd]][KSP:url]  [![License][LIC:shd]][LIC:url]  
-[![Curseforge][CURSFG:shd]][CURSFG:url] [![GitHub][GITHUB:shd]][GITHUB:url] [![SpaceDock][SPCDCK:shd]][SPCDCK:url] [![CKAN][CKAN:shd]][CKAN:url]   
+[![Curseforge][CURSFG:shd]][CURSFG:url] [![GitHub][GITHUB:shd]][GITHUB:url] [![SpaceDock][SPCDCK:shd]][SPCDCK:url] [![CKAN][ckan:shd]][ckan:url]  
 [![Pages][MOD:pages:shd]][MOD:pages]
 
+![Code][CODE:shd]
 
 
 # On Demand Fuel Cells (ODFC)
@@ -17,16 +18,14 @@ updated: 05 Jul 2022 -->
 
 adopted with *express* permission and brought to you by *KerbSimpleCo*
 
-<img src="https://raw.githubusercontent.com/zer0Kerbal/OnDemandFuelCells/master/img/HeroLogo_1920x1920.png" alt="OnDemandFuelCells Hero" width="72%" height="72%">
+<img src="https://raw.githubusercontent.com/zer0Kerbal/OnDemandFuelCells/master/img/HeroLogo_1920x1920.png" alt="OnDemandFuelCells Hero" width="50%" height="50%">
 
 
 ### Preamble by [`Orum`][orum]
->
->On Demand Fuel Cells (ODFC) is a plugin to simulate fuel cells in Kerbal Space Program (KSP), and do a better job of it than stock's use of a resource converter.  The main difference is it only generates electricity when it's really needed (batteries almost empty), and otherwise lets electricity of a craft float up and down, as it might in a solar powered vehicle when the sun is eclipsed by another celestial body.  It also allows fuel cells to generate byproducts, aimed at supporting life support mods like TACLS.
 
-The plugin requires a set of Module Manager patches to function, as it does not do anything unless integrated into a part. There are two different sets of patches available on CKAN or SpaceDock.
-One set that copies the fuel cells from Stock, Universal Storage 2, Jatwaa Demolitions Co, and Solid Fuel Cells (soon more) and replaces the stock modules with ODFC with three modes (four if Community Resource Pack is installed correctly) of operation. Also adds a 0.5 EC/s multimode fuel cell to all stock command pods (easily disabled since in separate patch)
-Another set that modifies the same set of parts instead of copying them.
+> On Demand Fuel Cells (ODFC) is a plugin to simulate fuel cells in Kerbal Space Program (KSP), and do a better job of it than stock's use of a resource converter.  The main difference is it only generates electricity when it's really needed (batteries almost empty), and otherwise lets electricity of a craft float up and down, as it might in a solar powered vehicle when the sun is eclipsed by another celestial body.  It also allows fuel cells to generate byproducts, aimed at supporting life support mods like TACLS.
+
+The plugin includes a set of Module Manager patches to function, as it does not do anything unless integrated into a part. The patches integrates ODFC into the fuel cells from Stock, Universal Storage 2, Jatwaa Demolitions Co, and Solid Fuel Cells (soon more) and replaces the stock modules with ODFC with three modes (four if Community Resource Pack is installed correctly) of operation. Also adds a 0.5 EC/s multimode fuel cell to all stock command pods (easily disabled since in separate patch)
 
 ### Features
 
@@ -36,7 +35,8 @@ Another set that modifies the same set of parts instead of copying them.
 * configurable to produce byproducts (so O+H2 = EC + H2O)
 * very small memory footprint
 * Brown and Black out protection assistance
-* PAW (Part Action Window / Right Click Menu) grouping with auto collapse, *click the down arrow to drop the ODFC control panel down (KSP 1.7.1).*
+* PAW (Part Action Window / Right Click Menu) grouping with auto collapse,
+  * *click the down arrow to drop the ODFC control panel down (KSP 1.7.1).*
 * Two new features from the game settings:
   * Stall: fuel cell stops working if vessel total electric charge falls to close to zero (0f) and will not start until there is more electric charge. Fuel cells require EC to work.
   * autoSwitch: automatically switched fuel mode looking for fuel if the current mode becomes fuel deprived.
@@ -44,57 +44,59 @@ Another set that modifies the same set of parts instead of copying them.
 
 ### See More
 
-* See our [Parts Catalog][MOD:parts] for part pictures
-* For more images, see our [Marketing Slicks][MOD:markt]
-* Discussions and news on this mod: See [Discussions][MOD:discu] or [KSP Forums][MOD:forum]
-* Changelog Summary for more details of changes: See [ChangeLog][MOD:chlog]
-* Known Issues for more details of feature requests and known issues : See [Known Issues][MOD:issue]
-* GitHub Pages : See [Pages][MOD:pages]
-
----
-
-![Hero Image][IMG:hero:0]
+>* [GitHub Pages][MOD:pages]
+>* [Marketing Slicks][MOD:markt]
+>* [Discussions][MOD:discu] or [KSP Forums][MOD:forum] for discussions and news
+>* [ChangeLog][MOD:chlog] for more details of changes
+>* [Known Issues][MOD:issue] for more details of feature requests and known issues
+>* [Integration Wiki](https://github.com/zer0Kerbal/OnDemandFuelCells/wiki)
 
 ### Help Wanted
 
 > * Compatibility patches
 > * Contracts for these glorious parts
-> * Marketing Images and Videos such as hero shots, animated gifs, short highlight
+> * Variant Textures
+> * Converting from FireSpitter to Stock and/or KSPWheel  
+> * Model updates to Unity 2019
+> * Marketing Images and Videos such as hero shots, animated gifs, short highlights
+> * See the [README in the Localization folder][lreadme] or the [Quickstart Guide][qstart] for instructions for adding or improving translations. [GitHub][GitHub:url] push is the best way to contribute. *Additions and corrections welcome!*
 > * Have a request? Glad to have them, kindly submit through [GitHub][MOD:issue].
-
----
 
 ### Localization
 
 >* ![English][EN] English
 >* ***your translation here***
->
-> HELP WANTED - See the [README in the Localization folder][lreadme] or the [Quickstart Guide][qstart] for instructions for adding or improving translations. [GitHub][GitHub:url] push is the best way to contribute. *Additions and corrections welcome!*
-
----
 
 ### Installation Directions [^1]
 
 ***Use***
   CurseForge/OverWolf App (currently does not install dependencies)  
 
-  <a href="https://download.curseforge.com/">
-    <img src="https://www.overwolf.com/brand-guidelines/img/logo2.svg" alt="CurseForge/OverWolf App" width="15%" height="15%">
-</a>
+  <a href="https://download.curseforge.com/"> <img src="https://www.overwolf.com/brand-guidelines/img/logo2.svg" alt="CurseForge/OverWolf App" width="15%" height="15%"></a>
 
-Whilst I agree CKAN is a great mod for those that can't use zip tools. I take no part, nor am I interested in maintaining the CKAN mod metadata for my mods.
-Please don't ask me about it but refer to the CKAN mod thread if you are having issues with CKAN or the metadata it maintains. Beware, CKAN *can* really mess up though it tries very, very, very hard not to.
+I take no part, nor am I interested in maintaining the [CKAN][ckan:url] mod metadata for my mods. [CKAN][ckan:url] is a great mod for those that can't use zip tools. If you are having issues please let the [CKAN][ckan:url] people know and refer to the [CKAN][ckan:url] thread. My support of [CKAN][ckan:url] extends as far as me checking the checkbox in Spacedock when I upload. Beware, [CKAN][ckan:url] *can* really mess up though it tries very, very, very hard not to.
 
-or [![CKAN][CKAN:img]][CKAN:url]
+or [![CKAN][ckan:img]][ckan:url]
 
 ### Dependencies
 
-* [Kerbal Space Program][KSP:url] [![Kerbal Space Program][KSP:shd]][KSP:url] [^2]
 * Either [^3]
-  * [Module Manager][mm]
   * [Module Manager /L][mml]
+  * [Module Manager][mm]
+* [Kerbal Space Program][KSP:url] [![Kerbal Space Program][KSP:shd]][KSP:url] [^2]
 
-* ***Parts designed to use, or patches to modify existing parts*** *This addon does nothing by itself.*
+### Suggests (These mods have Fuel Cells)
+
+* by [zer0Kerbal][zer0Kerbal]
+  * [Hot Beverages Irradiated - Fuel Cells (HBI/FC)][HBIFC]
+  * [Biomatic (BIO)][BIO]
+  * [Field Training Facility (FTF)][FTF]
+  * [Field Training Lab (FTL)][FTL]
+  * [GPO SpeedPump (GPO)][GPO]
+  * [Kaboom! (BOOM)][BOOM]
+  * [On Demand Fuel Cells (ODFC)][ODFC]
+  * [Papa Kerballini's Pizza (PIZZA)][PIZZA]
+* [GPO (Goo Pumps & Oils') Speed Pump (GPO)][GPO]
 
 ### Supports
 
@@ -104,10 +106,6 @@ or [![CKAN][CKAN:img]][CKAN:url]
   * [BackgroundProcessing][bgp] *(exclusive to BackgroundResources) (see known issues list)*
   * [Background Resources][bgr] *(exclusive to BackgroundProcessing) (see known issues list)*
 * [Community Resource Pack][crp]
-
-### Suggests (These mods have Fuel Cells)
-
-* [Hot Beverages Irradiated - Fuel Cells (HBI/FC)][HBIFC]
 * [Bluedog Design Bureau][bdb]
 * [Stockalike Mining Extension (SMX)][smx]
 * [Univeral Storage II][us2]
@@ -116,7 +114,7 @@ or [![CKAN][CKAN:img]][CKAN:url]
 * [Solid Fuel Cells][sfc]
 * [Jatwaa Demolitions Co][jdf]
 
-### Does not work with parts from (because they use own generation MODULES)
+### Does not patch parts from (because they use own generation MODULES)
 
 * Kethane
 * USI
@@ -129,8 +127,7 @@ or [![CKAN][CKAN:img]][CKAN:url]
 
 ### REPLACES
 
-* [ODFC][]
-* [ODFC - On Demand Fuel Cells by Orum](http://forum.kerbalspaceprogram.com/index.php?/topic/138431-111-*) >-- ORIGINAL (outdated)--<
+* [ODFC - On Demand Fuel Cells by Orum](http://forum.kerbalspaceprogram.com/index.php?/topic/138431-*/) >-- ORIGINAL (outdated)--<
 * [ODFC-Refueled][ODFC-R]
 
 ### Tags
@@ -148,23 +145,11 @@ plugin, config, flags, agency, control, convenience, sound, resources
 
 * [Orum][orum] for creating this glorious addon!
 * [`4x4cheesecake`][4x4cheesecake] for helping with the initial adoption
-* see [Attribution.md][MOD:attr] for more comprehensive list
-
-### Known Issue Tracker
-
-* [NEW][BUG 1.1.2.1a] AmpYear doesn't seem to recognize ODFC
-* [BUG 1.1.2.0a] TweakScale will not scale module ODFC
-* [BUG 1.1.2.0b] Kerbalism doesn't recognize ODFC, ODFC still functions correctly
-* [BUG 0.0.1.9a] B9 doesn't work on ODFC enabled parts
-* [BUG 0.0.1.9b] next fuel mode should not be visible when only one mode
-* [BUG 0.0.1.6a] BackgroundProcessing or Background Resources mods don't see ODFC, so ODFC doesn't work when doesn't have focus. Should not have both BackgroundProcessing and BackgroundResources installed.
-* *any mod that requires to use onLoad() instead of onStart() to update a part*
-
----
+* see [Attribution.md][MOD:attr] for more
 
 ### Legal Mumbo Jumbo (License *provenance*)
 
-#### Current (4) - [`zer0Kerbal`][zer0Kerbal]
+#### Current (3) - [`zer0Kerbal`][zer0Kerbal]
 
 > Forum: [Thread][MOD:forum] - Source: [GitHub][GITHUB:url]  
 > License: [![License][LIC:shd]][LIC:url] ![License][LIC:log]
@@ -176,38 +161,38 @@ plugin, config, flags, agency, control, convenience, sound, resources
 
 ##### see [Notices.md][MOD:notic] for more *legal mumbo jumbo*
 
-#### Original (3) - [`zer0Kerbal`][zer0Kerbal]
+#### Author (2) - [`zer0Kerbal`][zer0Kerbal]
 
 > Forum: [Thread][MOD:2:thread] - Download: [CurseForge][MOD:2:dnload] - Source: [GitHub][MOD:2:source]  
 > License: [![License][LIC:2:shd]][LIC:2:url] ![License][LIC:2:log]
 
-#### Original (1) - Author: [`'Orum`][orum1]
+#### Author (1) - Author: [`'Orum`][orum1]
 
-> Forum: [Thread][MOD:1:thread] - Download: [SpaceDock][MOD:1:dnload] - Source: [Dropbox][MOD:1:source]  
+> Forum: [Thread][MOD:1:thread] - Download: [SpaceDock][MOD:1:dnload] - Source: [SpaceDock][MOD:1:source]  
 > License: [![License][LIC:1:shd]][LIC:1:url] ![License][LIC:1:log]
 
 #### Original (0) - Author: [`Orum`][orum]
 
-> Forum: [Thread][MOD:0:thread] - Download: [Dropbox][MOD:0:dnload] - Source: [Dropbox][MOD:0:source]  
+> Forum: [Thread][MOD:0:thread] - Download: [Archive.org][MOD:0:dnload] - Source: [Archive.org][MOD:0:source]  
 > License: [![License][LIC:0:shd]][LIC:0:url] ![License][LIC:0:log]
-
----
 
 ### How to support this and other great mods by [`zer0Kerbal`][zer0Kerbal]  
 
+> ***Completely voluntary, absolutely amazing, and really does help me out a lot!***  
+> quote from <a href="https://forum.kerbalspaceprogram.com/index.php?/profile/32393-*/"><img border="0" alt="cybutek" src="https://kerbal-forum-uploads.s3.us-west-2.amazonaws.com/monthly_2020_06/kappa-kerbal-anarchy.thumb.png.673a2f6f7b36cc60a35c24efef217246.png" width="25px" height="25px"> cybutek</a> creator of <a href="https://forum.kerbalspaceprogram.com/index.php?/topic/17833-130-*/" alt="Kerbal Engineer Redux (KER)"> Kerbal Engineer</a>
+
 [![Support][PAYPAL:img]][PAYPAL:url] [![Github Sponsor][GSPONS:img]][GSPONS:url] [![Patreon][PATREON:img]][PATREON:url] [![Buy zer0Kerbal a snack][BMCC:img]][BMCC:url]
+
+*and it is true.*
 
 <!-- mod links -->
 [MOD:attr]: https://zer0kerbal.github.io/OnDemandFuelCells/Attributions "Attribution"
 [MOD:chlog]: https://raw.githubusercontent.com/zer0Kerbal/OnDemandFuelCells/master/changelog.md  "Changelog"
-[MOD:contr]: https://github.com/zer0Kerbal/.github/blob/master/.github/CONTRIBUTING.md "Contributing"
 [MOD:discu]: https://github.com/zer0Kerbal/OnDemandFuelCells/discussions "Discussions"
-[MOD:forum]: https://forum.kerbalspaceprogram.com/index.php?/topic/187625-*/ "OnDemandFuelCells Forum Thread"
+[MOD:forum]: https://forum.kerbalspaceprogram.com/index.php?/topic/187625-*/ "On Demand Fuel Cells (ODFC) Forum Thread"
 [MOD:issue]: https://github.com/zer0Kerbal/OnDemandFuelCells/issues "Issues"
-[MOD:licns]: https://github.com/zer0Kerbal/OnDemandFuelCells/blob/master/LICENSE "Github License"
 [MOD:markt]: https://zer0kerbal.github.io/OnDemandFuelCells/Marketing "Marketing Slicks"
 [MOD:notic]: https://zer0kerbal.github.io/OnDemandFuelCells/Notices "Notices"
-[MOD:parts]: https://zer0kerbal.github.io/OnDemandFuelCells/PartsCatalog "Parts Catalog"
 [MOD:pages]: https://zer0kerbal.github.io/OnDemandFuelCells "GitHub Pages"
 
 <!--- mod -->
@@ -223,11 +208,11 @@ plugin, config, flags, agency, control, convenience, sound, resources
 [MOD:2:thread]: https://forum.kerbalspaceprogram.com/index.php?/topic/187625-*/ "KSP Forum"
 
 [MOD:1:dnload]: https://spacedock.info/mod/618 "SpaceDock"
-[MOD:1:source]: https://www.dropbox.com/s/0rpp4138jumvaxq/ODFC_v1.1.zip "Dropbox"
+[MOD:1:source]: https://spacedock.info/mod/618 "SpaceDock"
 [MOD:1:thread]: https://forum.kerbalspaceprogram.com/index.php?/topic/138431-*/ "KSP Forum"
 
-[MOD:0:dnload]: https://www.dropbox.com/s/k1120x68899vcr1/ODFC_1.0.zip "Dropbox"
-[MOD:0:source]: https://www.dropbox.com/s/k1120x68899vcr1/ODFC_1.0.zip "Dropbox"
+[MOD:0:dnload]: https://archive.org/details/ODFC-1.1 "Archive.org"
+[MOD:0:source]: https://archive.org/details/ODFC-1.1 "Archive.org"
 [MOD:0:thread]: https://forum.kerbalspaceprogram.com/index.php?/topic/99761-*/ "KSP Forum"
 
 <!--- license provenance -->
@@ -246,10 +231,6 @@ plugin, config, flags, agency, control, convenience, sound, resources
 [LIC:url]: https://www.gnu.org/licenses/gpl-2.0-standalone.html "GPL-2.0"
 [LIC:log]: https://i.postimg.cc/9FrwMgK6/GPL-17x17.png "GPL-2.0"
 [LIC:shd]:  https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/zer0Kerbal/OnDemandFuelCells/master/json/license.json "GPL-2.0"
-
-<!--- AVC -->
-[AVC:shd]: https://img.shields.io/badge/KSP-AVC--supported-00C961.svg?labelColor=black&style=plastic
-[AVCVLD:shd]: https://github.com/zer0Kerbal/OnDemandFuelCells/workflows/Validate%20AVC%20.version%20files/badge.svg?labelColor=black&style=plastic "AVC-Valid - thank you to DasSkelett"
 
 <!--- CKAN -->
 [CKAN:img]: https://i.postimg.cc/x8XSVg4R/sj507JC.png "CKAN"
@@ -271,6 +252,15 @@ plugin, config, flags, agency, control, convenience, sound, resources
 [KSP:shd]: https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/zer0Kerbal/OnDemandFuelCells/master/json/ksp.json&logo=data:image/webp;base64,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 "Kerbal Space Program"
 
 <!-- links to add-ons/mods -->
+[BIO]: https://forum.kerbalspaceprogram.com/index.php?/topic/191426-*/ "Biomatic (BIO)"
+[BOOM]: https://forum.kerbalspaceprogram.com/index.php?/topic/192938-*/ "Kaboom! (BOOM)"
+[FTF]: https://forum.kerbalspaceprogram.com/index.php?/topic/188841-*/ "Field Training Facility (FTF)"
+[FTL]: https://forum.kerbalspaceprogram.com/index.php?/topic/188841-*/ "Field Training Lab (FTL)"
+[GPO]: https://forum.kerbalspaceprogram.com/index.php?/topic/207732-*/ "GPO SpeedPump (GPO)"
+[HBIFC]: https://github.com/zer0Kerbal/HotBeverageIrradiated "Hot Beverages Irradiated"
+[ODFC]: https://forum.kerbalspaceprogram.com/index.php?/topic/187625-*/ "On Demand Fuel Cells (ODFC)"
+[PIZZA]: https://forum.kerbalspaceprogram.com/index.php?/topic/209577-*/ "Papa Kerballini's Pizza (PIZZA)"
+
 [all]: http://forum.kerbalspaceprogram.com/index.php?/topic/155858-*/ "AllYAll"
 [bdb]: http://forum.kerbalspaceprogram.com/index.php?/topic/122020-*/ "Bluedog Design Bureau"
 [bgp]: http://forum.kerbalspaceprogram.com/index.php?/topic/88777-*/ "BackgroundProcessing"
@@ -282,13 +272,8 @@ plugin, config, flags, agency, control, convenience, sound, resources
 [rla]: https://forum.kerbalspaceprogram.com/index.php?/topic/175512-*/ "RLA Reborn"
 [sfc]: https://forum.kerbalspaceprogram.com/index.php?/topic/187776-*/ "Solid Fuel Cells"
 [smx]: http://forum.kerbalspaceprogram.com/index.php?/topic/130325-105-*/ "Stockalike Mining Extension (SMX)"
-[twk]: https://forum.kerbalspaceprogram.com/index.php?/topic/179030-*/ "TweakScale"
 [us1]: https://forum.kerbalspaceprogram.com/index.php?/topic/68043-*/ "Universal Storage"
 [us2]: https://forum.kerbalspaceprogram.com/index.php?/topic/177385-*/ "Univeral Storage II"
-
-[HBIFC]: https://github.com/zer0Kerbal/HotBeverageIrradiated "Hot Beverages Irradiated"
-[GPO]: https://forum.kerbalspaceprogram.com/index.php?/topic/207732-*/ "GPO SpeedPump (GPO)"
-[ODFC]: https://forum.kerbalspaceprogram.com/index.php?/topic/187625-*/ "On Demand Fuel Cells"
 
 <!-- financial support -->
 [PAYPAL:img]: https://img.shields.io/badge/Buy%20me%20some%20-LFO-BADA55?style=for-the-badge&logo=paypal&labelColor=FFDD00/ "PayPal"
@@ -337,9 +322,15 @@ plugin, config, flags, agency, control, convenience, sound, resources
 
 Track progress: issues [here][MOD:issue] and projects [here](https://github.com/zer0Kerbal/OnDemandFuelCells/projects/) along with **[The Short List](https://github.com/users/zer0Kerbal/projects/27)**
 
-[<img align="left" alt="zer0Kerbal | kerbalspaceprogram.com" width="32px" src="https://cdn.icon-icons.com/icons2/1381/PNG/32/kerbalspaceprogram_93898.png" />][zer0Kerbal] [<img align="left" alt="zer0Kerbal | CurseForge" width="32px" src="https://cdn.jsdelivr.net/npm/simple-icons@v3/icons/curseforge.svg" />][curseforge] [<img align="left" alt="zer0Kerbal | reddit" width="32px" src="https://cdn.icon-icons.com/icons2/1945/PNG/512/iconfinder-reddit-4661631_122483.png" />][reddit] [<img align="left" alt="zer0Kerbal | Patreon" width="32px" src="https://cdn.icon-icons.com/icons2/2429/PNG/512/patreon_logo_icon_147253.png" />][PATREON:url] [<img align="left" alt="zer0Kerbal | YouTube" width="32px" src="https://cdn.icon-icons.com/icons2/836/PNG/512/Youtube_icon-icons.com_66802.png" />][youtube] [<img align="left" alt="zer0Kerbal | Twitch" width="32px" src="https://cdn.icon-icons.com/icons2/2699/PNG/512/twitch_logo_icon_170383.png" />][twitch] [<img align="left" alt="zer0Kerbal | PayPal" width="32px" src="https://cdn.icon-icons.com/icons2/2699/PNG/512/paypal_logo_icon_168055.png" />][PAYPAL:url] [<img align="left" alt="zer0Kerbal | Buy Me a Coffee" width="32px" src="https://www.buymeacoffee.com/assets/img/bmc-meta-new/new/favicon.ico" />][BMCC:url] [<img align="left" alt="zer0Kerbal | Twitter" width="32px" src="https://cdn.icon-icons.com/icons2/836/PNG/32/Twitter_icon-icons.com_66803.png" />][twitter]
+[<img align="left" alt="zer0Kerbal | kerbalspaceprogram.com" width="32px" src="https://cdn.icon-icons.com/icons2/1381/PNG/32/kerbalspaceprogram_93898.png" />][zer0Kerbal] [<img align="left" alt="zer0Kerbal | CurseForge" width="32px" src="https://cdn.jsdelivr.net/npm/simple-icons@v3/icons/curseforge.svg" />][curseforge] [<img align="left" alt="zer0Kerbal | reddit" width="32px" src="https://cdn.icon-icons.com/icons2/1945/PNG/512/iconfinder-reddit-4661631_122483.png" />][reddit] [<img align="left" alt="zer0Kerbal | Patreon" width="32px" src="https://cdn.icon-icons.com/icons2/2429/PNG/512/patreon_logo_icon_147253.png" />][PATREON:url] [<img align="left" alt="zer0Kerbal | YouTube" width="32px" src="https://cdn.icon-icons.com/icons2/836/PNG/512/Youtube_icon-icons.com_66802.png" />][youtube] [<img align="left" alt="zer0Kerbal | Twitch" width="32px" src="https://cdn.icon-icons.com/icons2/2699/PNG/512/twitch_logo_icon_170383.png" />][twitch] [<img align="left" alt="zer0Kerbal | PayPal" width="32px" src="https://cdn.icon-icons.com/icons2/2699/PNG/512/paypal_logo_icon_168055.png" />][PAYPAL:url] [<img align="left" alt="zer0Kerbal | Buy Me a Coffee" width="32px" src="https://www.buymeacoffee.com/assets/img/bmc-meta-new/new/favicon.ico" />][BMCC:url] [<img align="left" alt="zer0Kerbal | Twitter" width="32px" src="https://raw.githubusercontent.com/zer0Kerbal/zer0Kerbal/master/img/twitter-32.ico" />][twitter]</br>
+
+##### Release Schedule
+
+1. GitHub, reaching first manual installers and users of KSP-AVC. Right now.
+2. CurseForge. Right now.
+3. SpaceDock (and CKAN users). Soon™
 
 <!-- footnotes -->
-[^1]: this isn't a mod. ;P
-[^2]: ***may*** work on other versions (YMMV)
+[^1]: this isn't a mod. ;P  
+[^2]: ***may*** work on other versions (YMMV)  
 [^3]: *Be Kind: Lithobrake, not jakebrake! Keep your Module Manager up to date!*
