@@ -56,8 +56,6 @@ The plugin includes a set of Module Manager patches to function, as it does not 
 > * Compatibility patches
 > * Contracts for these glorious parts
 > * Variant Textures
-> * Converting from FireSpitter to Stock and/or KSPWheel  
-> * Model updates to Unity 2019
 > * Marketing Images and Videos such as hero shots, animated gifs, short highlights
 > * See the [README in the Localization folder][lreadme] or the [Quickstart Guide][qstart] for instructions for adding or improving translations. [GitHub][GitHub:url] push is the best way to contribute. *Additions and corrections welcome!*
 > * Have a request? Glad to have them, kindly submit through [GitHub][MOD:issue].
