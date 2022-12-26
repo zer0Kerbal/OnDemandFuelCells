@@ -11,13 +11,13 @@ repository:
   name: OnDemandFuelCells
 
   # A short description of the repository that will show up on GitHub
-  description:  "On Demand Fuel Cells (ODFC) is a plugin to support fuel cells that only generate power when it is needed, thereby saving precious fuel. Simulates fuel cells in Kerbal Space Program (KSP), and do a better job of it than stock's use of a resource converter.  The main difference is it only generates electricity when it's really needed (batteries almost empty), and otherwise lets electricity of a craft float up and down, as it might in a solar powered vehicle when the sun is eclipsed by another celestial body.  It also allows fuel cells to generate byproducts, aimed at supporting life support mods like TACLS. "
+  description:  On Demand Fuel Cells (ODFC) is a plugin to saving precious fuel support by having fuel cells generating power only when needed. Simulates fuel cells in and does a much better job than stock's use of a resource converter.  The main difference is ODFC only generates electricity when it's really needed (batteries almost empty), and lets electricity of a craft float up and down, as it might do in a solar powered vessel when the sun is eclipsed by another celestial body.  It also allows fuel cells to generate byproducts, aimed at supporting life support mods like TACLS.
 
   # A URL with more information about the repository
   homepage: https://forum.kerbalspaceprogram.com/index.php?/topic/187625-*/
   
   # A comma-separated list of topics to set on the repository
-  topics: fuel-mode,odfc,fuel-cells,automatic,demand-fuel-cells,fuel-cell,stock,mod,addon,add-on,kerbal,kerbalspaceprogram,ksp,ksp-mods,kerbal-space,kerbal-space-program,kerbal-mods,zedk,contributions-welcome,hacktoberfest,mods
+  topics: fuel-mode,fuel-cells,automatic,demand-fuel-cells,fuel-cell,stock,kerbal,kerbalspaceprogram,ksp,ksp-mods,kerbal-space,kerbal-space-program,zedk,contributions-welcome,hacktoberfest,mods
 
 # Labels: define labels for Issues and Pull Requests
 labels:
