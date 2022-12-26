@@ -128,7 +128,7 @@ or [![CKAN][ckan:img]][ckan:url]
 ### REPLACES
 
 * [ODFC - On Demand Fuel Cells by Orum](http://forum.kerbalspaceprogram.com/index.php?/topic/138431-*/) >-- ORIGINAL (outdated)--<
-* [ODFC-Refueled][ODFC-R]
+* [ODFC-Refueled <=v1.2.0.0](https://forum.kerbalspaceprogram.com/index.php?/topic/187625-*/)
 
 ### Tags
 
