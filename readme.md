@@ -47,7 +47,7 @@ Another set that modifies the same set of parts instead of copying them.
 * See our [Parts Catalog][MOD:parts] for part pictures
 * For more images, see our [Marketing Slicks][MOD:markt]
 * Discussions and news on this mod: See [Discussions][MOD:discu] or [KSP Forums][MOD:forum]
-* Changelog Summary for more details of changes : See [ChangeLog][MOD:chlog]
+* Changelog Summary for more details of changes: See [ChangeLog][MOD:chlog]
 * Known Issues for more details of feature requests and known issues : See [Known Issues][MOD:issue]
 * GitHub Pages : See [Pages][MOD:pages]
 
@@ -325,7 +325,7 @@ plugin, config, flags, agency, control, convenience, sound, resources
 [reddit]: https://www.reddit.com/user/zer0Kerbal
 [twitch]: https://www.twitch.tv/zer0kerbal
 [twitter]: https://twitter.com/zer0Kerbal
-[youtube]: https://www.youtube.com/channel/UCp9c8IaK4Gjgfj3O9QxrbDw
+[youtube]: https://www.youtube.com/@zer0Kerbal
 
 [orum]: https://forum.kerbalspaceprogram.com/index.php?/profile/102159-*/ "Orum"
 [4x4cheesecake]: https://forum.kerbalspaceprogram.com/index.php?/profile/42741-*/ "4x4cheesecake"
