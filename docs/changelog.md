@@ -5,10 +5,9 @@ description: The Opening Credits, and the closing credits, plus the first of two
 # layout: bare
 tags: changes,changelog,change-log,page,kerbal,ksp,zer0Kerbal,zedK
 ---
-
 <!-- 
 hdr-changelog.md v1.0.0.0
-<MOD-NAME>
+<On Demand Fuel Cells (ODFC)>
 created: 13 May 2022
 updated:
 CC BY-ND 4.0 by zer0Kerbal
@@ -16,7 +15,7 @@ CC BY-ND 4.0 by zer0Kerbal
   
 | modName    | On Demand Fuel Cells (ODFC)                                       |
 | ---------- | ----------------------------------------------------------------- |
-| license    | GPL-3.0                                                           |
+| license    | GPL-2.0                                                           |
 | author     | Orum and zer0Kerbal                                               |
 | forum      | (https://forum.kerbalspaceprogram.com/index.php?/topic/187625-*/) |
 | github     | (https://github.com/zer0Kerbal/OnDemandFuelCells)                 |
