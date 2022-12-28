@@ -38,12 +38,8 @@ namespace OnDemandFuelCells
         /// <summary>ENUM: byte: error, off, nominal, fuelDeprived, noDemand, stalled }; // deploy, retract</summary>
         public enum states : byte { error, off, nominal, fuelDeprived, noDemand, stalled }; // deploy, retract,
         // private static readonly string[] STATES_STR = {  Localizer.Format("#ODFC-err"), "Off", "Nominal", "Fuel Deprived", "No Demand", "Stalled" };
-        private static readonly string[] STATES_STR = { "#ODFC-err",		 // ERROR!
-                                                        "#ODFC-off",		 // Off
-                                                        "#ODFC-nom",		 // Nominal
-                                                        "#ODFC-dep",		 // Fuel Deprived
-                                                        "#ODFC-dem",		 // No Demand
-                                                        "#ODFC-sta" };		 // Stalled
+        private static readonly string[] STATES_STR = { Localizer.Format("#ODFC-err"), Localizer.Format("#ODFC-off"), Localizer.Format("#ODFC-nom"),
+            Localizer.Format("#ODFC-dep"), Localizer.Format("#ODFC-dem"), Localizer.Format("#ODFC-sta") };
                                                         //"#ODFC-dep" };	 // Deployed
                                                         //"#ODFC-ret" };     // Retracted
         private static readonly string[] STATES_COLOUR = { "<#FF8000>",      // ERROR!        - orange
@@ -170,7 +166,7 @@ namespace OnDemandFuelCells
         public string byproducts = Localizer.Format("#ODFC-err");
 
         [KSPField(  isPersistant = true,  guiActive = true,  guiActiveEditor = true, groupName = __GroupName__,
-                    guiName = "#autoLOC_900889" + ":"),		// Enabled
+                    guiName = "#autoLOC_900889"),		// Enabled
             UI_Toggle(  invertButton = true,
                         requireFullControl = false,
                         disabledText = "#autoLOC_439840",		// No
@@ -194,7 +190,7 @@ namespace OnDemandFuelCells
 
         /// <summary>The current threshold (%) which needs to be equal or below before production begins.</summary>
         [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, groupName = __GroupName__,
-                    guiName = "#autoLOC_900891" + ":", guiFormat = "P0"),		// Threshold:
+                    guiName = "#autoLOC_900891", guiFormat = "P0"),		// Threshold:
             UI_FloatRange(minValue = thresholdMin, maxValue = thresHoldMax, stepIncrement = thresHoldSteps)]
         public float threshold = 0.85f; //x thresholdMin;
 
@@ -496,13 +492,14 @@ namespace OnDemandFuelCells
             {
                 case GameScenes.FLIGHT:
                     {
-                        PAWStatus = begStr + colorStr + "#autoLOC_500646" + ":" + status + " - " + ECs_status + "#autoLOC_234126" + ":" + endStr;		// Fuel Cell: // EC/s
+                        PAWStatus = begStr + colorStr + Localizer.Format("#autoLOC_500646") + ": " + status + " - " + ECs_status + " " + Localizer.Format("#autoLOC_234126") + ":" + endStr;		// Fuel Cell: // EC/s 
                         break;
                     }
                 case GameScenes.EDITOR:
                     {
-                        PAWStatus = begStr + colorStr + "#autoLOC_500646" + ":"  + maxECs_status + "/" + ODFC_config.modes[fuelMode].maxEC + "#autoLOC_234126" + ":" + endStr;		// Fuel Cell: // EC/s:
-                    //PAWStatus = begStr + colorStr + "Fuel Cell: " + _fuelModeMaxECRateLimit + "/" + maxECs_status + " EC/s:" + endStr;
+                        status = Localizer.Format("#ODFC-off");
+                        PAWStatus = begStr + colorStr + Localizer.Format("#autoLOC_500646") + ": " + maxECs_status + "/" + ODFC_config.modes[fuelMode].maxEC + Localizer.Format("#autoLOC_234126") + ":" + endStr;       // Fuel Cell: // EC/s:
+                        //PAWStatus = begStr + colorStr + "Fuel Cell: " + _fuelModeMaxECRateLimit + "/" + maxECs_status + " EC/s:" + endStr;
                         break;
                     }
 /*                case GameScenes.LOADING:
@@ -760,7 +757,7 @@ namespace OnDemandFuelCells
 
                 for (int n = 0; n < mds.Length; n++)
                     //info += "\n\n<color=#99FF00FF>Mode: " + n.ToString() + "</color> - Max EC: " + mds[n].GetValue("MaxEC") +
-                    info += "\n\n<color=#99FF00FF>" + Localizer.Format("#autoLOC_8200011") + n.ToString() + "</color>\n\t" + Localizer.Format("#ODFC-ec-max") + ": "
+                    info += "\n\n<color=#99FF00FF>" + Localizer.Format("#autoLOC_8200011") + " " + n.ToString() + "</color>\n\t" + Localizer.Format("#ODFC-ec-max") + ": "
                         + mds[n].GetValue("MaxEC") + "/s\n<color=#FFFF00FF>" + Localizer.Format("#ODFC-fuels") + ":</color>" + GetResourceRates(mds[n].GetNode("FUELS")) +
                         "\n<color=#FFFF00FF>" + Localizer.Format("#ODFC-bypro") + ":</color>" + GetResourceRates(mds[n].GetNode("BYPRODUCTS"));
             }
