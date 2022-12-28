@@ -10,6 +10,61 @@
 | spacedock  | (https://spacedock.info/mod/2223)                                 |
 | ckan       | OnDemandFuelCells                                                 |
 
+## Version 1.2.99.1-prerelease - `<BlackOut>` edition
+
+* Released
+  * 26 Dec 2022
+  * for Kerbal Space Program 1.12.4
+  * by zer0Kerbal
+
+### Summary 1.2.99.1
+
+* Recompiled for KSP 1.12.4 (NET 4.5.2 - C# 5.0)
+  * <OnDemandFuelCells.dll> 1.2.99.100 --> 1.2.99.120
+* Code is fully localized.
+* Adds KerbalXMAS (XMAS) compatibility
+* Now includes modify patches and no longer compatible with
+  * modify patches
+  * copy patches
+  * will update those releases if enough demand
+
+### Localization 1.2.99.1
+
+* Add
+  * <en-us.cfg> v1.0.2.0
+  * <readme.md> v2.1.2.0
+  * <quickstart.md> v1.0.1.1
+* closes #52 - Add localization code.
+* closes #88 - Code Localization
+* closes #87 - Part Localization
+* closes #70 - English <us-en.cfg>
+* updates #69 - Localization - Master
+
+### Code 1.2.99.1
+
+* Recompiled
+  * KSP 1.12.4
+  * .NET 4.5.2
+  * C# 5.0
+  * <OnDemandFuelCells.dll> 1.2.99.100 --> 1.2.99.120
+* Bug Fixes
+* closes #51 - [BUG 1.2.0.0a] fuel consumption and byproduct production should be seen on PAW
+
+### Compatibliity
+
+* Add
+  * <KerbalXMAS.cfg> v1.0.0.0
+
+### Status 1.2.99.0
+
+* Issues
+  * closes #94 - On Demand Fuel Cells (ODFC) 1.2.99.1-prerelease `<BlackOut>`
+  * closes #95 - 1.2.99.1 Verify Legal Mumbo Jumbo
+  * closes #96 - 1.2.99.1 Update Documentation
+  * closes #97 - 1.2.99.1 Update Social Media
+
+---
+
 ## 1.2.99.0-prerelease - `<NextMode>` edition
 
 * 05 Aug 2022
