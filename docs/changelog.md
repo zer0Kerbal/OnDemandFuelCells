@@ -68,7 +68,7 @@ CC BY-ND 4.0 by zer0Kerbal
 * Add
   * <KerbalXMAS.cfg> v1.0.0.0
 
-### Status 1.2.99.0
+### Status 1.2.99.1
 
 * Issues
   * closes #94 - On Demand Fuel Cells (ODFC) 1.2.99.1-prerelease `<BlackOut>`
@@ -92,18 +92,18 @@ CC BY-ND 4.0 by zer0Kerbal
   * copy patches
   * will update those releases if enough demand
 
-### Code
+### Code 1.2.99.0
 
 * Recompiled
   * .NET 4.5.2
   * C# 5.0
   * KSP 1.12.3
-  * <OnDemandFuelCells.dll> 
+  * <OnDemandFuelCells.dll>
     * file version 1.2.99.100
 * Renamed
   * <ODFC.dll> to <OnDemandFuelCells.dll>
 
-### Config
+### Config 1.2.99.0
 
 * Update
   * all configs to reflect dll namechange
@@ -112,7 +112,7 @@ CC BY-ND 4.0 by zer0Kerbal
   * <OnDemandFuelCells.version>
     * remove "KSP_VERSION_MAX"
 
-### Compatibliity
+### Compatibliity 1.2.99.0
 
 * Update
   * all patches to reflect dll namechange
