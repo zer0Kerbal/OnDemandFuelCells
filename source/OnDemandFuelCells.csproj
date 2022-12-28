@@ -10,9 +10,9 @@
     <AssemblyName>OnDemandFuelCells</AssemblyName>
     <RootNamespace>OnDemandFuelCells</RootNamespace>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
-      <FileAlignment>512</FileAlignment>
-      <Deterministic>true</Deterministic>
-      <LangVersion>latest</LangVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+    <LangVersion>latest</LangVersion>
     <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -26,6 +26,7 @@
     <ConsolePause>false</ConsolePause>
     <Prefer32Bit>false</Prefer32Bit>
     <PlatformTarget>anycpu</PlatformTarget>
+    <DocumentationFile>..\docs\Code\OnDemandFuelCells.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
     <DebugType>embedded</DebugType>
@@ -53,7 +54,7 @@
     <Reference Include="K:\112\KSP_x64_Data\Managed\UnityEngine.UI.dll">
       <Private>False</Private>
     </Reference>
-    <!-- <Reference Include="$(K19)\GameData\999_Scale_Redist.dll">
+    <!-- <Reference Include="$(K112)\GameData\999_Scale_Redist.dll">
       <Private>False</Private>
     </Reference> -->
     <Reference Include="System" />
@@ -94,27 +95,27 @@
   </PropertyGroup>
   <PropertyGroup>
     <PostBuildEvent>
-set K112=K:\112
+set K112=$(K112)
 IF "%25K112%25"=="" (
 	ECHO Configuration error - K112 not specified in project.
 	ECHO Either set K100 environment variable
 	PAUSE
 	rem GOTO DONE
 )
-start /D $(ProjectDir)..\  /WAIT _deploy.bat
-if $(ConfigurationName) == Release start /D $(ProjectDir)..\   /WAIT _buildRelease.bat
+start /D $(ProjectDir)..\  /WAIT _addonDeploy.bat $(ProjectDir)
+if $(ConfigurationName) == Release start /D $(ProjectDir)..\   /WAIT _addonRelease.bat $(ProjectDir)
 del $(TargetDir)\*.tmp
 :DONE
-  </PostBuildEvent>
-  </PropertyGroup>
-  <ProjectExtensions>
-    <MonoDevelop>
-      <Properties>
-        <Policies>
-          <TextStylePolicy TabWidth="4" IndentWidth="4" RemoveTrailingWhitespace="True" NoTabsAfterNonTabs="False" EolMarker="Native" FileWidth="132" TabsToSpaces="False" scope="text/plain" />
-        </Policies>
-      </Properties>
-    </MonoDevelop>
-    <VisualStudio AllowExistingFolder="true" />
-  </ProjectExtensions>
+	</PostBuildEvent>
+	</PropertyGroup>
+	<ProjectExtensions>
+		<MonoDevelop>
+			<Properties>
+				<Policies>
+					<TextStylePolicy TabWidth="4" IndentWidth="4" RemoveTrailingWhitespace="True" NoTabsAfterNonTabs="False" EolMarker="Native" FileWidth="132" TabsToSpaces="False" scope="text/plain" />
+				</Policies>
+			</Properties>
+		</MonoDevelop>
+		<VisualStudio AllowExistingFolder="true" />
+	</ProjectExtensions>
 </Project>

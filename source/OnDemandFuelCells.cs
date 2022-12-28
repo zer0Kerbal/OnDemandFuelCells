@@ -33,15 +33,25 @@ namespace OnDemandFuelCells
     public class ODFC : PartModule
     /// <seealso cref="PartModule" />
     {
-#region Enums Vars
+        #region Enums Vars
 
+        /// <summary>ENUM: byte: error, off, nominal, fuelDeprived, noDemand, stalled }; // deploy, retract</summary>
         public enum states : byte { error, off, nominal, fuelDeprived, noDemand, stalled }; // deploy, retract,
-        // private static readonly string[] STATES_STR = {  Localizer.Format("#ODFC-PAW-err"), "Off", "Nominal", "Fuel Deprived", "No Demand", "Stalled" };
-        private static readonly string[] STATES_STR = { "ERROR!", "Off", "Nominal", "Fuel Deprived", "No Demand", "Stalled" };
-        private static readonly string[] STATES_COLOUR = { "<color=orange>", "<color=black>", "<#ADFF2F>", "<color=yellow>", "<#6495ED>", "<color=red>" };
-        //                                                                                      (Green)                          (Blue)
-        //                                                                                                  (Green)                          (Blue)
+        // private static readonly string[] STATES_STR = {  Localizer.Format("#ODFC-err"), "Off", "Nominal", "Fuel Deprived", "No Demand", "Stalled" };
+        private static readonly string[] STATES_STR = { Localizer.Format("#ODFC-err"), Localizer.Format("#ODFC-off"), Localizer.Format("#ODFC-nom"),
+            Localizer.Format("#ODFC-dep"), Localizer.Format("#ODFC-dem"), Localizer.Format("#ODFC-sta") };
+                                                        //"#ODFC-dep" };	 // Deployed
+                                                        //"#ODFC-ret" };     // Retracted
+        private static readonly string[] STATES_COLOUR = { "<#FF8000>",      // ERROR!        - orange
+                                                           "<#000000>",      // Off           - black
+                                                           "<#ADFF2F>",      // Nominal       - green
+                                                           "<#FFFF00>",      // Fuel Deprived - yellow
+                                                           "<#0000FF>",      // No Demand     - cornflower blue #6495ED
+                                                           "<#FF0000>" };    // Stalled       - red
+        
         private const string FuelTransferFormat = "0.##"; //FuelTransferFormat?
+
+        private const string __GroupName__ = "OnDemandFuelCells";
 
         private const float
             thresHoldSteps = 0.05f, // increment the rate by this amount (default is 5)
@@ -55,20 +65,18 @@ namespace OnDemandFuelCells
         private double _fuelModeMaxECRateLimit = 0f;
         public double fuelModeMaxECRateLimit = 0f;
 
-        /// <summary>
-        /// Gets the On Demand Fuelcells(ODFC) Electric Charge (EC) Production.
-        /// AMPYear / JPRepo / Background?
-        /// allows AMPYear and others to see current EC/s production
-        /// </summary>
-        /// <value>
-        /// The On Demand Fuelcells(ODFC) Electric Charge (EC) Production.
-        /// </value>
+        /// <summary>Gets the On Demand Fuelcells(ODFC) Electric Charge (EC) Production.
+        /// AMPYear / JPRepo / Background? allows AMPYear and others to see current EC/s production</summary>
+        /// <value>The On Demand Fuelcells(ODFC) Electric Charge (EC) Production.</value>
         public double OnDemandFuelCellsEC { get { return this._fuelModeMaxECRateLimit; } }
 
         private double
             lastGen = -1,
             lastMax = -1,
             lastTF = -1;
+
+        /// <summary>Per Fuel Cell AutoSwitch</summary>
+        private bool __autoSwitch__ = false;
 
         private int lastFuelMode = -1;
         /// <summary>Module information shown in editors</summary>
@@ -87,8 +95,6 @@ namespace OnDemandFuelCells
         public static int ElectricChargeID;
 
         private PartResource _electricCharge;
-        
-        private const string GroupName = "ODFC";
 
         /// <summary>The ns</summary>
         public bool ns = true;
@@ -118,13 +124,18 @@ namespace OnDemandFuelCells
 
         [KSPField(  isPersistant = false,  guiActive = true, guiActiveEditor = true,
                     guiName = " ")]
-        public string PAWStatus = Localizer.Format("#ODFC-PAW-boot");
+        public string PAWStatus = Localizer.Format("#ODFC-boot");
 
-        [KSPField(  isPersistant = false,  guiActive = true,  guiActiveEditor = true, groupName = GroupName,
-                    groupDisplayName = "On Demand Fuel Cells v" + Version.SText, groupStartCollapsed = true,
-                    guiName = ""),
-            UI_Label(scene = UI_Scene.Flight)]
-        public string status = Localizer.Format("#ODFC-PAW-err");
+        [KSPField(  isPersistant = true,  guiActive = true,  guiActiveEditor = true, groupName = __GroupName__, groupStartCollapsed = true,
+                    groupDisplayName = "On Demand Fuel Cells v" + Version.SText,
+                    guiName = ""), UI_Label(scene = UI_Scene.All)]
+                    //guiName = ""), UI_Label(scene = UI_Scene.)]
+        public string status = Localizer.Format("#ODFC-err");
+
+        //[KSPField(  isPersistant = true,  guiActive = true,  guiActiveEditor = true, groupName = "OnDemandFuelCells",
+        //            groupDisplayName = "On Demand Fuel Cells v" + Version.SText, groupStartCollapsed = true,
+        //            guiName = ""),
+        //    UI_Label(scene = UI_Scene.Flight)]
         
         [KSPField(  isPersistant = true,  guiActive = false, guiActiveEditor = false),
             UI_Label(scene = UI_Scene.None)]
@@ -133,33 +144,33 @@ namespace OnDemandFuelCells
 
         /// <summary>The current ElectricCharge %</summary>
         //[UI_Label(scene = UI_Scene.Flight)]
-        [KSPField(  isPersistant = false,  guiActive = true, guiActiveEditor = false, groupName = GroupName,
-                    guiName = "Vessel EC %", guiFormat = "F2", guiUnits = "%"),
+        [KSPField(  isPersistant = false,  guiActive = true, guiActiveEditor = false, groupName = __GroupName__,
+                    guiName = "#ODFC-GUI-vecp", guiFormat = "F2", guiUnits = "%"),		// Vessel EC %
         UI_ProgressBar(minValue = 0f, maxValue = 1f, scene = UI_Scene.Flight)]
         public float CurrentVesselChargeState;
 
-        [KSPField(  isPersistant = false,  guiActive = false, guiActiveEditor = false, groupName = GroupName,
-                    guiName = "EC/s (cur/max)")]
-        public string ECs_status = Localizer.Format("#ODFC-PAW-err");
+        [KSPField(  isPersistant = false,  guiActive = false, guiActiveEditor = false, groupName = __GroupName__,
+                    guiName = "#ODFC-ec-cmax")]		// EC/s (cur/max)
+        public string ECs_status = Localizer.Format("#ODFC-err");
 
-        [KSPField(  isPersistant = false, guiActive = false, guiActiveEditor = false, groupName = GroupName,
-                    guiName = "Max EC/s")]
-        public string maxECs_status = Localizer.Format("#ODFC-PAW-err");
+        [KSPField(  isPersistant = false, guiActive = false, guiActiveEditor = false, groupName = __GroupName__,
+                    guiName = "#ODFC-ec-max")]		// Max EC/s
+        public string maxECs_status = Localizer.Format("#ODFC-err");
 
-        [KSPField(  isPersistant = false, guiActive = true, guiActiveEditor = true, groupName = GroupName,
-                    guiName = "Fuels")]
-        public string fuel_consumption = Localizer.Format("#ODFC-PAW-err");
+        [KSPField(  isPersistant = false, guiActive = true, guiActiveEditor = true, groupName = __GroupName__,
+                    guiName = "#ODFC-fuels")]		// Fuels
+        public string fuel_consumption = Localizer.Format("#ODFC-err");
 
-        [KSPField(  isPersistant = false, guiActive = false, guiActiveEditor = false, groupName = GroupName,
-                    guiName = "Byproducts")]
-        public string byproducts = Localizer.Format("#ODFC-PAW-err");
+        [KSPField(  isPersistant = false, guiActive = false, guiActiveEditor = false, groupName = __GroupName__,
+                    guiName = "#ODFC-bypro")]		// Byproducts
+        public string byproducts = Localizer.Format("#ODFC-err");
 
-        [KSPField(  isPersistant = true,  guiActive = true,  guiActiveEditor = true, groupName = GroupName,
-                    guiName = "Enabled:"),
+        [KSPField(  isPersistant = true,  guiActive = true,  guiActiveEditor = true, groupName = __GroupName__,
+                    guiName = "#autoLOC_900889"),		// Enabled
             UI_Toggle(  invertButton = true,
                         requireFullControl = false,
-                        disabledText = "No",
-                        enabledText = "Yes")]
+                        disabledText = "#autoLOC_439840",		// No
+                        enabledText = "#autoLOC_439839")]		// Yes
         public bool fuelCellIsEnabled = true;
 
 #endregion KSPFields
@@ -172,21 +183,21 @@ namespace OnDemandFuelCells
         */
 
         /// <summary>The rate limit(max % production)</summary>
-        [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, groupName = GroupName,
-                    guiName = "Rate Limit:", guiFormat = "P0"),
+        [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, groupName = __GroupName__,
+                    guiName = "#ODFC-rate-lim", guiFormat = "P0"),		// Rate Limit:
             UI_FloatRange(minValue = thresholdMin, maxValue = thresHoldMax, stepIncrement = thresHoldSteps)]
         public float rateLimit = 1f;
 
         /// <summary>The current threshold (%) which needs to be equal or below before production begins.</summary>
-        [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, groupName = GroupName,
-                    guiName = "Threshold:", guiFormat = "P0"),
+        [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, groupName = __GroupName__,
+                    guiName = "#autoLOC_900891", guiFormat = "P0"),		// Threshold:
             UI_FloatRange(minValue = thresholdMin, maxValue = thresHoldMax, stepIncrement = thresHoldSteps)]
         public float threshold = 0.85f; //x thresholdMin;
 
-#endregion KSPFields (sliders)
-#region KSPEvents
-       
-        [KSPEvent(  guiActive = true, guiActiveEditor = true, guiName = "Next Fuel Mode", groupName = GroupName)]
+        #endregion KSPFields (sliders)
+        #region KSPEvents
+
+        [KSPEvent(guiActive = true, guiActiveEditor = true, guiName = "#ODFC-next", groupName = __GroupName__)]		// Next Fuel Mode
         public void nextFuelMode()
         {
             if (++fuelMode >= ODFC_config.modes.Length) 
@@ -194,7 +205,7 @@ namespace OnDemandFuelCells
             updateEditor();
         }
 
-        [KSPEvent(  guiActive = false,  guiActiveEditor = false,  guiName = "Previous Fuel Mode",  groupName = GroupName)]
+        [KSPEvent(guiActive = false, guiActiveEditor = false, guiName = "#ODFC-prev", groupName = __GroupName__)]		// Previous Fuel Mode
         public void previousFuelMode()
         {
             if (--fuelMode < 0)
@@ -204,40 +215,77 @@ namespace OnDemandFuelCells
 
 #endregion KSPEvents
 #region KSPActions
-
-        [KSPAction("Toggle Fuel Cell")]
+        /// <summary>Action: Toggle Fuel Cell</summary>
+        /// <param name="kap"></param>
+        [KSPAction("#autoLOC_502025")]		// Toggle Fuel Cell
         public void toggleAction(KSPActionParam kap)
         { fuelCellIsEnabled = !fuelCellIsEnabled; }
 
-        [KSPAction("Enable Fuel Cell")]
+        /// <summary>Action: Start Fuel Cell</summary>
+        /// <param name="kap"></param>
+        [KSPAction("#autoLOC_502023")]		// Start Fuel Cell
         public void enableAction(KSPActionParam kap)
         { fuelCellIsEnabled = true; }
 
-        [KSPAction("Disable Fuel Cell")]
+        /// <summary>Action: Stop Fuel Cell</summary>
+        /// <param name="kap"></param>
+        [KSPAction("#autoLOC_502024")]		// Stop Fuel Cell
         public void disableAction(KSPActionParam kap)
         { fuelCellIsEnabled = false; }
 
-        [KSPAction("NextFuelMode")]
-        public void nextFuelmodeAction(KSPActionParam kap)
+        /// <summary>Action: Next Fuel Mode</summary>
+        /// <param name="kap"></param>
+        [KSPAction("#ODFC-next")]		// Next Fuel Mode
+        public void NextFuelmodeAction(KSPActionParam kap)
         { nextFuelMode(); }
 
-        [KSPAction("PreviousFuelMode")]
-        public void previousFuelModeAction(KSPActionParam kap)
+        /// <summary>Action: Previous Fuel Mode</summary>
+        /// <param name="kap"></param>
+        [KSPAction("#ODFC-prev")]		// Previous Fuel Mode
+        public void PreviousFuelModeAction(KSPActionParam kap)
         { previousFuelMode(); }
 
-        [KSPAction("Decrease Rate Limit")]
+// NEW
+        /// <summary>Action: Toggle per fuel cell Auto Switch (looks for another fuel mode that is operable</summary>
+        /// <param name="kap"></param>
+        [KSPAction("#autoLOC_6001393")]      // Toggle Mode
+        public void ToggleSwitchAction(KSPActionParam kap)
+        { __autoSwitch__ = !__autoSwitch__; }
+
+        /// <summary>Action: Disable per fuel cell Auto Switch (looks for another fuel mode that is operable</summary>
+        /// <param name="kap"></param>
+        [KSPAction("#autoLOC_6001392")]      // Manual Switching
+        public void DisableSwitchAction(KSPActionParam kap)
+        { __autoSwitch__ = false; }
+
+        /// <summary>Action: Enable per fuel cell Auto Switch (looks for another fuel mode that is operable</summary>
+        /// <param name="kap"></param>
+        [KSPAction("#autoLOC_6001391")]      // Automatic Switching
+        public void EnableSwitchAction(KSPActionParam kap)
+        { __autoSwitch__ = true; }
+
+// OLD
+        /// <summary>Action: Decrease Rate Limit</summary>
+        /// <param name="kap"></param>
+        [KSPAction("#ODFC-rate-dec")]		// Decrease Rate Limit
         public void decreaseRateLimitAction(KSPActionParam kap)
         { rateLimit = Math.Max(rateLimit - thresHoldSteps, thresholdMin); }
 
-        [KSPAction("Increase Rate Limit")]
+        /// <summary>Action: Increase Rate Limit</summary>
+        /// <param name="kap"></param>
+        [KSPAction("#ODFC-rate-inc")]		// Increase Rate Limit
         public void increaseRateLimitAction(KSPActionParam kap)
         { rateLimit = Math.Min(rateLimit + thresHoldSteps, thresHoldMax); }
 
-        [KSPAction("Decrease Threshold")]
+        /// <summary>Action: Decrease Threshold</summary>
+        /// <param name="kap"></param>
+        [KSPAction("#ODFC-threshold-dec")]		// Decrease Threshold
         public void decreaseThresholdAction(KSPActionParam kap)
         { threshold = Math.Max(threshold - thresHoldSteps, thresholdMin); }
 
-        [KSPAction("Increase Threshold")]
+        /// <summary>Action: Increase Threshold</summary>
+        /// <param name="kap"></param>
+        [KSPAction("#ODFC-threshold-inc")]		// Increase Threshold
         public void increaseThresholdAction(KSPActionParam kap)
         { threshold = Math.Min(threshold + thresHoldSteps, thresHoldMax); }
 #endregion KSPActions
@@ -258,7 +306,7 @@ namespace OnDemandFuelCells
 
             if (fuels.Length == 0)
             {
-                s = "None\n";
+                s = Localizer.Format("#autoLOC_6003000") + "\n";
                 return;
             }
 
@@ -372,8 +420,8 @@ namespace OnDemandFuelCells
                         Events["previousFuelMode"].guiActive = false;
                         Events["previousFuelMode"].guiActiveEditor = false;
 
-                        Actions["nextFuelmodeAction"].active = false;
-                        Actions["previousFuelModeAction"].active = false;
+                        Actions["NextFuelmodeAction"].active = false;
+                        Actions["PreviousFuelModeAction"].active = false;
                         break;
                     }
                 case 2:
@@ -392,8 +440,8 @@ namespace OnDemandFuelCells
                         Events["previousFuelMode"].guiActive = true;
                         Events["previousFuelMode"].guiActiveEditor = true;
 
-                        Actions["nextFuelmodeAction"].active = true;
-                        Actions["previousFuelModeAction"].active = true;
+                        Actions["NextFuelmodeAction"].active = true;
+                        Actions["PreviousFuelModeAction"].active = true;
                         break;
                     }
             }
@@ -444,13 +492,14 @@ namespace OnDemandFuelCells
             {
                 case GameScenes.FLIGHT:
                     {
-                        PAWStatus = begStr + colorStr + "Fuel Cell: " + status + " - " + ECs_status + " EC/s" + endStr;
+                        PAWStatus = begStr + colorStr + Localizer.Format("#autoLOC_500646") + ": " + status + " - " + ECs_status + " " + Localizer.Format("#autoLOC_234126") + ":" + endStr;		// Fuel Cell: // EC/s 
                         break;
                     }
                 case GameScenes.EDITOR:
                     {
-                        PAWStatus = begStr + colorStr + "Fuel Cell: " + maxECs_status + "/" + ODFC_config.modes[fuelMode].maxEC + " EC/s:" + endStr;
-                    //PAWStatus = begStr + colorStr + "Fuel Cell: " + _fuelModeMaxECRateLimit + "/" + maxECs_status + " EC/s:" + endStr;
+                        status = Localizer.Format("#ODFC-off");
+                        PAWStatus = begStr + colorStr + Localizer.Format("#autoLOC_500646") + ": " + maxECs_status + "/" + ODFC_config.modes[fuelMode].maxEC + Localizer.Format("#autoLOC_234126") + ":" + endStr;       // Fuel Cell: // EC/s:
+                        //PAWStatus = begStr + colorStr + "Fuel Cell: " + _fuelModeMaxECRateLimit + "/" + maxECs_status + " EC/s:" + endStr;
                         break;
                     }
 /*                case GameScenes.LOADING:
@@ -636,6 +685,7 @@ namespace OnDemandFuelCells
 
 //? this looks for another fuel mode that isn't deprived if autoSwitch == true
                 if (HighLogic.CurrentGame.Parameters.CustomParams<Options>().autoSwitch)
+                //if (HighLogic.CurrentGame.Parameters.CustomParams<Options>().autoSwitch || __autoSwitch__)
                 {
             // TODO: responseTime
                     // this slows down the autoSwitch so it doesn't break the PAW
@@ -697,17 +747,19 @@ namespace OnDemandFuelCells
             if (info == string.Empty)
             {
                 info += Localizer.Format("#ODFC-manu-titl"); // #ODFC-manu-titl = Okram Industries
-                info += "\n v" + Version.SText; // ODFC Version Number text
+                info += "\n" + Localizer.Format("#ODFC-manu-desc") + "\n";
+                info += "\n" + Localizer.Format("#ODFC-GUI-namev", Version.SText); // ODFC Version Number text
                 info += "\n<color=#b4d455FF>" + Localizer.Format("#ODFC-desc"); // #ODFC-desc = Automated fuel cell controller which only generates electricity when really needed
                 info += "</color>\n\n";
 
                 ConfigNode[] mds = configNode.GetNodes("MODE");
-                info += "Modes: " + mds.Length.ToString();
+                info += Localizer.Format("#ODFC-info-modes") + ": " + mds.Length.ToString();
 
                 for (int n = 0; n < mds.Length; n++)
-                    info += "\n\n<color=#99FF00FF>Mode: " + n.ToString() + "</color> - Max EC: " + mds[n].GetValue("MaxEC") +
-                        "/s\n<color=#FFFF00FF>Fuels:</color>" + GetResourceRates(mds[n].GetNode("FUELS")) +
-                        "\n<color=#FFFF00FF>Byproducts:</color>" + GetResourceRates(mds[n].GetNode("BYPRODUCTS"));
+                    //info += "\n\n<color=#99FF00FF>Mode: " + n.ToString() + "</color> - Max EC: " + mds[n].GetValue("MaxEC") +
+                    info += "\n\n<color=#99FF00FF>" + Localizer.Format("#autoLOC_8200011") + " " + n.ToString() + "</color>\n\t" + Localizer.Format("#ODFC-ec-max") + ": "
+                        + mds[n].GetValue("MaxEC") + "/s\n<color=#FFFF00FF>" + Localizer.Format("#ODFC-fuels") + ":</color>" + GetResourceRates(mds[n].GetNode("FUELS")) +
+                        "\n<color=#FFFF00FF>" + Localizer.Format("#ODFC-bypro") + ":</color>" + GetResourceRates(mds[n].GetNode("BYPRODUCTS"));
             }
 
             //info += "\n\n<color=orange>Requires:</color> \n - <color=white><b>" + Localizer.Format("#autoLOC_252004"); // #autoLOC_252004 = ElectricCharge
