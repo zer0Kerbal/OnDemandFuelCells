@@ -21,6 +21,9 @@
         <member name="T:OnDemandFuelCells.ODFC">
             <summary>On Demand Fuel Cells (ODFC) part module</summary>
         </member>
+        <member name="T:OnDemandFuelCells.ODFC.states">
+            <summary>ENUM: byte: error, off, nominal, fuelDeprived, noDemand, stalled }; // deploy, retract</summary>
+        </member>
         <member name="F:OnDemandFuelCells.ODFC.timeOut">
             <summary>current counter for responseTime</summary>
         </member>
@@ -28,14 +31,12 @@
             <summary>[internal]The fuel mode current ElectricCharge (EC) production. seealso OnDemandFuelCellsEC</summary>
         </member>
         <member name="P:OnDemandFuelCells.ODFC.OnDemandFuelCellsEC">
-            <summary>
-            Gets the On Demand Fuelcells(ODFC) Electric Charge (EC) Production.
-            AMPYear / JPRepo / Background?
-            allows AMPYear and others to see current EC/s production
-            </summary>
-            <value>
-            The On Demand Fuelcells(ODFC) Electric Charge (EC) Production.
-            </value>
+            <summary>Gets the On Demand Fuelcells(ODFC) Electric Charge (EC) Production.
+            AMPYear / JPRepo / Background? allows AMPYear and others to see current EC/s production</summary>
+            <value>The On Demand Fuelcells(ODFC) Electric Charge (EC) Production.</value>
+        </member>
+        <member name="F:OnDemandFuelCells.ODFC.__autoSwitch__">
+            <summary>Per Fuel Cell AutoSwitch</summary>
         </member>
         <member name="F:OnDemandFuelCells.ODFC.info">
             <summary>Module information shown in editors</summary>
@@ -73,61 +74,94 @@
         <member name="F:OnDemandFuelCells.ODFC.threshold">
             <summary>The current threshold (%) which needs to be equal or below before production begins.</summary>
         </member>
+        <member name="M:OnDemandFuelCells.ODFC.toggleAction(KSPActionParam)">
+            <summary>Action: Toggle Fuel Cell</summary>
+            <param name="kap"></param>
+        </member>
+        <member name="M:OnDemandFuelCells.ODFC.enableAction(KSPActionParam)">
+            <summary>Action: Start Fuel Cell</summary>
+            <param name="kap"></param>
+        </member>
+        <member name="M:OnDemandFuelCells.ODFC.disableAction(KSPActionParam)">
+            <summary>Action: Stop Fuel Cell</summary>
+            <param name="kap"></param>
+        </member>
+        <member name="M:OnDemandFuelCells.ODFC.NextFuelmodeAction(KSPActionParam)">
+            <summary>Action: Next Fuel Mode</summary>
+            <param name="kap"></param>
+        </member>
+        <member name="M:OnDemandFuelCells.ODFC.PreviousFuelModeAction(KSPActionParam)">
+            <summary>Action: Previous Fuel Mode</summary>
+            <param name="kap"></param>
+        </member>
+        <member name="M:OnDemandFuelCells.ODFC.ToggleSwitchAction(KSPActionParam)">
+            <summary>Action: Toggle per fuel cell Auto Switch (looks for another fuel mode that is operable</summary>
+            <param name="kap"></param>
+        </member>
+        <member name="M:OnDemandFuelCells.ODFC.DisableSwitchAction(KSPActionParam)">
+            <summary>Action: Disable per fuel cell Auto Switch (looks for another fuel mode that is operable</summary>
+            <param name="kap"></param>
+        </member>
+        <member name="M:OnDemandFuelCells.ODFC.EnableSwitchAction(KSPActionParam)">
+            <summary>Action: Enable per fuel cell Auto Switch (looks for another fuel mode that is operable</summary>
+            <param name="kap"></param>
+        </member>
+        <member name="M:OnDemandFuelCells.ODFC.decreaseRateLimitAction(KSPActionParam)">
+            <summary>Action: Decrease Rate Limit</summary>
+            <param name="kap"></param>
+        </member>
+        <member name="M:OnDemandFuelCells.ODFC.increaseRateLimitAction(KSPActionParam)">
+            <summary>Action: Increase Rate Limit</summary>
+            <param name="kap"></param>
+        </member>
+        <member name="M:OnDemandFuelCells.ODFC.decreaseThresholdAction(KSPActionParam)">
+            <summary>Action: Decrease Threshold</summary>
+            <param name="kap"></param>
+        </member>
+        <member name="M:OnDemandFuelCells.ODFC.increaseThresholdAction(KSPActionParam)">
+            <summary>Action: Increase Threshold</summary>
+            <param name="kap"></param>
+        </member>
         <member name="M:OnDemandFuelCells.ODFC.updatePAWLabel">
             <summary><para>Updates the PAW label.</para></summary>
         </member>
+        <member name="T:OnDemandFuelCells.Options">
+            <summary>search for "Mod integration into Stock Settings
+            http://forum.kerbalspaceprogram.com/index.php?/topic/147576-modders-notes-for-ksp-12/#comment-2754813 /// </summary>
+        </member>
         <member name="F:OnDemandFuelCells.Options.needsECtoStart">
-            <summary>
-            The needs EC to start in GameParameters
-            </summary>
+            <summary>The needs EC to start in GameParameters</summary>
         </member>
         <member name="F:OnDemandFuelCells.Options.consumesEC">
-            <summary>
-            The needs EC to start in GameParameters
-            </summary>
+            <summary>The needs EC to start in GameParameters</summary>
         </member>
         <member name="F:OnDemandFuelCells.Options.autoSwitch">
-            <summary>
-            The automatic switch in GameParameters
-            </summary>
+            <summary>The automatic switch in GameParameters</summary>
+        </member>
+        <member name="F:OnDemandFuelCells.Options.requireFullControl">
+            <summary>Does ODFC require full control in GameParameters</summary>
         </member>
         <member name="F:OnDemandFuelCells.Options.coloredPAW">
-            <summary>
-            The colored paw
-            </summary>
+            <summary>The option to de-colored PAW/RMB</summary>
         </member>
         <member name="F:OnDemandFuelCells.Options._InGameMail">
-            <summary>
-            This setting turns ON/off ODFC sending mail via in game mail system
-            </summary>
+            <summary>This setting turns ON/off ODFC sending mail via in game mail system</summary>
         </member>
         <member name="F:OnDemandFuelCells.Options.globalScalingFactor">
-            <summary>
-            Sets the globalScalingFactor in GameParameters
-            </summary>
+            <summary>Sets the globalScalingFactor in GameParameters</summary>
         </member>
         <member name="F:OnDemandFuelCells.Options.responseTime">
-            <summary>
-            Sets the globalScalingFactor in GameParameters
-            </summary>
+            <summary>/// Sets the globalScalingFactor in GameParameters/// </summary>
         </member>
         <member name="F:OnDemandFuelCells.Options.powerGraph">
-            <summary>
-            Sets the globalScalingFactor in GameParameters
-            </summary>
+            <summary> Sets the globalScalingFactor in GameParameters </summary>
         </member>
         <member name="P:OnDemandFuelCells.Options.HasPresets">
-            <summary>
-            Gets a value indicating whether this instance has presets.
-            </summary>
-            <value>
-              <c>true</c> if this instance has presets; otherwise, <c>false</c>.
-            </value>
+            <summary>Gets a value indicating whether this instance has presets.</summary>
+            <value><c>true</c> if this instance has presets; otherwise, <c>false</c>.</value>
         </member>
         <member name="M:OnDemandFuelCells.Options.SetDifficultyPreset(GameParameters.Preset)">
-            <summary>
-            Sets the difficulty preset.
-            </summary>
+            <summary>Sets the difficulty preset.</summary>
             <param name="preset">The preset.</param>
         </member>
     </members>
