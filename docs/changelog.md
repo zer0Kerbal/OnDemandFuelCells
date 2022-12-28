@@ -33,6 +33,7 @@ CC BY-ND 4.0 by zer0Kerbal
 ### Summary 1.2.99.1
 
 * Recompiled for KSP 1.12.4 (NET 4.5.2 - C# 5.0)
+  * <OnDemandFuelCells.dll> 1.2.99.100 --> 1.2.99.120
 * Code is fully localized.
 * Adds KerbalXMAS (XMAS) compatibility
 * Now includes modify patches and no longer compatible with
