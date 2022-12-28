@@ -55,7 +55,7 @@
 * Add
   * <KerbalXMAS.cfg> v1.0.0.0
 
-### Status 1.2.99.0
+### Status 1.2.99.1
 
 * Issues
   * closes #94 - On Demand Fuel Cells (ODFC) 1.2.99.1-prerelease `<BlackOut>`
