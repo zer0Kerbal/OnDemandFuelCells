@@ -44,7 +44,7 @@ namespace OnDemandFuelCells
     {
         public override string Title { get { return "#ODFC-set-title"; } }		// Default Settings
         public override GameParameters.GameMode GameMode { get { return GameParameters.GameMode.ANY; } }
-        public override string DisplaySection { get { return "#ODFC-name"; } } // On Demand Fuel Cells
+        public override string DisplaySection { get { return "#ODFC-modname"; } } // On Demand Fuel Cells
         public override string Section { get { return "#ODFC-manu-name"; } }		   // On Demand Fuel Cells
         public override int SectionOrder { get { return 1; } }
 
